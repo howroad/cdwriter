@@ -1,0 +1,70 @@
+重写readme.md
+
+//TODO 进行到一半
+saveOrUpdate
+saveOrUpdateAndSubmit
+Business｛
+增(保存/提交/修改saveXXXBusiness.java，批量提交SubmitXXXListBusiness.java)
+删(DeleteXXXByIdsBusiness.java)
+查(ShowXXXByIdBusiness.java/QueryXXXListBusiness.java)
+business模版需要修改
+｝
+
+生成连表查询★★★★★
+生成VIEW
+生成BUILDER
+生成工作流的方法
+
+//TODO
+
+
+
+注释智能换行...模版解决ok
+
+打印日志
+向jar包插入文件并执行(不使用jar包)........ok
+增加MySQL数据库的支持
+应当支持多种格式的EXCEL：
+顺序不同的excel，精度和长度分开的excel
+汇总SQL文件的工具，自定义后缀
+自动验证方法
+验证连接方法错误.......ok
+APPNO不起作用
+点击浏览再点击xx报错
+减少耦合
+缩写由T改为首字母........ok
+从Excel中读取的时候，模块名取错，或者应当写一个设置模块的按钮
+生成的xml中 公共SQL进一步提取......ok
+
+ <!-- 关联表删除 -->
+ 
+ $common{appNoLow} 没取到指
+ 检测createdate 和 updateDate
+ 
+ //自动代码 日志找不到类
+ import org.apache.log4j.PropertyConfigurator;
+
+ 将jar和directory的templet同步
+
+ setting写一个接口 和两个实现类
+ 写一个自定义意思的mapping
+可以从resource读取模版.....ok
+util -> service
+
+导出的SQL
+
+autoRun的时候要判断是否有序列
+思路：减少配置
+删除：前缀、实现类是否生成注释、是否使用模版，使用模块，不进行hardcode,【下个版本去掉】是否使用分页
+Config使用接口的形式进行赋值，写一个由Map到static Param的方法.
+
+
+
+--------------
+1.保证不抱错
+
+2.重写项目，并根据需求制作接口
+Config使用接口的形式进行赋值，写一个由Map到static Param的方法
+
+
+生成的Table中 是否为空写反了
