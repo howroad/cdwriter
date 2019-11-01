@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author $common{author}
  * 
- * @since：$table{now}
+ * @since $common{now}
  * 
  */
 public class $table{entityName}ServiceImpl extends BaseServerImpl implements $table{entityName}Service {
@@ -31,7 +31,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * @param model $table{remark}实体
     * @author $common{author}
     * @return $table{remark}主键
-    * @since $table{now}
+    * @since $common{now}
     */
     public Integer save$table{entityName}($table{entityName} model) {
         return getDaoFacade().get$table{entityName}Dao().save$table{entityName}(model);
@@ -41,7 +41,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * 根据主键删除$table{remark}
     * @param id $table{remark}主键
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void delete$table{entityName}ById (Integer id) {
         getDaoFacade().get$table{entityName}Dao().delete$table{entityName}ById (id);
@@ -51,7 +51,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * 修改$table{remark}
     * @param model $table{remark}实体
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void update$table{entityName}($table{entityName} model) {
         getDaoFacade().get$table{entityName}Dao().update$table{entityName}(model);
@@ -62,7 +62,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}集合
-    * @since $table{now}
+    * @since $common{now}
     */
     public List<$table{entityName}View> get$table{entityName}List($table{entityName}Scope scope) {
         return getDaoFacade().get$table{entityName}Dao().get$table{entityName}List(scope);
@@ -73,7 +73,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * @param id $table{remark}主键
     * @author $common{author}
     * @return $table{remark}
-    * @since $table{now}
+    * @since $common{now}
     */
     public $table{entityName}View get$table{entityName}ById(Integer id) {
         return getDaoFacade().get$table{entityName}Dao().get$table{entityName}ById(id);
@@ -84,7 +84,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}
-    * @since $table{now}
+    * @since $common{now}
     */
     public $table{entityName}View get$table{entityName}ByScope ($table{entityName}Scope scope) {
         return getDaoFacade().get$table{entityName}Dao().get$table{entityName}ByScope(scope);
@@ -94,7 +94,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * 根据主键删除多个$table{remark}
     * @param ids $table{remark}主键
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void delete$table{entityName}ByIds (List<Integer> ids) {
         getDaoFacade().get$table{entityName}Dao().delete$table{entityName}ByIds(ids);
@@ -104,7 +104,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * 根据$table{remark}条件删除$table{remark}
     * @param scope $table{remark}条件
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void delete$table{entityName} ($table{entityName}Scope scope) {
         getDaoFacade().get$table{entityName}Dao().delete$table{entityName}(scope);
@@ -116,7 +116,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}记录数
-    * @since $table{now}
+    * @since $common{now}
     */
     public Integer get$table{entityName}PageCount($table{entityName}Scope scope) {
         return getDaoFacade().get$table{entityName}Dao().get$table{entityName}PageCount(scope);
@@ -127,7 +127,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}集合
-    * @since $table{now}
+    * @since $common{now}
     */
     public List<$table{entityName}View> get$table{entityName}PageList($table{entityName}Scope scope) {
         return getDaoFacade().get$table{entityName}Dao().get$table{entityName}PageList(scope);
@@ -138,7 +138,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     * @param model $table{remark}实体
     * @author $common{author}
     * @return $table{remark}主键
-    * @since $table{now}
+    * @since $common{now}
     */
     public Integer saveOrUpdate$table{entityName}($table{entityName} model) {
         //保存或修改$table{remark}信息
@@ -161,7 +161,7 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
      * @param model
      * @return Integer caseId
      * @author $common{author}
-     * @since $table{now}
+     * @since $common{now}
      */
     public Integer submit$table{entityName}($table{entityName} model) {
         if(model == null || model.get$table{pkNameUp}() == null) {

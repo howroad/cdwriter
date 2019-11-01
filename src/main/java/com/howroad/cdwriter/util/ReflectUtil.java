@@ -29,7 +29,7 @@ public class ReflectUtil {
         }
         String value = paramMap.get(fieldName);
         if (value == null) {
-            System.out.println(fieldName + ":未设置！");
+            System.out.println(field.getDeclaringClass().getName() + " : " + fieldName + ":未设置！");
             return;
         }
         try {

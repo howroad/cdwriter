@@ -12,13 +12,11 @@ import com.howroad.cdwriter.service.impl.*;
  */
 public class Container {
     public static IDatabaseService databaseService;
-    public static IBuildService buildService;
     public static ICoreService coreService;
     public static IIOService ioService;
 
     static{
         databaseService = new DatabaseServiceImpl();
-        buildService = new BuildServiceImpl();
         coreService = new CoreServiceImpl();
         ioService = new IOServiceImpl();
     }

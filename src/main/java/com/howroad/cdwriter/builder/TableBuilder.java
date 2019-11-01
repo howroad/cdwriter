@@ -4,6 +4,7 @@ import com.google.common.base.CaseFormat;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.model.MyParam;
 import com.howroad.cdwriter.model.Table;
+import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.ExcelUtil;
 import oracle.jdbc.driver.OracleConnection;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +37,6 @@ public class TableBuilder {
      */
     public static Table buildTableFromDB(String tableName) {
         tableName = tableName.toUpperCase();
-        Connection conn = null;
         DatabaseMetaData db;
         // 字段信息
         ResultSet rs = null;
@@ -45,11 +45,11 @@ public class TableBuilder {
         String tableRemark = null;
         List<MyParam> paramList = new ArrayList<MyParam>();
         try {
-            conn = DriverManager.getConnection(PageConfig.URL, PageConfig.USER, PageConfig.PASSWORD);
+            Connection conn = DBUtil.getConn();
             ((OracleConnection) conn).setRemarksReporting(true);
             db = conn.getMetaData();
-            rs = db.getColumns(null, PageConfig.USER, tableName.toUpperCase(), null);
-            rsTable = db.getTables(null, PageConfig.USER, tableName.toUpperCase(), new String[] {"TABLE"});
+            rs = db.getColumns(null, PageConfig.USER.toUpperCase(), tableName.toUpperCase(), null);
+            rsTable = db.getTables(null, PageConfig.USER.toUpperCase(), tableName.toUpperCase(), new String[] {"TABLE"});
             if(rsTable.next()) {
                 tableRemark = rsTable.getString("REMARKS");
             }
@@ -79,18 +79,14 @@ public class TableBuilder {
             throw new RuntimeException(e);
         }finally {
             try {
-                if(rs!=null) {
+                if(rs != null){
                     rs.close();
                 }
-                if(rsTable != null) {
+                if(rsTable != null){
                     rsTable.close();
-                }
-                if(conn != null) {
-                    conn.close();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new RuntimeException(e);
             }
         }
         if(paramList.isEmpty()) {
@@ -159,5 +155,13 @@ public class TableBuilder {
             throw new RuntimeException(e);
         }
         return tableList;
-    }    
+    }
+    public static List<Table> buildTableFromNames(List<String> tbNames) {
+        List<Table> resultList = new ArrayList<Table>();
+        tbNames.forEach(tbName ->{
+            Table table = buildTableFromDB(tbName);
+            resultList.add(table);
+        });
+        return resultList;
+    }
 }

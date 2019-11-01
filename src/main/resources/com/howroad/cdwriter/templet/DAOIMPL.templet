@@ -15,7 +15,7 @@ import $common{groupId}.$common{appNo}.$common{poPackage}.view.*;
  *
  * @author $common{author}
  * 
- * @since：$table{now}
+ * @since $common{now}
  * 
  */
 @SuppressWarnings("unchecked")
@@ -30,7 +30,7 @@ public class $table{entityName}Dao extends BaseDao{
     * @param model $table{remark}实体
     * @author $common{author}
     * @return $table{remark}主键
-    * @since $table{now}
+    * @since $common{now}
     */
     public Integer save$table{entityName}($table{entityName} model) {
         return (Integer)getSqlMapClientTemplate().insert(getStatement("save$table{entityName}"),model);
@@ -40,7 +40,7 @@ public class $table{entityName}Dao extends BaseDao{
     * 修改$table{remark}
     * @param model $table{remark}实体
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void update$table{entityName}($table{entityName} model) {
         getSqlMapClientTemplate().update(getStatement("update$table{entityName}"),model);
@@ -51,7 +51,7 @@ public class $table{entityName}Dao extends BaseDao{
     * @param scope $table{remark}Scope查询条件
     * @author $common{author}
     * @return $table{remark}集合
-    * @since $table{now}
+    * @since $common{now}
     */
     public List<$table{entityName}View> get$table{entityName}List($table{entityName}Scope scope) {
         return getSqlMapClientTemplate().queryForList(getStatement("get$table{entityName}List"),scope);
@@ -62,7 +62,7 @@ public class $table{entityName}Dao extends BaseDao{
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}
-    * @since $table{now}
+    * @since $common{now}
     */
     public $table{entityName}View get$table{entityName}ByScope ($table{entityName}Scope scope){
         return ($table{entityName}View) getSqlMapClientTemplate().queryForObject(getStatement("get$table{entityName}ByScope"), scope);
@@ -72,7 +72,7 @@ public class $table{entityName}Dao extends BaseDao{
     * 根据主键删除多个$table{remark}
     * @param ids $table{remark}主键
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void delete$table{entityName}ByIds (List<Integer> ids) {
         getSqlMapClientTemplate().delete(getStatement("delete$table{entityName}ByIds"), ids);
@@ -84,7 +84,7 @@ public class $table{entityName}Dao extends BaseDao{
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}记录数
-    * @since $table{now}
+    * @since $common{now}
     */
     public Integer get$table{entityName}PageCount($table{entityName}Scope scope) {
         return (Integer) getSqlMapClientTemplate().queryForObject(getStatement("get$table{entityName}PageCount"), scope);
@@ -95,7 +95,7 @@ public class $table{entityName}Dao extends BaseDao{
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}集合
-    * @since $table{now}
+    * @since $common{now}
     */
     public List<$table{entityName}View> get$table{entityName}PageList($table{entityName}Scope scope) {
         Integer count = get$table{entityName}PageCount(scope);
@@ -108,7 +108,7 @@ public class $table{entityName}Dao extends BaseDao{
      * 根据条件删除$table{remark}
      * @param scope $table{remark}删除条件
      * @author $common{author}
-     * @since：$table{now}
+     * @since $common{now}
      */
     public void delete$table{entityName}($table{entityName}Scope scope) {
         getSqlMapClientTemplate().delete(getStatement("delete$table{entityName}"), scope);
@@ -118,7 +118,7 @@ public class $table{entityName}Dao extends BaseDao{
     * 新增或者修改$table{remark}集合中的内容
     * @param list $table{remark}集合
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void saveOrUpdate$table{entityName}List (List<$table{entityName}> list){
         getSqlMapClientTemplate().update(getStatement("saveOrUpdate$table{entityName}List"),list);
@@ -128,7 +128,7 @@ public class $table{entityName}Dao extends BaseDao{
     * 新增或者修改$table{remark}
     * @param model $table{remark}实体
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void saveOrUpdate$table{entityName} ($table{entityName} model){
         getSqlMapClientTemplate().update(getStatement("saveOrUpdate$table{entityName}"),model);

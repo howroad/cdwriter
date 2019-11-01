@@ -11,4 +11,5 @@ package com.howroad.cdwriter.conf;
 public class SystemConfig {
     public final static String WRITE_CODE = "GBK";
     public final static String INPUT_CODE =  "UTF-8";
+    public final static String SUFFIX = ".templet";
 }

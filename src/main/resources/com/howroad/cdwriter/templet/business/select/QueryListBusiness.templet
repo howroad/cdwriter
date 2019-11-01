@@ -11,7 +11,7 @@ package com.nstc.$common{appNo}.business;
  *
  * @author $common{author}
  * 
- * @since：$table{now}
+ * @since $common{now}
  *
  */
 public class Query$table{entityName}Business extends Abstract$common{appNoUpper}Business{
@@ -38,7 +38,7 @@ public class Query$table{entityName}Business extends Abstract$common{appNoUpper}
     /**
      * 初始化
      * @author $common{author}
-     * @since：$table{now}
+     * @since $common{now}
      */
     private void init() {
         if($common{appNoLow}_$table{entityNameLow}_qry == null) {

@@ -15,7 +15,7 @@ import $common{groupId}.$common{appNo}.$common{poPackage}.view.*;
  *
  * @author $common{author}
  * 
- * @since：$table{now}
+ * @since $common{now}
  * 
  */
 public interface $table{entityName}Service {
@@ -25,7 +25,7 @@ public interface $table{entityName}Service {
     * @param model $table{remark}实体
     * @author $common{author}
     * @return $table{remark}主键
-    * @since $table{now}
+    * @since $common{now}
     */
     public Integer save$table{entityName}($table{entityName} model);
 
@@ -33,7 +33,7 @@ public interface $table{entityName}Service {
     * 根据主键删除$table{remark}
     * @param id $table{remark}主键
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void delete$table{entityName}ById (Integer id);
 
@@ -41,7 +41,7 @@ public interface $table{entityName}Service {
     * 修改$table{remark}
     * @param model $table{remark}实体
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void update$table{entityName}($table{entityName} model);
 
@@ -50,7 +50,7 @@ public interface $table{entityName}Service {
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}集合
-    * @since $table{now}
+    * @since $common{now}
     */
     public List<$table{entityName}View> get$table{entityName}List($table{entityName}Scope scope);
     
@@ -59,7 +59,7 @@ public interface $table{entityName}Service {
     * @param id $table{remark}主键
     * @author $common{author}
     * @return $table{remark}
-    * @since $table{now}
+    * @since $common{now}
     */
     public $table{entityName}View get$table{entityName}ById(Integer id);
 
@@ -68,7 +68,7 @@ public interface $table{entityName}Service {
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}
-    * @since $table{now}
+    * @since $common{now}
     */
     public $table{entityName}View get$table{entityName}ByScope ($table{entityName}Scope scope);
     
@@ -76,7 +76,7 @@ public interface $table{entityName}Service {
     * 根据主键删除多个$table{remark}
     * @param ids $table{remark}主键
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void delete$table{entityName}ByIds (List<Integer> ids);
     
@@ -84,7 +84,7 @@ public interface $table{entityName}Service {
     * 根据$table{remark}条件删除$table{remark}
     * @param scope $table{remark}条件
     * @author $common{author}
-    * @since $table{now}
+    * @since $common{now}
     */
     public void delete$table{entityName} ($table{entityName}Scope scope);
 
@@ -94,7 +94,7 @@ public interface $table{entityName}Service {
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}记录数
-    * @since $table{now}
+    * @since $common{now}
     */
     public Integer get$table{entityName}PageCount($table{entityName}Scope scope);
     
@@ -103,7 +103,7 @@ public interface $table{entityName}Service {
     * @param scope $table{remark}查询条件
     * @author $common{author}
     * @return $table{remark}集合
-    * @since $table{now}
+    * @since $common{now}
     */
     public List<$table{entityName}View> get$table{entityName}PageList($table{entityName}Scope scope);
     
@@ -112,7 +112,7 @@ public interface $table{entityName}Service {
     * @param model $table{remark}实体
     * @author $common{author}
     * @return $table{remark}主键
-    * @since $table{now}
+    * @since $common{now}
     */
     public Integer saveOrUpdate$table{entityName}($table{entityName} model);
     
@@ -122,7 +122,7 @@ public interface $table{entityName}Service {
      * @param model
      * @return Integer caseId
      * @author $common{author}
-     * @since $table{now}
+     * @since $common{now}
      */
     public Integer submit$table{entityName}($table{entityName} model);
     @{/delete}  

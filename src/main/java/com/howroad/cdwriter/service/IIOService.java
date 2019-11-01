@@ -5,6 +5,7 @@ import com.howroad.cdwriter.model.Table;
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.jar.JarEntry;
 
 /**
@@ -29,24 +30,15 @@ public interface IIOService {
     void writeFileByTemplet(File templet,File outFile, Table table);
     void writeFileByTemplet(InputStream ins,File outFile, Table table);
 
+    List<File> getAllFile(File dir);
+    Map<String,InputStream> getAllJarTemplet();
+    void writeAllFileByTemplet(Table table,String outDir,String templetDir);
+    void writeAllFileByJarTemplet(Table table);
 
-    void writeAllTemplet(Table table,String path,String templetDir);
-
-    List<JarEntry> readAllTempletJarEntry();
-    JarEntry getJarEntry(String entryName);
-
-    void writeTempletByEntry(Table table,String path, JarEntry jarEntry, File outPath);
-    void writeAllTempletFromJar(Table table, String path);
-
-    int getLastKeyLineNum(List<String> lineList,String key);
-
-    void reWriteFileByList(File file, List<String> list, Table table, int fileType);
-    void writeCommonFileByTemplet(Table table);
     void writeDataFile(Table table);
     void writeDataFile(Table table, String sql, String[] primaryColUpKeys, String filName);
 
     void clear();
     void clearDir(File dir);
-    void reBuildCommonFile();
-    void clearAndRebuild();
+
 }

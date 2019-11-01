@@ -11,7 +11,7 @@ package com.nstc.$common{appNo}.business;
  *
  * @author $common{author}
  * 
- * @since：$table{now}
+ * @since $common{now}
  *
  */
 public class Sumit$table{entityName}ListBusiness extends Abstract$common{appNoUpper}Business{

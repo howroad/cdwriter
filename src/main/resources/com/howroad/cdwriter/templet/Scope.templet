@@ -13,7 +13,7 @@ import $common{groupId}.$common{appNo}.$common{poPackage}.$table{entityName};
  *
  * @author luhao
  * 
- * @since：$table{now}
+ * @since $common{now}
  *
  */
 public class $table{entityName}Scope extends $table{entityName}{

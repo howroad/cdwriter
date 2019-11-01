@@ -11,7 +11,7 @@ $table{import}
  *
  * @author luhao
  * 
- * @since：$table{now}
+ * @since $common{now}
  *
  */
 public class $table{entityName} {

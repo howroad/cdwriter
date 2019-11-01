@@ -5,6 +5,7 @@ import com.howroad.cdwriter.util.PropertiesUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>Title: FileNameMapping.java</p>
@@ -26,12 +27,12 @@ public class FileNameMap {
         if(map == null){
             init();
         }
-        String result = map.get(key);
+        String result = map.get(key.toUpperCase());
         if(StringUtils.isBlank(result)){
-            result = localMap.get(key);
+            result = localMap.get(key.toUpperCase());
         }
         if(StringUtils.isBlank(result)){
-            result = key.replace("TEMPLET","");
+            result = key.replaceAll("\\.TEMPLET|\\.templet","");
         }
         return result;
 
@@ -41,9 +42,17 @@ public class FileNameMap {
         if(localMap == null){
             localMap = PropertiesUtil.readJarPropertiesUpperCase(PathConfig.NAME_MAPING_PATH);
         }
-        String result = localMap.get(key);
+        String result = null;
+        Set<String> keySet = localMap.keySet();
+        for (String k : keySet) {
+            if(("DB/" + key.toUpperCase()).equals(k) || key.toUpperCase().equals(k)){
+                result = localMap.get(k);
+                break;
+            }
+        }
+
         if(StringUtils.isBlank(result)){
-            result = key.replace("TEMPLET","");
+            result = key.replaceAll("\\.TEMPLET|\\.templet","");
         }
         return result;
     }

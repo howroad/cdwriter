@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -17,7 +18,7 @@ import java.util.Properties;
  * @since 2019-10-31 10:12
  */
 public class PropertiesUtil {
-    public static Map<String,Object> readJarProperties(String path){
+    public static Map<String,String> readJarProperties(String path){
         Properties pro = new Properties();
         InputStream in = null;
         try {
@@ -36,11 +37,10 @@ public class PropertiesUtil {
             }
         }
 
-        Map<String,Object> resultMap = new HashMap<>();
+        Map<String,String> resultMap = new HashMap<>();
         pro.forEach((e,f) ->{
-            resultMap.put(String.valueOf(e),f);
+            resultMap.put(String.valueOf(e).toUpperCase(),String.valueOf(f));
         });
-        System.out.println(resultMap);
         return resultMap;
     }
 
@@ -67,7 +67,6 @@ public class PropertiesUtil {
         pro.forEach((e,f) ->{
             resultMap.put(String.valueOf(e).toUpperCase(),String.valueOf(f));
         });
-        System.out.println(resultMap);
         return resultMap;
     }
 
@@ -94,7 +93,6 @@ public class PropertiesUtil {
         pro.forEach((e,f) ->{
             resultMap.put(String.valueOf(e).toUpperCase(),String.valueOf(f));
         });
-        System.out.println(resultMap);
         return resultMap;
     }
 }

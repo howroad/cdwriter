@@ -32,9 +32,11 @@ public class Config {
         //初始化FileNameMap
         initClass(FileNameMap.class, PathConfig.NAME_MAPING_PATH);
 
-        System.out.println(CommonMap.map);
-        System.out.println(WithoutLastMap.map);
-        System.out.println(FileNameMap.map);
+        log(PathConfig.class);
+        log(PageConfig.class);
+        log(CommonMap.class);
+        log(WithoutLastMap.class);
+        log(FileNameMap.class);
     }
 
     public static void initClass(Class clazz, String path){
@@ -44,14 +46,10 @@ public class Config {
             for (Field field : fields) {
                 ReflectUtil.setStaticParam(field,result);
             }
-            for (Field field : fields) {
-                System.out.println(field.getName() + ": " + field.get(null));
-            }
             Method method = clazz.getMethod("init");
             if(method != null){
                 method.invoke(null);
             }
-            System.out.println(clazz.getName() + "初始化完成！");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -68,14 +66,10 @@ public class Config {
             for (Field field : fields) {
                 ReflectUtil.setStaticParam(field,result);
             }
-            for (Field field : fields) {
-                System.out.println(field.getName() + ": " + field.get(null));
-            }
             Method method = clazz.getMethod("init");
             if(method != null){
                 method.invoke(null);
             }
-            System.out.println(clazz.getName() + "初始化完成！");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -87,5 +81,18 @@ public class Config {
 
     public static void main(String[] args) {
         init();
+    }
+
+    public static void log(Class clazz){
+        try {
+            System.out.println("-----------" + clazz.getName() + "  start-----------");
+            Field[] fields = ReflectUtil.getStaticFields(clazz);
+            for (Field field : fields) {
+                System.out.println(field.getName() + ": " + field.get(null));
+            }
+            System.out.println("-----------" + clazz.getName() + "  end-----------");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

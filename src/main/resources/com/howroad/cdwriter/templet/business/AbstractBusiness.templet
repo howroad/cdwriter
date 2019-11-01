@@ -14,7 +14,7 @@ import com.nstc.util.CollectionUtils;
  *
  * @author $common{author}
  * 
- * @since：$table{now}
+ * @since $common{now}
  *
  */
 public abstract class Abstract$common{appNoUpper}Business extends BaseBusiness{
@@ -46,7 +46,7 @@ public abstract class Abstract$common{appNoUpper}Business extends BaseBusiness{
      * @param list
      * @return List<String>
      * @author $common{author}
-     * @since：$table{now}
+     * @since $common{now}
      */
     protected List<Integer> selectByName(List<Map<String, Object>> list,String idName) {
         List<Integer> ids = new ArrayList<Integer>();

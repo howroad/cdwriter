@@ -106,7 +106,7 @@ public class Table{
      */
     public String getSeqName() {
         String seqName = null;
-        if(new Integer(0).equals(PageConfig.SEQ_ON_LAST)) {
+        if(!PageConfig.SEQ_ON_LAST) {
             seqName = "SEQ_" + getTableName();
         }else {
             seqName = getTableName() + "_SEQ";

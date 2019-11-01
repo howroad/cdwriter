@@ -33,11 +33,23 @@ public interface IDatabaseService {
      */
     String defaultDDL(String tableName);
 
+    /**
+     * 获得数据初始化脚本，自定义主键
+     * @param table
+     * @param sql
+     * @param primaryColUpKeys
+     * @param filName
+     * @return
+     */
     List<String> getDate(Table table,String sql,String[] primaryColUpKeys,String filName);
+
+    /**
+     * 将数据库中的数据转换成插入脚本，默认是主键
+     * @param table
+     * @param dataList
+     * @return
+     */
     List<String> dataToLine(Table table, List<List<Object>> dataList);
-    List<Table> buildTableFromNames(List<String> tbNames);
-    Table buildTableFromName(String tbName);
-    List<Table> buildTableFromExcel(int sheetNo);
 
 
 }
