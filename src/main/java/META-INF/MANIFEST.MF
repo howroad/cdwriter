@@ -1,3 +1,2 @@
-Manifest-Version: 1.1
-Main-Class: com.nstc.cbwriter.control.Start
-
+Manifest-Version: 0.11.25
+Main-Class: com.howroad.cdwriter.control.Start

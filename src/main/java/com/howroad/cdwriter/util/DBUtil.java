@@ -116,17 +116,4 @@ public class DBUtil {
         return resultList;
     }
 
-    public static void main(String[] args) {
-        Config.init();
-        String tableName = "aims_account";
-        tableName = tableName.toUpperCase();
-        String sql = "SELECT DBMS_METADATA.GET_DDL('TABLE','" + tableName + "') FROM DUAL";
-        List<List<Object>> list = DBUtil.query(sql);
-        String result = null;
-        if(!list.isEmpty()){
-            Clob clob = (Clob)list.get(0).get(0);
-            result = DataUtil.clobToString(clob);
-        }
-        System.out.println(result);
-    }
 }

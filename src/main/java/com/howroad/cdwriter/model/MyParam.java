@@ -98,7 +98,7 @@ public class MyParam {
         } else {
             throw new RuntimeException("未知类型 : " + columnType);
         }
-        this.nullable = nullable0 != null && TableContans.NOTNULL.equals(nullable0.trim());
+        this.nullable = !TableContans.NOTNULL.equalsIgnoreCase(nullable0.trim());
         init();
     }
 

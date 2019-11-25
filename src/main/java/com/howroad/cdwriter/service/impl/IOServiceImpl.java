@@ -1,14 +1,14 @@
 package com.howroad.cdwriter.service.impl;
 
-import com.howroad.cdwriter.builder.TableBuilder;
-import com.howroad.cdwriter.conf.Config;
 import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.conf.SystemConfig;
 import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.rule.FileNameMap;
+import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.IIOService;
+import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.LineUtil;
-import com.howroad.cdwriter.util.ValidateUtil;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 
 import java.io.*;
@@ -70,7 +70,7 @@ public class IOServiceImpl implements IIOService {
 
     @Override
     public void write(File file, List<String> lineList) {
-        ValidateUtil.notEmpty(lineList);
+        Validate.notNull(lineList);
         PrintWriter out = null;
         try {
             File father = file.getParentFile();
@@ -158,14 +158,6 @@ public class IOServiceImpl implements IIOService {
         return result;
     }
 
-    public static void main(String[] args) {
-        Config.init();
-        Table table = TableBuilder.buildTableFromDB("aims_ebank_log");
-        String outDir = "C:\\Users\\Administrator\\Desktop\\code";
-        String templetDir = "E:\\Project\\cdwriter\\src\\main\\resources\\com\\howroad\\cdwriter\\templet";
-        new IOServiceImpl().writeAllFileByTemplet(table,outDir,templetDir);
-    }
-
     @Override
     public Map<String,InputStream> getAllJarTemplet() {
         Set<String> names = FileNameMap.localMap.keySet();
@@ -184,6 +176,7 @@ public class IOServiceImpl implements IIOService {
         outDirFile.mkdirs();
         File tmpletDirFile = new File(templetDir);
         File[] files = tmpletDirFile.listFiles(file -> file.isDirectory() || file.getName().endsWith(SystemConfig.SUFFIX));
+        if(files == null) return;
         for (File file : files) {
             if(file.isFile()){
                 List<String> lineList = readToLine(file);
@@ -199,7 +192,7 @@ public class IOServiceImpl implements IIOService {
 
     @Override
     public void writeAllFileByJarTemplet(Table table) {
-        File outDirFile = new File(PathConfig.OUT_CODE_DIR);
+        File outDirFile = new File(PathConfig.OUT_CODE_DIR());
         outDirFile.mkdirs();
         Map<String, InputStream> allJarTemplet = getAllJarTemplet();
         Set<String> keySet = allJarTemplet.keySet();
@@ -207,27 +200,84 @@ public class IOServiceImpl implements IIOService {
             String fileName = LineUtil.buildName(key, table);
             List<String> lineList = readToLine(allJarTemplet.get(key));
             List<String> newLine = LineUtil.buildNewLine(lineList, table);
-            write(PathConfig.OUT_CODE_DIR + "/" + fileName, newLine);
+            write(PathConfig.OUT_CODE_DIR() + "/" + fileName, newLine);
         }
     }
 
     @Override
     public void writeDataFile(Table table) {
-
+        List<List<Object>> listList = DBUtil.query("SELECT * FROM " + table.getTableName() + " WHERE ROWNUM <= 200 ORDER BY 1");
+        List<String> line = Container.databaseService.dataToLine(table, listList);
+        write(new File(PathConfig.OUT_SQL_PATH(table)), line);
     }
 
     @Override
-    public void writeDataFile(Table table, String sql, String[] primaryColUpKeys, String filName) {
-
+    public void writeDataFile(Table table, String sql, String[] primaryColUpKeys) {
+        List<String> line = Container.databaseService.custDataToLine(table, sql, primaryColUpKeys);
+        write(new File(PathConfig.OUT_SQL_PATH_CUST(table)), line);
     }
 
     @Override
     public void clear() {
-
+        Container.ioService.clearWithReg(new File(PathConfig.OUT_CODE_DIR()), new String[]{".+\\.+(java|xml|Table|PDC)"}, new String[]{});
     }
 
     @Override
     public void clearDir(File dir) {
+        if(dir.exists() && dir.isDirectory()) {
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                if(file.isFile()) {
+                    if(".gitkeep".equals(file.getName())){
+                        continue;
+                    }
+                    if(file.getName().endsWith(".xlsx")){
+                        continue;
+                    }
+                    if(file.getName().endsWith(".jar")){
+                        continue;
+                    }
+                    if(file.getName().toUpperCase().endsWith(".CMD")){
+                        continue;
+                    }
+                    file.delete();
+                }else if(file.isDirectory()) {
+                    clearDir(file);
+                    file.delete();
+                }
+            }
+        }
+    }
 
+    @Override
+    public void clearWithReg(File dir, String[] regs, String[] withoutRegs) {
+        Validate.notEmpty(regs);
+        Validate.notNull(withoutRegs);
+        if(dir.exists() && dir.isDirectory()) {
+            File[] files = dir.listFiles();
+            a:for (File file : files) {
+                String fileName = file.getName();
+                if(file.isFile()) {
+                    b:
+                    for (String withoutReg : withoutRegs) {
+                        if(fileName.matches(withoutReg)){
+                            continue a;
+                        }
+                    }
+                    c:
+                    for (String reg : regs) {
+                        if(fileName.matches(reg)){
+                            file.delete();
+                            continue a;
+                        }
+                    }
+                }else if(file.isDirectory()) {
+                    clearDir(file);
+                    if(ArrayUtils.isEmpty(file.listFiles())){
+                        file.delete();
+                    }
+                }
+            }
+        }
     }
 }

@@ -36,9 +36,10 @@ public interface IIOService {
     void writeAllFileByJarTemplet(Table table);
 
     void writeDataFile(Table table);
-    void writeDataFile(Table table, String sql, String[] primaryColUpKeys, String filName);
+    void writeDataFile(Table table, String sql, String[] primaryColUpKeys);
 
     void clear();
     void clearDir(File dir);
+    void clearWithReg(File dir, String[] reg, String[] withoutReg);
 
 }

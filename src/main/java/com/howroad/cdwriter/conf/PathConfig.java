@@ -1,5 +1,7 @@
 package com.howroad.cdwriter.conf;
 
+import com.howroad.cdwriter.model.Table;
+
 /**
  * <p>Title: PathConfig.java</p>
  * <p>Description: 所有的路径配置</p>
@@ -12,20 +14,11 @@ public class PathConfig {
 
     public final static String PROPERTIES_PATH = "/com/howroad/cdwriter/conf/path.properties";
 
-    // 输出工作空间
-    public static String OUT_WORK_SPACE;
-
-    //输出的代码目录
-    public static String OUT_CODE_DIR;
-
     //本地模版所在目录
     public static String TEMPLET_DIR;
 
     //本地模版文件名映射文件路径
     public static String NAME_MAPING_PATH;
-
-    //外部模版所在文件夹
-    public static String CUST_TEMPLET_DIR;
 
     //替换规则文件路径(普通替换)
     public static String COMMON_MAP_PATH;
@@ -36,4 +29,23 @@ public class PathConfig {
     //本地保存的配置文件路径
     public static String SAVE_CONFIG_PATH;
 
+    public static String OUT_CODE_DIR(){
+        return PageConfig.WORK_SPACE + "/out";
+    }
+    public static String CUST_TEMPLET_DIR(){
+        return PageConfig.WORK_SPACE + "/templet";
+    }
+    public static String EXCEL_PATH(){
+        return PageConfig.WORK_SPACE + "/1.xlsx";
+    }
+
+    public static String OUT_SQL_DIR() {
+        return OUT_CODE_DIR() + "/sqls/";
+    }
+    public static String OUT_SQL_PATH(Table table){
+        return OUT_CODE_DIR() + "/sqls/" + table.getTableName() + ".SQL";
+    }
+    public static String OUT_SQL_PATH_CUST(Table table){
+        return OUT_CODE_DIR() + "/sqls/cust/" + table.getTableName() + ".SQL";
+    }
 }

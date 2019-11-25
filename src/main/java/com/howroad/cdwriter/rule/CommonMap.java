@@ -30,6 +30,7 @@ public class CommonMap {
     }
     private static String getNow() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(new Date());
+        //return sdf.format(new Date());
+        return "2019-11-25 15:49:22";
     }
 }

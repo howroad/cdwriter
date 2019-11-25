@@ -43,8 +43,8 @@ public class FilePane extends JPanel {
         // java8 later
         this.button.addActionListener((e)->{
             JFileChooser jfc=new JFileChooser();  
-            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY );  
-            jfc.showDialog(new JLabel(), "选择文件");  
+            jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            jfc.showDialog(new JLabel(), "选择文件夹");
             File file=jfc.getSelectedFile();  
             text.setText(file.getAbsolutePath().replace("\\", "/"));
         });

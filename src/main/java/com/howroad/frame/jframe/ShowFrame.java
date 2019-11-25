@@ -1,12 +1,28 @@
 package com.howroad.frame.jframe;
 
 
-import java.awt.*;
-
-import javax.swing.*;
-
-import com.howroad.frame.panel.*;
+import com.howroad.cdwriter.conf.Config;
+import com.howroad.cdwriter.conf.PageConfig;
+import com.howroad.cdwriter.conf.PathConfig;
+import com.howroad.cdwriter.service.Container;
+import com.howroad.frame.panel.FilePane;
+import com.howroad.frame.panel.JoinSqlLine;
+import com.howroad.frame.panel.LogPanel;
+import com.howroad.frame.panel.SelectPanel;
+import com.howroad.frame.panel.TextPane;
 import com.howroad.log.PanelLog;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.util.Properties;
 
 
 /**
@@ -28,32 +44,30 @@ public class ShowFrame extends JFrame {
     private JPanel contentPanel = new JPanel(new FlowLayout());
 
     /** 内容，后两位参数是间距 */
-    private JPanel settingPanel = new JPanel(new GridLayout(12, 2, 1, 1));
+    private JPanel settingPanel = new JPanel(new GridLayout(9, 2, 1, 1));
 
     private LogPanel logPanel = new LogPanel();
 
-    private JPanel sqlPanel = new JPanel(new GridLayout(12, 2, 1, 1));
+    private JPanel sqlPanel = new JPanel(new GridLayout(9, 2, 1, 1));
 
     /** settings start */
     private FilePane filePanel = new FilePane("...", TEXT_LENGTH);
-    private TextPane outerDirPanel = new TextPane("outer:", TEXT_LENGTH);
     private TextPane uRLPanel = new TextPane("url:", TEXT_LENGTH);
     private TextPane userNamePanel = new TextPane("user:", TEXT_LENGTH);
     private TextPane passwordPanel = new TextPane("pwd:", TEXT_LENGTH);
-    private SelectPanel fromExcelPanel = new SelectPanel("frmExl", TEXT_LENGTH, "false", "true");
-    private SelectPanel fromDatebasePanel = new SelectPanel("frmDb", TEXT_LENGTH, "false", "true");
+
     private TextPane appNoPanel = new TextPane("appNo:", TEXT_LENGTH);
     private TextPane tablesPanel = new TextPane("tbls", TEXT_LENGTH);
-    private SelectPanel seqDirPanel = new SelectPanel("seqDr:", TEXT_LENGTH, "前置", "后置");
+    private SelectPanel seqDirPanel = new SelectPanel("T_seq:", TEXT_LENGTH, "true", "false");
     private JPanel btnPanel = new JPanel();
-    
+
     private JPanel custPanel = new JPanel();
 
-    private JButton conBtn = new JButton("conn");
-    private JButton runBtn = new JButton("run");
-    private JButton clearBtn = new JButton("clear");
-    private JButton testBtn = new JButton("test");
-    
+    private JButton conBtn = new JButton("cnn");
+    private JButton runBtnExcel = new JButton("RnEx");
+    private JButton clearBtn = new JButton("clr");
+    private JButton runBtnDB = new JButton("RnDb");
+
     private JButton showSqlBtn = new JButton("sql>>");
     private JButton logBtn = new JButton("log>>");
     /** settings end */
@@ -92,23 +106,20 @@ public class ShowFrame extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         btnPanel.add(conBtn);
-        btnPanel.add(runBtn);
+        btnPanel.add(runBtnExcel);
+        btnPanel.add(runBtnDB);
         btnPanel.add(clearBtn);
-        btnPanel.add(testBtn);
-        
+
         custPanel.add(showSqlBtn);
         custPanel.add(logBtn);
         
         this.settingPanel.add(filePanel);
-        this.settingPanel.add(outerDirPanel);
         this.settingPanel.add(uRLPanel);
         this.settingPanel.add(userNamePanel);
         this.settingPanel.add(passwordPanel);
         this.settingPanel.add(appNoPanel);
         this.settingPanel.add(seqDirPanel);
         this.settingPanel.add(tablesPanel);
-        this.settingPanel.add(fromExcelPanel);
-        this.settingPanel.add(fromDatebasePanel);
         this.settingPanel.add(btnPanel);
         this.settingPanel.add(custPanel);
 
@@ -119,6 +130,7 @@ public class ShowFrame extends JFrame {
         sqlBtnPanel.add(createSql);
         sqlPanel.add(sqlBtnPanel);
 
+        /*
         sqlPanel.add(joinSqlLine1);
         sqlPanel.add(joinSqlLine2);
         sqlPanel.add(joinSqlLine3);
@@ -128,6 +140,7 @@ public class ShowFrame extends JFrame {
         joinBtnPanel.add(joinBtnOnSqlId);
         joinBtnPanel.add(joinBtnOnColumn);
         sqlPanel.add(joinBtnPanel);
+         */
 
         /**sql panel end*/
 
@@ -135,11 +148,151 @@ public class ShowFrame extends JFrame {
         this.contentPanel.add(logPanel);
         this.contentPanel.add(sqlPanel);
 
-        this.setTitle("dbWriter v2.9.9");
+        this.setTitle("cdWriter 0.11 howroad");
         this.setContentPane(contentPanel);
         pack();
+        init();
 
     }
 
+    private void init() {
+        Config.init();
+        loadConfig();
+        addListener();
+        hidePanel(logPanel);
+        hidePanel(sqlPanel);
+
+    }
+
+    private void loadConfig(){
+        seqDirPanel.setText(PageConfig.SEQ_ON_LAST.toString());
+        filePanel.setText(PageConfig.WORK_SPACE);
+        uRLPanel.setText(PageConfig.URL.replace("jdbc:oracle:thin:@", ""));
+        userNamePanel.setText(PageConfig.USER);
+        passwordPanel.setText(PageConfig.PASSWORD);
+        appNoPanel.setText(PageConfig.appNo);
+        tablesPanel.setText(PageConfig.tablesFromDB != null ? StringUtils.join(PageConfig.tablesFromDB,",") : "");
+    }
+
+    private void reLoadConfig(){
+        PageConfig.WORK_SPACE = filePanel.getText();
+        PageConfig.URL = "jdbc:oracle:thin:@" + uRLPanel.getText();
+        PageConfig.USER = userNamePanel.getText();
+        PageConfig.PASSWORD = passwordPanel.getText();
+        PageConfig.appNo = appNoPanel.getText();
+        PageConfig.tablesFromDB = tablesPanel.getText().split(",");
+        PageConfig.SEQ_ON_LAST = Boolean.valueOf(seqDirPanel.getText());
+    }
+
+    private void addListener(){
+        conBtn.addActionListener((e) -> {
+            reLoadConfig();
+            if(Container.coreService.testCoonect()){
+                JOptionPane.showMessageDialog(null, "连接成功！");
+                writeProperties();
+            }else{
+                JOptionPane.showMessageDialog(null, "连接失败！");
+            }
+        });
+
+        runBtnExcel.addActionListener((e) -> {
+            try {
+                reLoadConfig();
+                Container.coreService.createFromXls();
+                JOptionPane.showMessageDialog(null, "生成成功！");
+                writeProperties();
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, e1.getMessage());
+                e1.printStackTrace();
+            }
+        });
+        runBtnDB.addActionListener((e) -> {
+            try {
+                reLoadConfig();
+                Container.coreService.createFromDb();
+                JOptionPane.showMessageDialog(null, "生成成功！");
+                writeProperties();
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, e1.getMessage());
+                e1.printStackTrace();
+            }
+        });
+        clearBtn.addActionListener((e) -> {
+            try {
+                reLoadConfig();
+                Container.ioService.clear();
+                JOptionPane.showMessageDialog(null, "清除成功");
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, e1.getMessage());
+                e1.printStackTrace();
+            }
+        });
+
+        //自定义事件
+        createSql.addActionListener(e ->{
+            reLoadConfig();
+            try {
+                //Start.ta0723BuildSql();
+                //Start.N0801SQL();
+                Container.coreService.createCustSql(this.sqlTables.getText(),this.sqlSqls.getText(),this.sqlPks.getText().toUpperCase());
+                JOptionPane.showMessageDialog(null, "生成成功");
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, e1.getMessage());
+                e1.printStackTrace();
+            }
+        });
+
+        logBtn.addActionListener(e -> {
+            showOrHidePanel(this.logPanel);
+        });
+        showSqlBtn.addActionListener(e ->{
+            showOrHidePanel(this.sqlPanel);
+        });
+    }
+    /**
+     * 写入配置文件
+     */
+    public void writeProperties() {
+        Properties pro = new Properties();
+        FileOutputStream oFile;
+        File tempFile = new File(PathConfig.SAVE_CONFIG_PATH);
+        pro.setProperty("SEQ_ON_LAST", PageConfig.SEQ_ON_LAST == null ? "false" : PageConfig.SEQ_ON_LAST.toString());
+        pro.setProperty("URL", PageConfig.URL);
+        pro.setProperty("USER", PageConfig.USER);
+        pro.setProperty("PASSWORD", PageConfig.PASSWORD);
+        pro.setProperty("WORK_SPACE", PageConfig.WORK_SPACE);
+        pro.setProperty("appNo", PageConfig.appNo);
+        pro.setProperty("tablesFromDB", PageConfig.tablesFromDB == null ? "" : StringUtils.join(PageConfig.tablesFromDB, ","));
+        try {
+            if(!tempFile.exists()) {
+                tempFile.getParentFile().mkdirs();
+                tempFile.createNewFile();
+            }
+            oFile = new FileOutputStream(tempFile, false);
+            pro.store(new OutputStreamWriter(oFile, "utf-8"), "Comment");
+            oFile.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showOrHidePanel(JPanel panel){
+        if(panel.isVisible()){
+            hidePanel(panel);
+        }else{
+            showPanel(panel);
+        }
+    }
+    public void hidePanel(JPanel panel){
+        panel.setVisible(false);
+        contentPanel.remove(panel);
+        pack();
+    }
+    public void showPanel(JPanel panel){
+        panel.setVisible(true);
+        contentPanel.add(panel);
+        pack();
+    }
     
 }

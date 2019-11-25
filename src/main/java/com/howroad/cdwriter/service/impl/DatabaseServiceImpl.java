@@ -79,22 +79,25 @@ public class DatabaseServiceImpl implements IDatabaseService {
 
 
     @Override
-    public List<String> getDate(Table table, String sql, String[] primaryColUpKeys, String filName) {
+    public List<String> custDataToLine(Table table, String sql, String[] primaryColUpKeys) {
         List<String> resultList =  new ArrayList<String>();
         List<List<Object>> dataList = this.query(sql);
         String[] primaryKeyValues = new String[primaryColUpKeys.length];
         for (List<Object> list : dataList) {
-            resultList.add("INSERT INTO " + table.getTableName() + "(");
+            StringBuffer sb1 = new StringBuffer();
+            StringBuffer sb2 = new StringBuffer();
+            sb1.append("INSERT INTO " + table.getTableName() + "(");
             for (ListIterator<MyParam> iterator = table.getParamList().listIterator(); iterator.hasNext();) {
                 MyParam param = iterator.next();
                 String columnName = param.getColumnName();
                 if (iterator.hasNext()) {
-                    resultList.add(columnName + ",");
+                    sb1.append(columnName + ",");
                 } else {
-                    resultList.add(columnName + ") ");
+                    sb1.append(columnName + ") ");
                 }
             }
-            resultList.add("SELECT ");
+            resultList.add(sb1.toString());
+            sb2.append("SELECT ");
             int index = 0;
             for (ListIterator<Object> iterator = list.listIterator(); iterator.hasNext();) {
                 boolean last = false;
@@ -109,9 +112,9 @@ public class DatabaseServiceImpl implements IDatabaseService {
                 }
                 last = !iterator.hasNext();
                 if(last) {
-                    resultList.add(value);
+                    sb2.append(value);
                 }else {
-                    resultList.add(value + ",");
+                    sb2.append(value + ",");
                 }
             }
             StringBuffer whereStr = new StringBuffer(128);
@@ -123,7 +126,8 @@ public class DatabaseServiceImpl implements IDatabaseService {
                 }
                 whereStr.append(primaryColUpKey + " = " + primaryKeyValue);
             }
-            resultList.add(" FROM DUAL ");
+            sb2.append(" FROM DUAL ");
+            resultList.add(sb2.toString());
             resultList.add("WHERE NOT EXISTS (SELECT 1 FROM " + table.getTableName() + " WHERE " + whereStr + ")");
             resultList.add("/");
 
@@ -172,18 +176,5 @@ public class DatabaseServiceImpl implements IDatabaseService {
         }
         return resultList;
     }
-
-    public static void main(String[] args) {
-        Config.init();
-        Table table = TableBuilder.buildTableFromDB("aims_ebank_log");
-        List<List<Object>> query = DBUtil.query("select * from aims_ebank_log where rownum < 5");
-        List<String> strings = new DatabaseServiceImpl().dataToLine(table, query);
-        for (String string : strings) {
-            System.out.println(string);
-            
-        }
-    }
-
-
 
 }

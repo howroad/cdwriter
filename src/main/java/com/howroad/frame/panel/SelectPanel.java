@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.awt.Dimension;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,5 +42,9 @@ public class SelectPanel extends JPanel{
     }
     public String getText() {
         return ((String) comboBox.getSelectedItem()).trim();
+    }
+
+    public void setText(String item){
+        comboBox.setSelectedItem(item);
     }
 }

@@ -5,12 +5,13 @@
 
 	<groupId>com.howroad</groupId>
 	<artifactId>cdwriter</artifactId>
-	<version>0.11.01</version>
+	<version>0.11.25</version>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -34,7 +35,7 @@
 						<configuration>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.nstc.cdwriter.control.Start</mainClass>
+									<mainClass>com.howroad.cdwriter.control.Start</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
@@ -97,12 +98,6 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.7</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>18.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
 		<dependency>

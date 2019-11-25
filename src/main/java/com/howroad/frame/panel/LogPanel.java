@@ -17,7 +17,7 @@ public class LogPanel extends JPanel {
 
     private StringBuffer stringBuffer = new StringBuffer();
 
-    private JTextArea jTextArea = new JTextArea(null,"[log]",22,20);
+    private JTextArea jTextArea = new JTextArea(null,"[log]",18,20);
 
     private JScrollPane jScrollPane = new JScrollPane(jTextArea);
 

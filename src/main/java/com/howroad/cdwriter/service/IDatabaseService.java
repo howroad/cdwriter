@@ -38,10 +38,9 @@ public interface IDatabaseService {
      * @param table
      * @param sql
      * @param primaryColUpKeys
-     * @param filName
      * @return
      */
-    List<String> getDate(Table table,String sql,String[] primaryColUpKeys,String filName);
+    List<String> custDataToLine(Table table, String sql, String[] primaryColUpKeys);
 
     /**
      * 将数据库中的数据转换成插入脚本，默认是主键

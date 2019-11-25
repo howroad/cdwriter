@@ -1,5 +1,7 @@
 package com.howroad.cdwriter.service;
 
+import com.howroad.frame.jframe.ShowFrame;
+
 /**
  * <p>Title: ICoreService.java</p>
  * <p>Description: </p>
@@ -7,8 +9,9 @@ package com.howroad.cdwriter.service;
  * @since：2019-09-12 16:32
  */
 public interface ICoreService {
-    void testCoonect();
-    void handelRun();
+    boolean testCoonect();
+    void createFromXls();
+    void createFromDb();
     void clear();
     void createCustSql(String tbNamesStr,String sqlsStr,String pkNamesStr);
 }

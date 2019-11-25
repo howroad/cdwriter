@@ -22,6 +22,9 @@ public class PageConfig {
     public static String[] tablesFromDB;
     /** 序列规则 */
     public static Boolean SEQ_ON_LAST;
-    /** excel路径 */
-    public static String EXCEL_PATH;
+
+    // 输出工作空间
+    public static String WORK_SPACE;
+
+
 }

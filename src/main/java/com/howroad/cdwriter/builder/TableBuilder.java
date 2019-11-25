@@ -2,6 +2,7 @@ package com.howroad.cdwriter.builder;
 
 import com.google.common.base.CaseFormat;
 import com.howroad.cdwriter.conf.PageConfig;
+import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.model.MyParam;
 import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.util.DBUtil;
@@ -105,7 +106,7 @@ public class TableBuilder {
      */
     public static List<Table> buildTableFromExcel(int sheetNo) {
         //excel 导入数据
-        File file = new File(PageConfig.EXCEL_PATH);
+        File file = new File(PathConfig.EXCEL_PATH());
         List<List<String>> dataList= null;
         List<Table> tableList = new ArrayList<Table>();
         
@@ -156,12 +157,22 @@ public class TableBuilder {
         }
         return tableList;
     }
+
     public static List<Table> buildTableFromNames(List<String> tbNames) {
         List<Table> resultList = new ArrayList<Table>();
-        tbNames.forEach(tbName ->{
-            Table table = buildTableFromDB(tbName);
+        for (String tableName : tbNames) {
+            Table table = buildTableFromDB(tableName);
             resultList.add(table);
-        });
+        }
+        return resultList;
+    }
+
+    public static List<Table> buildTableFromNames(String[] tbNames) {
+        List<Table> resultList = new ArrayList<Table>();
+        for (String tableName : tbNames) {
+            Table table = buildTableFromDB(tableName);
+            resultList.add(table);
+        }
         return resultList;
     }
 }
