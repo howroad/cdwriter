@@ -1,20 +1,19 @@
 package com.howroad.cdwriter.service.impl;
 
-import com.google.common.collect.Lists;
 import com.howroad.cdwriter.builder.TableBuilder;
-import com.howroad.cdwriter.conf.Config;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.ICoreService;
-import com.howroad.frame.jframe.ShowFrame;
+import com.howroad.cdwriter.util.ValidateUtil;
 import com.howroad.log.PanelLog;
 
 import java.io.File;
-import java.nio.file.Path;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarEntry;
 
 /**
  * <p>Title: ICoreServiceImpl.java</p>
@@ -45,6 +44,15 @@ public class CoreServiceImpl implements ICoreService {
         for (Table table : tables) {
             Container.ioService.writeAllFileByJarTemplet(table);
             Container.ioService.writeAllFileByTemplet(table, PathConfig.OUT_CODE_DIR(), PathConfig.CUST_TEMPLET_DIR());
+        }
+        List<Table> tablePatch = TableBuilder.buildTableFromExcel(1);
+        for (Table table : tablePatch) {
+            //新增字段的模版
+            InputStream addColumnTemplet = Container.ioService.getTemplet(PathConfig.ADD_COLUMN_TEMPLET);
+            //修改字段的模版
+            InputStream modifyColumnTemplet = Container.ioService.getTemplet(PathConfig.MODIFY_COLUMN_TEMPLET);
+            Container.ioService.writeFileByTemplet(addColumnTemplet, new File(PathConfig.ADD_COLUMN_PATH(table)),table);
+            Container.ioService.writeFileByTemplet(modifyColumnTemplet, new File(PathConfig.MODIFY_COLUMN_PATH(table)),table);
         }
     }
 

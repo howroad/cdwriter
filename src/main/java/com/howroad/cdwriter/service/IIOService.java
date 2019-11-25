@@ -22,6 +22,10 @@ public interface IIOService {
     List<String> readToLine(File file);
     List<String> readToLine(String path);
 
+    List<File> getAllFile(File dir);
+    Map<String,InputStream> getAllJarTemplet();
+    InputStream getTemplet(String templetPath);
+
     void write(File file, List<String> lineList);
     void write(String path, List<String> lineList);
     void write(File file, String line);
@@ -29,14 +33,13 @@ public interface IIOService {
 
     void writeFileByTemplet(File templet,File outFile, Table table);
     void writeFileByTemplet(InputStream ins,File outFile, Table table);
-
-    List<File> getAllFile(File dir);
-    Map<String,InputStream> getAllJarTemplet();
     void writeAllFileByTemplet(Table table,String outDir,String templetDir);
     void writeAllFileByJarTemplet(Table table);
 
     void writeDataFile(Table table);
     void writeDataFile(Table table, String sql, String[] primaryColUpKeys);
+
+
 
     void clear();
     void clearDir(File dir);

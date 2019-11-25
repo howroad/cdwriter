@@ -169,6 +169,11 @@ public class IOServiceImpl implements IIOService {
         return result;
     }
 
+    @Override
+    public InputStream getTemplet(String templetPath) {
+        return Class.class.getResourceAsStream(templetPath);
+    }
+
 
     @Override
     public void writeAllFileByTemplet(Table table, String outDir, String templetDir) {
