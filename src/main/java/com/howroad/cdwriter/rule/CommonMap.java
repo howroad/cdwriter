@@ -21,7 +21,7 @@ public class CommonMap {
     public static void init(){
         if(map == null){
             //常量加载
-            map = PropertiesUtil.readJarProperties(PathConfig.COMMON_MAP_PATH);
+            map = PropertiesUtil.readJarPropertiesUpperCase(PathConfig.COMMON_MAP_PATH);
             //变量加载
             map.put("appNo", PageConfig.appNo);
             map.put("appNoUpper", PageConfig.appNo.toUpperCase());

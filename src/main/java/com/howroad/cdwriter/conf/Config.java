@@ -30,7 +30,7 @@ public class Config {
         //初始化WithoutMapMap
         initClass(WithoutLastMap.class, PathConfig.WITHOUT_MAP_PATH);
         //初始化FileNameMap
-        initClass(FileNameMap.class, PathConfig.NAME_MAPING_PATH);
+        initClassNotUp(FileNameMap.class, PathConfig.NAME_MAPING_PATH);
 
         log(PathConfig.class);
         log(PageConfig.class);
@@ -40,6 +40,25 @@ public class Config {
     }
 
     public static void initClass(Class clazz, String path){
+        try {
+            Map<String,String> result = PropertiesUtil.readJarPropertiesUpperCase(path);
+            Field[] fields = ReflectUtil.getStaticFields(clazz);
+            for (Field field : fields) {
+                ReflectUtil.setStaticParam(field,result);
+            }
+            Method method = clazz.getMethod("init");
+            if(method != null){
+                method.invoke(null);
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void initClassNotUp(Class clazz, String path){
         try {
             Map<String,String> result = PropertiesUtil.readJarPropertiesUpperCase(path);
             Field[] fields = ReflectUtil.getStaticFields(clazz);

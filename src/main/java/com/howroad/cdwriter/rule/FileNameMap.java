@@ -20,7 +20,7 @@ public class FileNameMap {
     public static Map<String,String> map;
     public static Map<String,String> localMap;
     public static void init(){
-        localMap = PropertiesUtil.readJarPropertiesUpperCase(PathConfig.NAME_MAPING_PATH);
+        localMap = PropertiesUtil.readJarProperties(PathConfig.NAME_MAPING_PATH);
         map = localMap;
     }
     public static String getCustName(String key){
@@ -40,12 +40,12 @@ public class FileNameMap {
 
     public static String getLocalName(String key){
         if(localMap == null){
-            localMap = PropertiesUtil.readJarPropertiesUpperCase(PathConfig.NAME_MAPING_PATH);
+            localMap = PropertiesUtil.readJarProperties(PathConfig.NAME_MAPING_PATH);
         }
         String result = null;
         Set<String> keySet = localMap.keySet();
         for (String k : keySet) {
-            if(("DB/" + key.toUpperCase()).equals(k) || key.toUpperCase().equals(k)){
+            if(("db/" + key).equals(k) || key.equals(k)){
                 result = localMap.get(k);
                 break;
             }

@@ -163,7 +163,11 @@ public class IOServiceImpl implements IIOService {
         Set<String> names = FileNameMap.localMap.keySet();
         Map<String,InputStream> result = new HashMap<>();
         for (String name : names) {
-            InputStream stream = Class.class.getResourceAsStream(PathConfig.TEMPLET_DIR + "/" + name);
+            InputStream stream = Class.class.getResourceAsStream(PathConfig.TEMPLET_DIR + name);
+            if(stream == null){
+                //System.out.println("ERRO:" + PathConfig.TEMPLET_DIR + name);
+                throw new RuntimeException(PathConfig.TEMPLET_DIR + name);
+            }
             result.put(name, stream);
         }
         return result;

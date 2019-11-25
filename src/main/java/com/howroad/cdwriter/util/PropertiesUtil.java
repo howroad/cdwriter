@@ -39,7 +39,7 @@ public class PropertiesUtil {
 
         Map<String,String> resultMap = new HashMap<>();
         pro.forEach((e,f) ->{
-            resultMap.put(String.valueOf(e).toUpperCase(),String.valueOf(f));
+            resultMap.put(String.valueOf(e),String.valueOf(f));
         });
         return resultMap;
     }
