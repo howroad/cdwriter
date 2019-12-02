@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
@@ -152,6 +153,8 @@ public class ShowFrame extends JFrame {
 
         this.setTitle("cdWriter 0.11 howroad");
         this.setContentPane(contentPanel);
+        //退出即关闭
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         init();
 
