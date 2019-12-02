@@ -2,6 +2,7 @@ package com.howroad.cdwriter.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Year;
@@ -70,11 +71,17 @@ public class PropertiesUtil {
         return resultMap;
     }
 
-    public static Map<String,String> readPropertiesUpperCase(String path){
+    public static Map<String,String> readPageConfig(String path){
         Properties pro = new Properties();
         InputStream in = null;
         try {
-            in = new FileInputStream(new File(path));
+            File file = new File(path);
+            if(!file.exists()){
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+                return new HashMap<>();
+            }
+            in = new FileInputStream(file);
             pro.load(in);
             in.close();
         } catch (Exception e) {

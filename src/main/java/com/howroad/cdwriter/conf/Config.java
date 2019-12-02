@@ -80,7 +80,7 @@ public class Config {
 
       public static void initClassFromAbs(Class clazz, String path){
         try {
-            Map<String,String> result = PropertiesUtil.readPropertiesUpperCase(path);
+            Map<String,String> result = PropertiesUtil.readPageConfig(path);
             Field[] fields = ReflectUtil.getStaticFields(clazz);
             for (Field field : fields) {
                 ReflectUtil.setStaticParam(field,result);

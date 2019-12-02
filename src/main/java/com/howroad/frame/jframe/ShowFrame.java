@@ -1,6 +1,7 @@
 package com.howroad.frame.jframe;
 
 
+import com.google.common.base.Strings;
 import com.howroad.cdwriter.conf.Config;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
@@ -11,6 +12,7 @@ import com.howroad.frame.panel.LogPanel;
 import com.howroad.frame.panel.SelectPanel;
 import com.howroad.frame.panel.TextPane;
 import com.howroad.log.PanelLog;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.JButton;
@@ -165,9 +167,9 @@ public class ShowFrame extends JFrame {
     }
 
     private void loadConfig(){
-        seqDirPanel.setText(PageConfig.SEQ_ON_LAST.toString());
+        seqDirPanel.setText(BooleanUtils.toStringTrueFalse(PageConfig.SEQ_ON_LAST));
         filePanel.setText(PageConfig.WORK_SPACE);
-        uRLPanel.setText(PageConfig.URL.replace("jdbc:oracle:thin:@", ""));
+        uRLPanel.setText(PageConfig.URL == null ? "" : PageConfig.URL.replace("jdbc:oracle:thin:@", ""));
         userNamePanel.setText(PageConfig.USER);
         passwordPanel.setText(PageConfig.PASSWORD);
         appNoPanel.setText(PageConfig.appNo);
