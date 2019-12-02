@@ -68,3 +68,5 @@ Config使用接口的形式进行赋值，写一个由Map到static Param的方�
 
 
 生成的Table中 是否为空写反了
+
+EXCEL中格式输入NUMBER(12)等没有逗号的类型会有问题
