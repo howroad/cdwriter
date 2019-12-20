@@ -3,6 +3,7 @@ package com.howroad.cdwriter.model;
 import com.google.common.base.CaseFormat;
 import com.howroad.cdwriter.constants.TableContans;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.sql.Types;
 import java.util.HashMap;
@@ -77,7 +78,12 @@ public class MyParam {
         } else if (columnType.startsWith(TableContans.NUMBER)) {
             if (mat.find()) {
                 String inner = mat.group();
-                this.type = new MyType(Types.DECIMAL, new Integer(inner.split(",")[0]), new Integer(inner.split(",")[1]));
+                if(inner.contains(",")){
+                    this.type = new MyType(Types.DECIMAL, new Integer(inner.split(",")[0]), new Integer(inner.split(",")[1]));
+                }else{
+                    this.type = new MyType(Types.DECIMAL, new Integer(inner), NumberUtils.INTEGER_ZERO);
+                }
+
             } else {
                 this.type = new MyType(Types.DECIMAL, 0, 0);
             }

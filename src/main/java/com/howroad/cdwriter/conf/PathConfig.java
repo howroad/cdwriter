@@ -55,9 +55,9 @@ public class PathConfig {
         return OUT_CODE_DIR() + "/sqls/cust/" + table.getTableName() + ".SQL";
     }
     public static String ADD_COLUMN_PATH(Table table){
-        return OUT_CODE_DIR() + "/db/patch/" + table.getTableName() + ".SQL";
+        return OUT_CODE_DIR() + "/db/patch/" + table.getTableName() + ".TAB";
     }
     public static String MODIFY_COLUMN_PATH(Table table){
-        return OUT_CODE_DIR() + "/db/patch/" + table.getTableName() + "2.SQL";
+        return OUT_CODE_DIR() + "/db/patch/" + table.getTableName() + "2.TAB";
     }
 }

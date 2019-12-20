@@ -45,15 +45,20 @@ public class CoreServiceImpl implements ICoreService {
             Container.ioService.writeAllFileByJarTemplet(table);
             Container.ioService.writeAllFileByTemplet(table, PathConfig.OUT_CODE_DIR(), PathConfig.CUST_TEMPLET_DIR());
         }
-        List<Table> tablePatch = TableBuilder.buildTableFromExcel(1);
-        for (Table table : tablePatch) {
+
+        List<Table> tableAddColumns = TableBuilder.buildTableFromExcel(1);
+        for (Table table : tableAddColumns) {
             //新增字段的模版
             InputStream addColumnTemplet = Container.ioService.getTemplet(PathConfig.ADD_COLUMN_TEMPLET);
+            Container.ioService.writeFileByTemplet(addColumnTemplet, new File(PathConfig.ADD_COLUMN_PATH(table)),table);
+        }
+
+        List<Table> tableModifyColumns = TableBuilder.buildTableFromExcel(2);
+        for (Table table : tableModifyColumns) {
             //修改字段的模版
             InputStream modifyColumnTemplet = Container.ioService.getTemplet(PathConfig.MODIFY_COLUMN_TEMPLET);
-            Container.ioService.writeFileByTemplet(addColumnTemplet, new File(PathConfig.ADD_COLUMN_PATH(table)),table);
             Container.ioService.writeFileByTemplet(modifyColumnTemplet, new File(PathConfig.MODIFY_COLUMN_PATH(table)),table);
-        }
+       }
     }
 
     @Override

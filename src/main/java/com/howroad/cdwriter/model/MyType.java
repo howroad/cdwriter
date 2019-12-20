@@ -30,9 +30,13 @@ public class MyType {
         this.value = dateType;
         if (Types.DECIMAL == dateType) {
             if (isInteger(columnSize, decimalDigits)) {
-                //有时候有可能会出现解析失去精度
+
                 paramTypeName = "Integer";
-                columnTypeName = "NUMBER";
+                if(columnSize > 0){
+                    columnTypeName = "NUMBER(" + columnSize + ")";
+                }else{
+                    columnTypeName = "NUMBER";
+                }
             } else {
                 paramTypeName = "Double";
                 columnTypeName = "NUMBER(" + columnSize + "," + decimalDigits + ")";
@@ -61,6 +65,7 @@ public class MyType {
     }
     
     private boolean isInteger(int columnSize,int decimalDigits) {
+        //有时候有可能会出现解析失去精度 - 当类型是NUMBER没有指明精度和长度的时候 会是 - 127
         return decimalDigits == 0 || decimalDigits == -127 && columnSize == 0;
     }
 
