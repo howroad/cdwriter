@@ -47,7 +47,7 @@ public class ShowFrame extends JFrame {
     private JPanel contentPanel = new JPanel(new FlowLayout());
 
     /** 内容，后两位参数是间距 */
-    private JPanel settingPanel = new JPanel(new GridLayout(9, 2, 1, 1));
+    private JPanel settingPanel = new JPanel(new GridLayout(10, 2, 1, 1));
 
     private LogPanel logPanel = new LogPanel();
 
@@ -61,11 +61,13 @@ public class ShowFrame extends JFrame {
 
     private TextPane appNoPanel = new TextPane("appNo:", TEXT_LENGTH);
     private TextPane tablesPanel = new TextPane("tbls", TEXT_LENGTH);
+    private TextPane filesPanel = new TextPane("files", TEXT_LENGTH);
     private SelectPanel seqDirPanel = new SelectPanel("T_seq:", TEXT_LENGTH, "true", "false");
     private JPanel btnPanel = new JPanel();
 
     private JPanel custPanel = new JPanel();
 
+    private JButton dbFile = new JButton("Db+F");
     private JButton conBtn = new JButton("cnn");
     private JButton runBtnExcel = new JButton("RnEx");
     private JButton clearBtn = new JButton("clr");
@@ -113,6 +115,7 @@ public class ShowFrame extends JFrame {
         btnPanel.add(runBtnDB);
         btnPanel.add(clearBtn);
 
+        custPanel.add(dbFile);
         custPanel.add(showSqlBtn);
         custPanel.add(logBtn);
         
@@ -123,6 +126,7 @@ public class ShowFrame extends JFrame {
         this.settingPanel.add(appNoPanel);
         this.settingPanel.add(seqDirPanel);
         this.settingPanel.add(tablesPanel);
+        this.settingPanel.add(filesPanel);
         this.settingPanel.add(btnPanel);
         this.settingPanel.add(custPanel);
 
@@ -177,6 +181,7 @@ public class ShowFrame extends JFrame {
         passwordPanel.setText(PageConfig.PASSWORD);
         appNoPanel.setText(PageConfig.appNo);
         tablesPanel.setText(PageConfig.tablesFromDB != null ? StringUtils.join(PageConfig.tablesFromDB,",") : "");
+        filesPanel.setText(PageConfig.modelFiles != null ? StringUtils.join(PageConfig.modelFiles,",") : "");
     }
 
     private void reLoadConfig(){
@@ -186,6 +191,7 @@ public class ShowFrame extends JFrame {
         PageConfig.PASSWORD = passwordPanel.getText();
         PageConfig.appNo = appNoPanel.getText();
         PageConfig.tablesFromDB = tablesPanel.getText().split(",");
+        PageConfig.modelFiles = filesPanel.getText().split(",");
         PageConfig.SEQ_ON_LAST = Boolean.valueOf(seqDirPanel.getText());
     }
 
@@ -215,6 +221,17 @@ public class ShowFrame extends JFrame {
             try {
                 reLoadConfig();
                 Container.coreService.createFromDb();
+                JOptionPane.showMessageDialog(null, "生成成功！");
+                writeProperties();
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, e1.getMessage());
+                e1.printStackTrace();
+            }
+        });
+        dbFile.addActionListener((e) -> {
+            try {
+                reLoadConfig();
+                Container.coreService.createFromDbAndFile();
                 JOptionPane.showMessageDialog(null, "生成成功！");
                 writeProperties();
             } catch (Exception e1) {
@@ -268,6 +285,7 @@ public class ShowFrame extends JFrame {
         pro.setProperty("WORK_SPACE", PageConfig.WORK_SPACE);
         pro.setProperty("appNo", PageConfig.appNo);
         pro.setProperty("tablesFromDB", PageConfig.tablesFromDB == null ? "" : StringUtils.join(PageConfig.tablesFromDB, ","));
+        pro.setProperty("modelFiles", PageConfig.modelFiles == null ? "" : StringUtils.join(PageConfig.modelFiles, ","));
         try {
             if(!tempFile.exists()) {
                 tempFile.getParentFile().mkdirs();

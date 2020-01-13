@@ -14,10 +14,8 @@
     <!-- 分页 end -->
     <sql id="pagingEndSql">
         <isNotNull property="paging">
-            ) N ) T
+            ) N WHERE ROWNUM <![CDATA[<=]]> (#paging.endRow#)) T
             WHERE T.R > #paging.startRow#
-            AND T.R <![CDATA[<=]]>
-            (#paging.endRow#)
         </isNotNull>
     </sql>
     

@@ -140,4 +140,15 @@ public class LineUtil {
         return result;
     }
 
+
+    public static List<String> replacePackage(List<String> list){
+        final String reg = "package \\w+\\;";
+        for (int i = 0; i < list.size(); i++) {
+            if(reg.matches(list.get(i))){
+                list.set(i,"");
+                break;
+            }
+        }
+        return list;
+    }
 }

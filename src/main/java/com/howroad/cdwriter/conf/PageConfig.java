@@ -20,6 +20,8 @@ public class PageConfig {
     public static String appNo;
     /** 从数据库读取的表名 */
     public static String[] tablesFromDB;
+    /** 导入的文件名 */
+    public static String[] modelFiles;
     /** 序列规则 */
     public static Boolean SEQ_ON_LAST;
 

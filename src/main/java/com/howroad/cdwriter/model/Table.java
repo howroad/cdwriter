@@ -57,6 +57,13 @@ public class Table{
         map.put("tableNo", tableNo());
         
     }
+
+    /** 重新载入对应关系 */
+    public void reloadColumnMap(Map<String,String> map){
+        for (MyParam myParam : paramList) {
+            myParam.setParamName(map.get(myParam.getColumnName()));
+        }
+    }
     
     //获得缩写
     public String tableNo() {

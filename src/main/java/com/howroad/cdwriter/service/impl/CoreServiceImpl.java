@@ -6,6 +6,7 @@ import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.ICoreService;
+import com.howroad.cdwriter.util.CompairUtil;
 import com.howroad.cdwriter.util.ValidateUtil;
 import com.howroad.log.PanelLog;
 
@@ -13,6 +14,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.jar.JarEntry;
 
 /**
@@ -95,6 +97,21 @@ public class CoreServiceImpl implements ICoreService {
             Table table = TableBuilder.buildTableFromDB(tableName);
             Container.ioService.writeDataFile(table,sql,primaryKey);
             PanelLog.log("build " + tableName + ".SQL(cust) down...");
+        }
+    }
+
+    @Override
+    public void createFromDbAndFile() {
+        List<Table> tables = TableBuilder.buildTableFromNames(PageConfig.tablesFromDB);
+        List<Class<?>> classList = TableBuilder.buildClazzFromNames(PageConfig.modelFiles);
+        for (int i = 0; i < tables.size(); i++) {
+            Table table = tables.get(i);
+            Class<?> clazz = classList.get(i);
+            Map<String, String> map = CompairUtil.map(table, clazz);
+            table.reloadColumnMap(map);
+            Container.ioService.writeAllFileByJarTemplet(table);
+            Container.ioService.writeAllFileByTemplet(table, PathConfig.OUT_CODE_DIR(), PathConfig.CUST_TEMPLET_DIR());
+            Container.ioService.writeDataFile(table);
         }
     }
 }

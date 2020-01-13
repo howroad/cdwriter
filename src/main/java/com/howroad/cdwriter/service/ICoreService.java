@@ -14,4 +14,5 @@ public interface ICoreService {
     void createFromDb();
     void clear();
     void createCustSql(String tbNamesStr,String sqlsStr,String pkNamesStr);
+    void createFromDbAndFile();
 }

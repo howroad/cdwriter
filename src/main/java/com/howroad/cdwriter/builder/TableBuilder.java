@@ -5,8 +5,10 @@ import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.model.MyParam;
 import com.howroad.cdwriter.model.Table;
+import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.ExcelUtil;
+import com.howroad.cdwriter.util.LineUtil;
 import oracle.jdbc.driver.OracleConnection;
 import org.apache.commons.lang3.StringUtils;
 
@@ -91,7 +93,7 @@ public class TableBuilder {
             }
         }
         if(paramList.isEmpty()) {
-            throw new RuntimeException(tableName + "表中无字段");
+            throw new RuntimeException(tableName + "表中无字段，或该表不存在！");
         }
         Table table = new Table(tableName, tableRemark ,paramList);
         return table;
@@ -174,5 +176,25 @@ public class TableBuilder {
             resultList.add(table);
         }
         return resultList;
+    }
+
+    public static List<Class<?>> buildClazzFromNames(String[] modelFiles) {
+        List<Class<?>> list = new ArrayList<>();
+        for (String modelFile : modelFiles) {
+            List<String> lineList = Container.ioService.readToLine(PathConfig.IN_CODE_DIR() + modelFile);
+            LineUtil.replacePackage(lineList);
+            Container.ioService.write(PathConfig.IN_CODE_DIR() + modelFile, lineList);
+            //TODO 编译该java文件到虚拟机
+
+            Class<?> clazz = null;
+            try {
+                clazz = Class.forName("modelFile");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            list.add(clazz);
+        }
+        return list;
     }
 }

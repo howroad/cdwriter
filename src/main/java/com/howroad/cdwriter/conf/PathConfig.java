@@ -60,4 +60,8 @@ public class PathConfig {
     public static String MODIFY_COLUMN_PATH(Table table){
         return OUT_CODE_DIR() + "/db/patch/" + table.getTableName() + "2.TAB";
     }
+
+    public static String IN_CODE_DIR(){
+        return PageConfig.WORK_SPACE + "/in/";
+    }
 }
