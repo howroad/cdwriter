@@ -1,2 +1,2 @@
-Manifest-Version: 0.11.25
+Manifest-Version: 1.01.14
 Main-Class: com.howroad.cdwriter.control.Start

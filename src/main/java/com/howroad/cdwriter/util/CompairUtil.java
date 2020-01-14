@@ -4,7 +4,6 @@ import com.howroad.cdwriter.builder.TableBuilder;
 import com.howroad.cdwriter.conf.Config;
 import com.howroad.cdwriter.model.MyParam;
 import com.howroad.cdwriter.model.Table;
-import com.howroad.temp.model.Account;
 import org.apache.commons.lang3.Validate;
 import org.apache.poi.hssf.record.formula.functions.T;
 
@@ -21,14 +20,6 @@ import java.util.Map;
  * @since 2020-01-13 15:31
  */
 public class CompairUtil {
-    
-    public static void main(String[] args) {
-        Config.init();
-        Table table = TableBuilder.buildTableFromDB("aims_account");
-        Class clazz = Account.class;
-        System.out.println(map(table,clazz));
-
-    }
 
     public static Map<String,String> map(Table table, Class<?> clazz){
         Validate.isTrue(table != null);

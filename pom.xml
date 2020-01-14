@@ -5,7 +5,7 @@
 
 	<groupId>com.howroad</groupId>
 	<artifactId>cdwriter</artifactId>
-	<version>0.01.14</version>
+	<version>1.01.14</version>
     <build>
         <plugins>
             <plugin>
@@ -25,7 +25,6 @@
 				<configuration>
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 				</configuration>
-
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -38,11 +37,20 @@
 									<mainClass>com.howroad.cdwriter.control.Start</mainClass>
 								</transformer>
 							</transformers>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.DSA</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+									</excludes>
+								</filter>
+							</filters>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
         </plugins>
     </build>
     <packaging>jar</packaging>
@@ -53,13 +61,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<repositories>
-		<repository>
-			<id>ebi</id>
-			<name>www.ebi.ac.uk</name>
-			<url>http://www.ebi.ac.uk/intact/maven/nexus/content/groups/public/</url>
-		</repository>
-	</repositories>
+
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
