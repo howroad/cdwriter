@@ -1,7 +1,6 @@
 package com.howroad.frame.jframe;
 
 
-import com.google.common.base.Strings;
 import com.howroad.cdwriter.conf.Config;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
@@ -20,10 +19,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Properties;
 
@@ -73,8 +74,9 @@ public class ShowFrame extends JFrame {
     private JButton clearBtn = new JButton("clr");
     private JButton runBtnDB = new JButton("RnDb");
 
-    private JButton showSqlBtn = new JButton("sql>>");
-    private JButton logBtn = new JButton("log>>");
+    private JButton showSqlBtn = new JButton("sql>");
+    private JButton openEx = new JButton("opEx");
+    private JButton logBtn = new JButton("lg>");
     /** settings end */
 
     /**export Sql start*/
@@ -115,6 +117,7 @@ public class ShowFrame extends JFrame {
         btnPanel.add(runBtnDB);
         btnPanel.add(clearBtn);
 
+        custPanel.add(openEx);
         custPanel.add(dbFile);
         custPanel.add(showSqlBtn);
         custPanel.add(logBtn);
@@ -269,6 +272,13 @@ public class ShowFrame extends JFrame {
         });
         showSqlBtn.addActionListener(e ->{
             showOrHidePanel(this.sqlPanel);
+        });
+        openEx.addActionListener(e ->{
+            try {
+                Desktop.getDesktop().open(new File(filePanel.getText()));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
     /**
