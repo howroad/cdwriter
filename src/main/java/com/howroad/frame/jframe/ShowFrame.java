@@ -155,7 +155,7 @@ public class ShowFrame extends JFrame {
         this.contentPanel.add(logPanel);
         this.contentPanel.add(sqlPanel);
 
-        this.setTitle("cdWriter 0.12 howroad");
+        this.setTitle("cdWriter 1.1 howroad");
         this.setContentPane(contentPanel);
         //退出即关闭
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
