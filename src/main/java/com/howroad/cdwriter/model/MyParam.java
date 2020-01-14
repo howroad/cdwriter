@@ -108,7 +108,7 @@ public class MyParam {
         init();
     }
 
-    private void init() {
+    public void init() {
         map.put("paramName", this.paramName);
         map.put("paramRemark", this.paramRemark);
         map.put("paramType", this.type.getParamTypeName());

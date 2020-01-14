@@ -62,7 +62,9 @@ public class Table{
     public void reloadColumnMap(Map<String,String> map){
         for (MyParam myParam : paramList) {
             myParam.setParamName(map.get(myParam.getColumnName()));
+            myParam.init();
         }
+        this.initMap();
     }
     
     //获得缩写

@@ -142,10 +142,19 @@ public class LineUtil {
 
 
     public static List<String> replacePackage(List<String> list){
-        final String reg = "package \\w+\\;";
+        final String reg = "package\\s+.+";
+        final String reg2 = "public\\s+class\\s\\w+(\\s+extends.+)\\{";
         for (int i = 0; i < list.size(); i++) {
-            if(reg.matches(list.get(i))){
+            String line = list.get(i);
+            if(line == null){
+                continue;
+            }
+            if(line.matches(reg)){
                 list.set(i,"");
+                continue;
+            }
+            if(line.matches(reg2) ){
+                list.set(i,line.replaceAll("extends\\s+\\w+(?=(\\s+implements\\s+\\w+)?\\{)",""));
                 break;
             }
         }

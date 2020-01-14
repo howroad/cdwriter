@@ -1,5 +1,6 @@
 package com.howroad.cdwriter.service.impl;
 
+import com.google.common.io.Files;
 import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.conf.SystemConfig;
 import com.howroad.cdwriter.model.Table;
@@ -8,11 +9,24 @@ import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.IIOService;
 import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.LineUtil;
+import org.apache.any23.encoding.TikaEncodingDetector;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>Title: IOServiceImpl.java</p>
@@ -29,7 +43,31 @@ public class IOServiceImpl implements IIOService {
         List<String> lineList = new ArrayList<String>();
         BufferedReader in = null ;
         try {
-            in = new BufferedReader(new InputStreamReader(ins, SystemConfig.INPUT_CODE));
+            in = new BufferedReader(new InputStreamReader(ins));
+            String line = null;
+            while((line = in.readLine()) != null) {
+                lineList.add(new String(line));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        return lineList;
+    }
+    @Override
+    public List<String> readToLine(InputStream ins, String code) {
+        List<String> lineList = new ArrayList<String>();
+        BufferedReader in = null ;
+        try {
+            in = new BufferedReader(new InputStreamReader(ins, code));
             String line = null;
             while((line = in.readLine()) != null) {
                 lineList.add(new String(line));
@@ -50,6 +88,17 @@ public class IOServiceImpl implements IIOService {
     }
     @Override
     public List<String> readToLine(File file) {
+        List<String> strings = null;
+        try {
+            String code = new TikaEncodingDetector().guessEncoding(new FileInputStream(file));
+            strings = Files.readLines(file, Charset.forName(code));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return strings;
+    }
+    @Override
+    public List<String> readToLine(File file, String code) {
         FileInputStream ins = null;
         try {
             ins = new FileInputStream(file);
@@ -57,7 +106,7 @@ public class IOServiceImpl implements IIOService {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return readToLine(ins);
+        return readToLine(ins,code);
     }
 
     @Override
@@ -66,6 +115,11 @@ public class IOServiceImpl implements IIOService {
         return readToLine(file);
     }
 
+    @Override
+    public List<String> readToLine(String path, String code) {
+        File file = new File(path);
+        return readToLine(file, code);
+    }
 
 
     @Override
@@ -78,6 +132,29 @@ public class IOServiceImpl implements IIOService {
                 father.mkdirs();
             }
             out = new PrintWriter(file, SystemConfig.WRITE_CODE);
+            for (String string : lineList) {
+                out.println(string);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }finally {
+            if(out != null) {
+                out.close();
+            }
+        }
+    }
+
+    @Override
+    public void write(File file, List<String> lineList, String code) {
+        Validate.notNull(lineList);
+        PrintWriter out = null;
+        try {
+            File father = file.getParentFile();
+            if(!father.exists()) {
+                father.mkdirs();
+            }
+            out = new PrintWriter(file, code);
             for (String string : lineList) {
                 out.println(string);
             }

@@ -19,14 +19,18 @@ import java.util.jar.JarEntry;
 public interface IIOService {
 
     List<String> readToLine(InputStream ins);
+    List<String> readToLine(InputStream ins,String code);
     List<String> readToLine(File file);
+    List<String> readToLine(File file, String code);
     List<String> readToLine(String path);
+    List<String> readToLine(String path, String code);
 
     List<File> getAllFile(File dir);
     Map<String,InputStream> getAllJarTemplet();
     InputStream getTemplet(String templetPath);
 
     void write(File file, List<String> lineList);
+    void write(File file, List<String> lineList, String code);
     void write(String path, List<String> lineList);
     void write(File file, String line);
     void write(String path, String line);

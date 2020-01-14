@@ -53,7 +53,13 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
+	<repositories>
+		<repository>
+			<id>ebi</id>
+			<name>www.ebi.ac.uk</name>
+			<url>http://www.ebi.ac.uk/intact/maven/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
@@ -105,6 +111,14 @@
 			<artifactId>log4j-api</artifactId>
 			<version>2.11.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.any23</groupId>
+			<artifactId>apache-any23-encoding</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+
 
 	</dependencies>
 

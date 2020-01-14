@@ -3,9 +3,12 @@ package com.howroad.cdwriter.builder;
 import com.google.common.base.CaseFormat;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
+import com.howroad.cdwriter.conf.SystemConfig;
 import com.howroad.cdwriter.model.MyParam;
 import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.service.Container;
+import com.howroad.cdwriter.util.CompairUtil;
+import com.howroad.cdwriter.util.CompileUtil;
 import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.ExcelUtil;
 import com.howroad.cdwriter.util.LineUtil;
@@ -13,6 +16,7 @@ import oracle.jdbc.driver.OracleConnection;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -181,14 +185,17 @@ public class TableBuilder {
     public static List<Class<?>> buildClazzFromNames(String[] modelFiles) {
         List<Class<?>> list = new ArrayList<>();
         for (String modelFile : modelFiles) {
-            List<String> lineList = Container.ioService.readToLine(PathConfig.IN_CODE_DIR() + modelFile);
+            List<String> lineList = Container.ioService.readToLine(new File(PathConfig.IN_CODE_DIR() + modelFile));
+            File javaFile = new File(PathConfig.IN_CODE_DIR() + modelFile);
             LineUtil.replacePackage(lineList);
-            Container.ioService.write(PathConfig.IN_CODE_DIR() + modelFile, lineList);
-            //TODO 编译该java文件到虚拟机
-
+            Container.ioService.write(javaFile, lineList, "utf8");
+            //编译该java文件到虚拟机
+            CompileUtil.compile(PathConfig.IN_CODE_DIR() + modelFile,null);
+            //加载自定义的classPath
+            CompileUtil.addClassLoader(PathConfig.IN_CODE_DIR());
             Class<?> clazz = null;
             try {
-                clazz = Class.forName("modelFile");
+                clazz = Class.forName(modelFile.replace(".java",""));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
