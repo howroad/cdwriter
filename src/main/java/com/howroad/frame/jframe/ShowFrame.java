@@ -158,7 +158,7 @@ public class ShowFrame extends JFrame {
         this.contentPanel.add(logPanel);
         this.contentPanel.add(sqlPanel);
 
-        this.setTitle("cdWriter 1.1 howroad");
+        this.setTitle("cdWriter 1.1.15 howroad");
         this.setContentPane(contentPanel);
         //退出即关闭
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -245,7 +245,7 @@ public class ShowFrame extends JFrame {
         clearBtn.addActionListener((e) -> {
             try {
                 reLoadConfig();
-                Container.ioService.clear();
+                Container.coreService.clear();
                 JOptionPane.showMessageDialog(null, "清除成功");
             } catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, e1.getMessage());

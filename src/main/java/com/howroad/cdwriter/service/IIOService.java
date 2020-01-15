@@ -18,12 +18,8 @@ import java.util.jar.JarEntry;
  */
 public interface IIOService {
 
-    List<String> readToLine(InputStream ins);
     List<String> readToLine(InputStream ins,String code);
     List<String> readToLine(File file);
-    List<String> readToLine(File file, String code);
-    List<String> readToLine(String path);
-    List<String> readToLine(String path, String code);
 
     List<File> getAllFile(File dir);
     Map<String,InputStream> getAllJarTemplet();
@@ -32,18 +28,13 @@ public interface IIOService {
     void write(File file, List<String> lineList);
     void write(File file, List<String> lineList, String code);
     void write(String path, List<String> lineList);
-    void write(File file, String line);
-    void write(String path, String line);
 
-    void writeFileByTemplet(File templet,File outFile, Table table);
     void writeFileByTemplet(InputStream ins,File outFile, Table table);
     void writeAllFileByTemplet(Table table,String outDir,String templetDir);
     void writeAllFileByJarTemplet(Table table);
 
     void writeDataFile(Table table);
     void writeDataFile(Table table, String sql, String[] primaryColUpKeys);
-
-
 
     void clear();
     void clearDir(File dir);

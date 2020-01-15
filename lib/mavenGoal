@@ -3,3 +3,6 @@ install:install-file -Dfile=lib/ojdbc6-12.1.0.1.0.jar
                      -DartifactId=ojdbc6
                      -Dversion=12.1.0.1.0
                      -Dpackaging=Jar
+install:install-file -Dfile=lib/cpdetector-1.0.7.jar -DgroupId=cpdetector -DartifactId=cpdetector -Dversion=1.0.7 -Dpackaging=Jar
+
+--idea maven -excute Maven Goal

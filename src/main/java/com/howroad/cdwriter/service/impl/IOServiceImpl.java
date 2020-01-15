@@ -9,14 +9,13 @@ import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.IIOService;
 import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.LineUtil;
-import org.apache.any23.encoding.TikaEncodingDetector;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,30 +37,6 @@ import java.util.Set;
  */
 public class IOServiceImpl implements IIOService {
 
-    @Override
-    public List<String> readToLine(InputStream ins) {
-        List<String> lineList = new ArrayList<String>();
-        BufferedReader in = null ;
-        try {
-            in = new BufferedReader(new InputStreamReader(ins));
-            String line = null;
-            while((line = in.readLine()) != null) {
-                lineList.add(new String(line));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }
-        return lineList;
-    }
     @Override
     public List<String> readToLine(InputStream ins, String code) {
         List<String> lineList = new ArrayList<String>();
@@ -90,37 +65,13 @@ public class IOServiceImpl implements IIOService {
     public List<String> readToLine(File file) {
         List<String> strings = null;
         try {
-            String code = new TikaEncodingDetector().guessEncoding(new FileInputStream(file));
+            String code = get_charset(file);
             strings = Files.readLines(file, Charset.forName(code));
         } catch (IOException e) {
             e.printStackTrace();
         }
         return strings;
     }
-    @Override
-    public List<String> readToLine(File file, String code) {
-        FileInputStream ins = null;
-        try {
-            ins = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return readToLine(ins,code);
-    }
-
-    @Override
-    public List<String> readToLine(String path) {
-        File file = new File(path);
-        return readToLine(file);
-    }
-
-    @Override
-    public List<String> readToLine(String path, String code) {
-        File file = new File(path);
-        return readToLine(file, code);
-    }
-
 
     @Override
     public void write(File file, List<String> lineList) {
@@ -174,43 +125,10 @@ public class IOServiceImpl implements IIOService {
         write(file,lineList);
     }
 
-    @Override
-    public void write(File file, String line) {
-        Validate.notNull(line);
-        PrintWriter out = null;
-        try {
-            File father = file.getParentFile();
-            if(!father.exists()) {
-                father.mkdirs();
-            }
-            out = new PrintWriter(file, SystemConfig.WRITE_CODE);
-            out.println(line);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }finally {
-            if(out != null) {
-                out.close();
-            }
-        }
-    }
-
-    @Override
-    public void write(String path, String line) {
-        File file = new File(path);
-        write(file,line);
-    }
-
-    @Override
-    public void writeFileByTemplet(File templet, File outFile, Table table) {
-        List<String> lineList = readToLine(templet);
-        List<String> resultList = LineUtil.buildNewLine(lineList, table);
-        write(outFile,resultList);
-    }
 
     @Override
     public void writeFileByTemplet(InputStream ins, File outFile, Table table) {
-        List<String> lineList = readToLine(ins);
+        List<String> lineList = readToLine(ins, SystemConfig.INPUT_CODE);
         List<String> resultList = LineUtil.buildNewLine(lineList, table);
         write(outFile,resultList);
     }
@@ -242,7 +160,6 @@ public class IOServiceImpl implements IIOService {
         for (String name : names) {
             InputStream stream = Class.class.getResourceAsStream(PathConfig.TEMPLET_DIR + name);
             if(stream == null){
-                //System.out.println("ERRO:" + PathConfig.TEMPLET_DIR + name);
                 throw new RuntimeException(PathConfig.TEMPLET_DIR + name);
             }
             result.put(name, stream);
@@ -284,7 +201,7 @@ public class IOServiceImpl implements IIOService {
         Set<String> keySet = allJarTemplet.keySet();
         for (String key : keySet) {
             String fileName = LineUtil.buildName(key, table);
-            List<String> lineList = readToLine(allJarTemplet.get(key));
+            List<String> lineList = readToLine(allJarTemplet.get(key), SystemConfig.INPUT_CODE);
             List<String> newLine = LineUtil.buildNewLine(lineList, table);
             write(PathConfig.OUT_CODE_DIR() + "/" + fileName, newLine);
         }
@@ -365,5 +282,73 @@ public class IOServiceImpl implements IIOService {
                 }
             }
         }
+    }
+
+
+    /**
+     * 比cpdetector 和 any23 好用
+     * @param file
+     * @return
+     */
+    public static String get_charset( File file ) {
+        String charset = "GBK";
+        byte[] first3Bytes = new byte[3];
+        try {
+            boolean checked = false;
+            BufferedInputStream bis = new BufferedInputStream( new FileInputStream( file ) );
+            bis.mark( 0 );
+            int read = bis.read( first3Bytes, 0, 3 );
+            if ( read == -1 ) return charset;
+            if ( first3Bytes[0] == (byte) 0xFF && first3Bytes[1] == (byte) 0xFE ) {
+                charset = "UTF-16LE";
+                checked = true;
+            }
+            else if ( first3Bytes[0] == (byte) 0xFE && first3Bytes[1] == (byte) 0xFF ) {
+                charset = "UTF-16BE";
+                checked = true;
+            }
+            else if ( first3Bytes[0] == (byte) 0xEF && first3Bytes[1] == (byte) 0xBB && first3Bytes[2] == (byte) 0xBF ) {
+                charset = "UTF-8";
+                checked = true;
+            }
+            bis.reset();
+            if ( !checked ) {
+                //    int len = 0;
+                int loc = 0;
+
+                while ( (read = bis.read()) != -1 ) {
+                    loc++;
+                    if ( read >= 0xF0 ) break;
+                    if ( 0x80 <= read && read <= 0xBF ) // 单独出现BF以下的，也算是GBK
+                        break;
+                    if ( 0xC0 <= read && read <= 0xDF ) {
+                        read = bis.read();
+                        if ( 0x80 <= read && read <= 0xBF ) // 双字节 (0xC0 - 0xDF) (0x80
+                            // - 0xBF),也可能在GB编码内
+                            continue;
+                        else break;
+                    }
+                    else if ( 0xE0 <= read && read <= 0xEF ) {// 也有可能出错，但是几率较小
+                        read = bis.read();
+                        if ( 0x80 <= read && read <= 0xBF ) {
+                            read = bis.read();
+                            if ( 0x80 <= read && read <= 0xBF ) {
+                                charset = "UTF-8";
+                                break;
+                            }
+                            else break;
+                        }
+                        else break;
+                    }
+                }
+                //System.out.println( loc + " " + Integer.toHexString( read ) );
+            }
+
+            bis.close();
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
+
+        return charset;
     }
 }

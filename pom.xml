@@ -5,7 +5,7 @@
 
 	<groupId>com.howroad</groupId>
 	<artifactId>cdwriter</artifactId>
-	<version>1.01.14</version>
+	<version>1.01.15</version>
     <build>
         <plugins>
             <plugin>
@@ -113,13 +113,6 @@
 			<artifactId>log4j-api</artifactId>
 			<version>2.11.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.any23</groupId>
-			<artifactId>apache-any23-encoding</artifactId>
-			<version>1.1</version>
-		</dependency>
-
 
 
 	</dependencies>
