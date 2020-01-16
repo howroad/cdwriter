@@ -5,7 +5,7 @@
     * @return $table{remark}主键
     * @since $common{now}
     */
-    public Integer save$table{entityName}($table{entityName} model);
+    Integer save$table{entityName}($table{entityName} model);
 
     /**
     * 根据主键删除$table{remark}
@@ -13,7 +13,7 @@
     * @author $common{author}
     * @since $common{now}
     */
-    public void delete$table{entityName}ById (Integer id);
+    void delete$table{entityName}ById (Integer id);
 
     /**
     * 修改$table{remark}
@@ -21,7 +21,7 @@
     * @author $common{author}
     * @since $common{now}
     */
-    public void update$table{entityName}($table{entityName} model);
+    void update$table{entityName}($table{entityName} model);
 
     /**
     * 查询$table{remark}列表
@@ -30,7 +30,7 @@
     * @return $table{remark}集合
     * @since $common{now}
     */
-    public List<$table{entityName}> get$table{entityName}List($table{entityName}Scope scope);
+    List<$table{entityName}> get$table{entityName}List($table{entityName}Scope scope);
     
     /**
     * 根据Id查询$table{remark}View
@@ -39,7 +39,7 @@
     * @return $table{remark}
     * @since $common{now}
     */
-    public $table{entityName}View get$table{entityName}ById(Integer id);
+    $table{entityName}View get$table{entityName}ById(Integer id);
 
     /**
     * 根据条件查询$table{remark}View的第一条记录
@@ -48,7 +48,7 @@
     * @return $table{remark}
     * @since $common{now}
     */
-    public $table{entityName}View get$table{entityName}ByScope ($table{entityName}Scope scope);
+    $table{entityName}View get$table{entityName}ByScope ($table{entityName}Scope scope);
 
     /**
     * 根据主键删除多个$table{remark}
@@ -56,7 +56,7 @@
     * @author $common{author}
     * @since $common{now}
     */
-    public void delete$table{entityName}ByIds (List<Integer> ids);
+    void delete$table{entityName}ByIds (List<Integer> ids);
     
         
     @{delete}
@@ -67,7 +67,7 @@
     * @return $table{remark}记录数
     * @since $common{now}
     */
-    public Integer get$table{entityName}PageCount($table{entityName}Scope scope);
+    Integer get$table{entityName}PageCount($table{entityName}Scope scope);
     
     /**
     * 查询$table{remark}分页列表
@@ -76,7 +76,7 @@
     * @return $table{remark}集合
     * @since $common{now}
     */
-    public List<$table{entityName}View> get$table{entityName}PageList($table{entityName}Scope scope);
+    List<$table{entityName}View> get$table{entityName}PageList($table{entityName}Scope scope);
     @{/delete}  
 
     /**
@@ -85,7 +85,7 @@
      * @author $common{author}
      * @since $common{now}
      */
-    public void delete$table{entityName}($table{entityName}Scope scope);
+    void delete$table{entityName}($table{entityName}Scope scope);
     
     /**
     * 新增或者修改$table{remark}集合中的内容
@@ -93,7 +93,7 @@
     * @author $common{author}
     * @since $common{now}
     */
-    public void saveOrUpdate$table{entityName}List (List<$table{entityName}> list);  
+    void saveOrUpdate$table{entityName}List (List<$table{entityName}> list);
       
     /**
     * 新增或者修改$table{remark}
@@ -101,4 +101,4 @@
     * @author $common{author}
     * @since $common{now}
     */
-    public void saveOrUpdate$table{entityName} ($table{entityName} model);    
+    void saveOrUpdate$table{entityName} ($table{entityName} model);
