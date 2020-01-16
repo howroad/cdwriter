@@ -30,14 +30,6 @@ public interface $table{entityName}Service {
     Integer save$table{entityName}($table{entityName} model);
 
     /**
-    * 根据主键删除$table{remark}
-    * @param id $table{remark}主键
-    * @author $common{author}
-    * @since $common{now}
-    */
-    void delete$table{entityName}ById (Integer id);
-
-    /**
     * 修改$table{remark}
     * @param model $table{remark}实体
     * @author $common{author}
@@ -53,15 +45,7 @@ public interface $table{entityName}Service {
     * @since $common{now}
     */
     List<$table{entityName}View> get$table{entityName}List($table{entityName}Scope scope);
-    
-    /**
-    * 根据Id查询$table{remark}
-    * @param id $table{remark}主键
-    * @author $common{author}
-    * @return $table{remark}
-    * @since $common{now}
-    */
-    $table{entityName}View get$table{entityName}ById(Integer id);
+
 
     /**
     * 根据条件查询$table{remark}View的第一条记录
@@ -88,7 +72,6 @@ public interface $table{entityName}Service {
     */
     void delete$table{entityName} ($table{entityName}Scope scope);
 
-    @{delete}
     /**
     * 查询$table{remark}记录数
     * @param scope $table{remark}查询条件
@@ -106,7 +89,25 @@ public interface $table{entityName}Service {
     * @since $common{now}
     */
     List<$table{entityName}View> get$table{entityName}PageList($table{entityName}Scope scope);
-    
+
+    @{delete}
+    /**
+    * 根据主键删除$table{remark}
+    * @param id $table{remark}主键
+    * @author $common{author}
+    * @since $common{now}
+    */
+    void delete$table{entityName}ById (Integer id);
+
+    /**
+    * 根据Id查询$table{remark}
+    * @param id $table{remark}主键
+    * @author $common{author}
+    * @return $table{remark}
+    * @since $common{now}
+    */
+    $table{entityName}View get$table{entityName}ById(Integer id);
+
     /**
     * 新增或修改$table{remark}
     * @param model $table{remark}实体

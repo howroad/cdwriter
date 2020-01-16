@@ -46,6 +46,9 @@ public class LineUtil {
                 delete = true;
                 continue;
             }
+            else if(delete){
+                continue;
+            }
             //循环种
             else if(loop) {
                 // 遇到结束标识 解析循环体中的模板

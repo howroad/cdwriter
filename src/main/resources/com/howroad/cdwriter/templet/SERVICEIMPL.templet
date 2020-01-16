@@ -38,16 +38,6 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     }
     
     /**
-    * 根据主键删除$table{remark}
-    * @param id $table{remark}主键
-    * @author $common{author}
-    * @since $common{now}
-    */
-    public void delete$table{entityName}ById (Integer id) {
-        getDaoFacade().get$table{entityName}Dao().delete$table{entityName}ById (id);
-    }
-    
-    /**
     * 修改$table{remark}
     * @param model $table{remark}实体
     * @author $common{author}
@@ -66,17 +56,6 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     */
     public List<$table{entityName}View> get$table{entityName}List($table{entityName}Scope scope) {
         return getDaoFacade().get$table{entityName}Dao().get$table{entityName}List(scope);
-    }
-    
-    /**
-    * 根据Id查询$table{remark}
-    * @param id $table{remark}主键
-    * @author $common{author}
-    * @return $table{remark}
-    * @since $common{now}
-    */
-    public $table{entityName}View get$table{entityName}ById(Integer id) {
-        return getDaoFacade().get$table{entityName}Dao().get$table{entityName}ById(id);
     }
 
     /**
@@ -110,7 +89,6 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
         getDaoFacade().get$table{entityName}Dao().delete$table{entityName}(scope);
     }
     
-    @{delete}
     /**
     * 查询$table{remark}记录数
     * @param scope $table{remark}查询条件
@@ -132,7 +110,29 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     public List<$table{entityName}View> get$table{entityName}PageList($table{entityName}Scope scope) {
         return getDaoFacade().get$table{entityName}Dao().get$table{entityName}PageList(scope);
     }
-    
+
+    @{delete}
+    /**
+    * 根据主键删除$table{remark}
+    * @param id $table{remark}主键
+    * @author $common{author}
+    * @since $common{now}
+    */
+    public void delete$table{entityName}ById (Integer id) {
+        getDaoFacade().get$table{entityName}Dao().delete$table{entityName}ById (id);
+    }
+
+    /**
+    * 根据Id查询$table{remark}
+    * @param id $table{remark}主键
+    * @author $common{author}
+    * @return $table{remark}
+    * @since $common{now}
+    */
+    public $table{entityName}View get$table{entityName}ById(Integer id) {
+        return getDaoFacade().get$table{entityName}Dao().get$table{entityName}ById(id);
+    }
+
     /**
     * 新增或修改$table{remark}
     * @param model $table{remark}实体

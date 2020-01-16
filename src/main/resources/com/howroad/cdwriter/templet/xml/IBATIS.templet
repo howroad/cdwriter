@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="$common{appNoUpper}.$table{entityName}Dao">
-    @{delete}
+
     <!-- 分页 start -->
     <sql id="pagingStartSql">
         <isNotNull property="paging">
@@ -34,8 +34,7 @@
         $table{tableNo}.$param{columnName} AS "$param{paramName}"$split{,}
         @{end}  
     </sql>
-    @{/delete} 
-       
+
     <!-- 新增$table{remark} -->
     <insert id="save$table{entityName}" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.$table{entityName}">
         <selectKey resultClass="java.lang.Integer" keyProperty="$table{pkName}">
@@ -90,7 +89,6 @@
         </iterate>
     </delete>   
 
-    @{delete}
     <!-- 查询$table{remark}记录数 -->
     <select id="get$table{entityName}PageCount" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.scope.$table{entityName}Scope" resultClass="java.lang.Integer">
         SELECT
@@ -109,8 +107,7 @@
         ORDER BY $table{tableNo}.$table{pkColumnName} ASC
         <include refid="pagingEndSql" />
     </select>
-    @{/delete}
-    
+
     <!-- 删除$table{remark} -->
     <delete id="delete$table{entityName}" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.scope.$table{entityName}Scope">
         DELETE $table{tableName} $table{tableNo} WHERE 1 = 1
