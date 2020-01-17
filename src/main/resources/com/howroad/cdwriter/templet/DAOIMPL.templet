@@ -78,7 +78,6 @@ public class $table{entityName}Dao extends BaseDao{
         getSqlMapClientTemplate().delete(getStatement("delete$table{entityName}ByIds"), ids);
     }
     
-    @{delete}
     /**
     * 查询$table{remark}记录数
     * @param scope $table{remark}查询条件
@@ -102,8 +101,7 @@ public class $table{entityName}Dao extends BaseDao{
         scope.getPaging().setTotalRow(count);
         return getSqlMapClientTemplate().queryForList(getStatement("get$table{entityName}PageList"),scope);
     }
-    @{/delete}
-    
+
     /**
      * 根据条件删除$table{remark}
      * @param scope $table{remark}删除条件
