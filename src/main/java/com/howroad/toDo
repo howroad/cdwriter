@@ -86,11 +86,12 @@ EXCEL中格式输入NUMBER(12)等没有逗号的类型会有问题(已修复)
 
 自动生成mapping对照 -- 已完成
 
-把mapping缓存起来
+把mapping缓存起来 - 存成csv格式（重要）
 
 打印日志的功能
 
 部分字段存在乱码 很奇怪 -- 已解决
 
-接口需要去掉public
+接口需要去掉public - 已完成
 scope和view 需要去掉导入的无用包
+
