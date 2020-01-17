@@ -135,8 +135,8 @@ public class TableBuilder {
                 //PanelLog.log(columnName);
                 String type = list.size() > 1 ? list.get(1) : "";
                 String commont = list.size() > 2 ? list.get(2) : "";
-                String nullableStr = list.size() > 3 ? list.get(3) : "";
-                String defaultV = list.size() > 4 ? list.get(4) : "";
+                String defaultV = list.size() > 3 ? list.get(3) : "";
+                String nullableStr = list.size() > 4 ? list.get(4) : "";
 
                 if(StringUtils.isEmpty(columnName) && StringUtils.isEmpty(type) && StringUtils.isEmpty(commont)) {
                     continue;
