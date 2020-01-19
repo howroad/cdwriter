@@ -35,6 +35,10 @@ public class PathConfig {
     /** 工程保存的修改字段的模版 */
     public static String MODIFY_COLUMN_TEMPLET;
 
+    public static String CSV_PATH(){
+        return PageConfig.WORK_SPACE + "/map.csv";
+    }
+
     public static String OUT_CODE_DIR(){
         return PageConfig.WORK_SPACE + "/out";
     }

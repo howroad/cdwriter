@@ -9,6 +9,8 @@ import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.IIOService;
 import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.LineUtil;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 
@@ -16,16 +18,22 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.howroad.cdwriter.rule.WithoutLastMap.map;
 
 /**
  * <p>Title: IOServiceImpl.java</p>
@@ -281,6 +289,30 @@ public class IOServiceImpl implements IIOService {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void writeCsv(File file,  Map<String, Map.Entry<String,Integer>> map) {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, SystemConfig.INPUT_CODE);
+            CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader("columnName", "paramName", "score");
+            CSVPrinter csvPrinter = new CSVPrinter(outputStreamWriter, csvFormat);
+            map.forEach((key, value) -> {
+                addColumn(csvPrinter, key, value.getKey(), value.getValue());
+            });
+            csvPrinter.flush();
+            csvPrinter.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void addColumn(CSVPrinter csvPrinter, Object... objs){
+        try {
+            csvPrinter.printRecord(objs);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

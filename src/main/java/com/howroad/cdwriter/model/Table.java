@@ -58,10 +58,11 @@ public class Table{
         
     }
 
-    /** 重新载入对应关系 */
-    public void reloadColumnMap(Map<String,String> map){
+    /** 重新载入对应关系
+     * @param map*/
+    public void reloadColumnMap(Map<String, Map.Entry<String, Integer>> map){
         for (MyParam myParam : paramList) {
-            myParam.setParamName(map.get(myParam.getColumnName()));
+            myParam.setParamName(map.get(myParam.getColumnName()).getKey());
             myParam.init();
         }
         this.initMap();

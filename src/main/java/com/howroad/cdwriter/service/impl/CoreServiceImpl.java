@@ -4,6 +4,7 @@ import com.howroad.cdwriter.builder.TableBuilder;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.model.Table;
+import com.howroad.cdwriter.rule.WithoutLastMap;
 import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.ICoreService;
 import com.howroad.cdwriter.util.CompairUtil;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.JarEntry;
+
+import static com.howroad.cdwriter.rule.WithoutLastMap.map;
 
 /**
  * <p>Title: ICoreServiceImpl.java</p>
@@ -107,7 +110,8 @@ public class CoreServiceImpl implements ICoreService {
         for (int i = 0; i < tables.size(); i++) {
             Table table = tables.get(i);
             Class<?> clazz = classList.get(i);
-            Map<String, String> map = CompairUtil.map(table, clazz);
+            Map<String, Map.Entry<String, Integer>> map = CompairUtil.map(table, clazz);
+            Container.ioService.writeCsv(new File(PathConfig.CSV_PATH()), map);
             table.reloadColumnMap(map);
             Container.ioService.writeAllFileByJarTemplet(table);
             Container.ioService.writeAllFileByTemplet(table, PathConfig.OUT_CODE_DIR(), PathConfig.CUST_TEMPLET_DIR());

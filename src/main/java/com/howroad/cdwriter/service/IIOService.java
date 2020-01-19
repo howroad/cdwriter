@@ -40,4 +40,5 @@ public interface IIOService {
     void clearDir(File dir);
     void clearWithReg(File dir, String[] reg, String[] withoutReg);
 
+    void writeCsv(File file, Map<String, Map.Entry<String,Integer>> map);
 }

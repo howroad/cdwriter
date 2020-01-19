@@ -8,6 +8,7 @@ import org.apache.commons.lang3.Validate;
 import org.apache.poi.hssf.record.formula.functions.T;
 
 import java.lang.reflect.Field;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,10 +22,10 @@ import java.util.Map;
  */
 public class CompairUtil {
 
-    public static Map<String,String> map(Table table, Class<?> clazz){
+    public static  Map<String, Map.Entry<String,Integer>> map(Table table, Class<?> clazz){
         Validate.isTrue(table != null);
         Validate.isTrue(table.getParamList() != null);
-        Map<String,String> result = new HashMap<String,String>();
+        Map<String, Map.Entry<String,Integer>> map = new HashMap<>();
         Field[] declaredFields = clazz.getDeclaredFields();
         for (MyParam myParam : table.getParamList()) {
             String finalValue = null;
@@ -42,9 +43,10 @@ public class CompairUtil {
                     finalValue = paramNameOld;
                 }
             }
-            result.put(columnName, finalValue);
+            Map.Entry<String,Integer> entry = new AbstractMap.SimpleEntry<>(finalValue, finalScore);
+            map.put(columnName, entry);
         }
-        return result;
+        return map;
     }
     
     public static int compair(String str1, String str2){
