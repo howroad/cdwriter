@@ -36,7 +36,7 @@ public class PathConfig {
     public static String MODIFY_COLUMN_TEMPLET;
 
     public static String CSV_PATH(){
-        return PageConfig.WORK_SPACE + "/map.csv";
+        return IN_CODE_DIR() + "/map.csv";
     }
 
     public static String OUT_CODE_DIR(){
