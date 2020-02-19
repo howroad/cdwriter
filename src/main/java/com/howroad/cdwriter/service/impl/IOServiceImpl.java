@@ -9,6 +9,7 @@ import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.IIOService;
 import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.LineUtil;
+import com.howroad.log.PanelLog;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.lang3.ArrayUtils;
@@ -56,7 +57,6 @@ public class IOServiceImpl implements IIOService {
                 lineList.add(new String(line));
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         } finally {
             if(in != null) {
@@ -77,7 +77,6 @@ public class IOServiceImpl implements IIOService {
             String code = get_charset(file);
             strings = Files.readLines(file, Charset.forName(code));
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
         return strings;
@@ -97,7 +96,6 @@ public class IOServiceImpl implements IIOService {
                 out.println(string);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException();
         }finally {
             if(out != null) {
@@ -120,7 +118,6 @@ public class IOServiceImpl implements IIOService {
                 out.println(string);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException();
         }finally {
             if(out != null) {
@@ -307,7 +304,6 @@ public class IOServiceImpl implements IIOService {
             csvPrinter.flush();
             csvPrinter.close();
         } catch (Exception e){
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -315,7 +311,6 @@ public class IOServiceImpl implements IIOService {
         try {
             csvPrinter.printRecord(objs);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -382,7 +377,6 @@ public class IOServiceImpl implements IIOService {
 
             bis.close();
         } catch ( Exception e ) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
 

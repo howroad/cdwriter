@@ -3,20 +3,18 @@ package com.howroad.cdwriter.builder;
 import com.google.common.base.CaseFormat;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
-import com.howroad.cdwriter.conf.SystemConfig;
 import com.howroad.cdwriter.model.MyParam;
 import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.service.Container;
-import com.howroad.cdwriter.util.CompairUtil;
 import com.howroad.cdwriter.util.CompileUtil;
 import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.ExcelUtil;
 import com.howroad.cdwriter.util.LineUtil;
+import com.howroad.log.PanelLog;
 import oracle.jdbc.driver.OracleConnection;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +80,6 @@ public class TableBuilder {
                 paramList.add(param);
             }
         } catch (Exception e) {
-            e.getStackTrace();
             throw new RuntimeException(e);
         }finally {
             try {
@@ -93,7 +90,6 @@ public class TableBuilder {
                     rsTable.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
                 throw new RuntimeException(e.getMessage());
             }
         }
@@ -160,7 +156,6 @@ public class TableBuilder {
 
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
         return tableList;
@@ -189,7 +184,7 @@ public class TableBuilder {
         for (String modelFile : modelFiles) {
             List<String> lineList = Container.ioService.readToLine(new File(PathConfig.IN_CODE_DIR() + modelFile));
             File javaFile = new File(PathConfig.IN_CODE_DIR() + modelFile);
-            LineUtil.replacePackage(lineList);
+            LineUtil.rebuildFile(lineList);
             Container.ioService.write(javaFile, lineList, "utf8");
             //编译该java文件到虚拟机
             CompileUtil.compile(PathConfig.IN_CODE_DIR() + modelFile,null);
@@ -199,7 +194,6 @@ public class TableBuilder {
             try {
                 clazz = Class.forName(modelFile.replace(".java",""));
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
                 throw new RuntimeException(e.getMessage());
             }
 

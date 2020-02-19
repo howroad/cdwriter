@@ -6,6 +6,8 @@ import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.rule.CommonMap;
 import com.howroad.cdwriter.rule.FileNameMap;
 import com.howroad.cdwriter.rule.WithoutLastMap;
+import com.howroad.frame.panel.LogPanel;
+import com.howroad.log.PanelLog;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -144,20 +146,24 @@ public class LineUtil {
     }
 
 
-    public static List<String> replacePackage(List<String> list){
+    public static List<String> rebuildFile(List<String> list){
         final String reg = "package\\s+.+";
         final String reg2 = "public\\s+class\\s\\w+(\\s+extends.+)\\{";
+        final String reg3 = "\\s+\\@Oweride.+";
         for (int i = 0; i < list.size(); i++) {
             String line = list.get(i);
             if(line == null){
                 continue;
             }
-            if(line.matches(reg)){
+            if(line.matches(reg) || line.matches(reg3)){
+                PanelLog.log("【重新编辑java文件】删除 " + list.get(i));
                 list.set(i,"");
                 continue;
             }
             if(line.matches(reg2) ){
+                PanelLog.log("【重新编辑java文件】编辑前: " + list.get(i));
                 list.set(i,line.replaceAll("extends\\s+\\w+(?=(\\s+implements\\s+\\w+)?\\{)",""));
+                PanelLog.log("【重新编辑java文件】编辑后: " + list.get(i));
                 break;
             }
         }

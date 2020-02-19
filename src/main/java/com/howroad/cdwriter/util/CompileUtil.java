@@ -39,7 +39,6 @@ public class CompileUtil {
         try {
             account = Class.forName("Account");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
         System.out.println(account);
@@ -52,10 +51,8 @@ public class CompileUtil {
             javac = ToolProvider.getSystemJavaCompiler();
             int compilationResult = -1;
             compilationResult = javac.run(null, null, null, "-g", "-verbose", path);
-            System.out.println(compilationResult);
-            PanelLog.log(compilationResult);
+            PanelLog.log(compilationResult == 0 ? "编译成功：" + path : "编译失败：" + path );
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -72,7 +69,6 @@ public class CompileUtil {
 //            Class<?> account = classloader.loadClass("Account");
 //            Class cl = Class.forName("Account", true, classloader);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }

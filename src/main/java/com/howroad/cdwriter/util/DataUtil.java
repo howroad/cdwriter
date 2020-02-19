@@ -55,7 +55,6 @@ public class DataUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -67,7 +66,6 @@ public class DataUtil {
         try {
             obj = clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e1) {
-            e1.printStackTrace();
             throw new RuntimeException(e1.getMessage());
         }
         Field[] fileds = clazz.getDeclaredFields();
@@ -93,7 +91,6 @@ public class DataUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
         return obj;
@@ -106,7 +103,6 @@ public class DataUtil {
         try {
             obj = clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e1) {
-            e1.printStackTrace();
             throw new RuntimeException(e1.getMessage());
         }
         Field[] fileds = clazz.getDeclaredFields();
@@ -132,7 +128,6 @@ public class DataUtil {
             // 主键设置为空
             fileds[0].set(obj,null);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
         return obj;
@@ -164,7 +159,6 @@ public class DataUtil {
             }
             fileds[0].set(obj,id);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
         return obj;
@@ -177,7 +171,6 @@ public class DataUtil {
         try {
             obj = clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e1) {
-            e1.printStackTrace();
             throw new RuntimeException(e1.getMessage());
         } 
         Field[] fileds = clazz.getDeclaredFields();
@@ -185,7 +178,6 @@ public class DataUtil {
             fileds[0].setAccessible(true);
             fileds[0].set(obj,id);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
         return obj;
@@ -213,7 +205,6 @@ public class DataUtil {
                 s = br.readLine();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();

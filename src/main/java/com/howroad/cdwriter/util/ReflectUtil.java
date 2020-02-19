@@ -59,7 +59,6 @@ public class ReflectUtil {
                 throw new RuntimeException("意外的类型：" + field.getType());
             }
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }

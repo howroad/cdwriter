@@ -217,7 +217,6 @@ public class Table{
                 try {
                     dateTime = time.dateValue();
                 } catch (SQLException e) {
-                    e.printStackTrace();
                     throw new RuntimeException(e.getMessage());
                 }
                 String value = sdf.format(dateTime);

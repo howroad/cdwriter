@@ -22,7 +22,6 @@ public class DBUtil {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -65,7 +64,6 @@ public class DBUtil {
                 preparedStatement.close();
                 preparedStatement = null;
             } catch (SQLException e) {
-                e.printStackTrace();
                 throw new RuntimeException(e.getMessage());
             }
         }
@@ -79,7 +77,6 @@ public class DBUtil {
             }
             resultSet = preparedStatement.executeQuery();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
         return resultSet;
@@ -92,7 +89,6 @@ public class DBUtil {
                 resultset.close();
                 resultset = null;
             } catch (SQLException e) {
-                e.printStackTrace();
                 throw new RuntimeException(e.getMessage());
             }
         }
@@ -116,7 +112,6 @@ public class DBUtil {
                 resultList.add(list);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         } finally {
 

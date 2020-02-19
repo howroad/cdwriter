@@ -33,7 +33,6 @@ public class BaseDao {
             sqlMapClient = SqlMapClientBuilder.buildSqlMapClient(reader);
             reader.close();
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
         sqlMapClientTemplate = new SqlMapClientTemplate(sqlMapClient);
@@ -60,7 +59,6 @@ class SqlMapClientTemplate {
         try {
             return sqlMapClient.insert(str, obj);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -68,7 +66,6 @@ class SqlMapClientTemplate {
         try {
             sqlMapClient.delete(str, obj);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -76,7 +73,6 @@ class SqlMapClientTemplate {
         try {
             sqlMapClient.update(str, obj);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -84,7 +80,6 @@ class SqlMapClientTemplate {
         try {
             return sqlMapClient.queryForList(str, obj);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -92,7 +87,6 @@ class SqlMapClientTemplate {
         try {
             return sqlMapClient.queryForObject(str, obj);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }

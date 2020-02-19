@@ -52,7 +52,6 @@ public class Config {
                 method.invoke(null);
             }
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         } catch (NoSuchMethodException e) {
             System.out.println(e.getClass().getSimpleName() + " : " + e.getMessage());
@@ -76,13 +75,10 @@ public class Config {
                 method.invoke(null);
             }
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -99,15 +95,12 @@ public class Config {
                 method.invoke(null);
             }
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         } catch (NoSuchMethodException e) {
-            System.out.println(e.getClass().getSimpleName() + " : " + e.getMessage());
             PanelLog.log(e.getClass().getSimpleName() + " : " + e.getMessage());
             //e.printStackTrace();
             //throw new RuntimeException(e.getMessage());
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -124,7 +117,6 @@ public class Config {
             }
             PanelLog.log("-----------" + clazz.getName() + "  end-----------");
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }

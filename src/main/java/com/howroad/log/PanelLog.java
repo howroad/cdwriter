@@ -25,4 +25,12 @@ public class PanelLog {
     public static void log(Object log0){
         logPanel.log(log0 == null ? null : log0.toString());
     }
+
+    public static void exception(Exception exception){
+        logPanel.log("【Exception】" + exception.toString());
+        StackTraceElement[] stackTrace = exception.getStackTrace();
+        for (StackTraceElement stackTraceElement : stackTrace) {
+            logPanel.log(stackTraceElement.toString());
+        }
+    }
 }
