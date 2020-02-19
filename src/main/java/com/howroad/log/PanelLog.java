@@ -18,7 +18,7 @@ public class PanelLog {
 
     public static void initLog(LogPanel logPanel0){
         if(logPanel == null){
-        logPanel = logPanel0;
+            logPanel = logPanel0;
         }
     }
 

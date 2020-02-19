@@ -217,7 +217,8 @@ public class Table{
                 try {
                     dateTime = time.dateValue();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    throw new RuntimeException(e.getMessage());
                 }
                 String value = sdf.format(dateTime);
                 result = "TO_DATE('" + value + "', 'YYYY-MM-DD HH24:MI:SS')";

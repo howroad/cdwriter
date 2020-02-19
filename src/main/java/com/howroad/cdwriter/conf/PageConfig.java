@@ -28,5 +28,5 @@ public class PageConfig {
     // 输出工作空间
     public static String WORK_SPACE;
 
-
+    public static void init(){}
 }

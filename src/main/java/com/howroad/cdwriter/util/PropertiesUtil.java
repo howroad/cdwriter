@@ -27,13 +27,15 @@ public class PropertiesUtil {
             pro.load(in);
             in.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }finally {
             if(in != null){
                 try {
                     in.close();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    throw new RuntimeException(e.getMessage());
                 }
             }
         }
@@ -53,13 +55,15 @@ public class PropertiesUtil {
             pro.load(in);
             in.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }finally {
             if(in != null){
                 try {
                     in.close();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    throw new RuntimeException(e.getMessage());
                 }
             }
         }
@@ -85,13 +89,15 @@ public class PropertiesUtil {
             pro.load(in);
             in.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }finally {
             if(in != null){
                 try {
                     in.close();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    throw new RuntimeException(e.getMessage());
                 }
             }
         }

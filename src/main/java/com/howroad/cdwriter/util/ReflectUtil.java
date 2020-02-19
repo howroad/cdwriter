@@ -1,6 +1,8 @@
 package com.howroad.cdwriter.util;
 
 
+import com.howroad.log.PanelLog;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -30,6 +32,7 @@ public class ReflectUtil {
         String value = paramMap.get(fieldName);
         if (value == null) {
             System.out.println(field.getDeclaringClass().getName() + " : " + fieldName + ":未设置！");
+            PanelLog.log(field.getDeclaringClass().getName() + " : " + fieldName + ":未设置！");
             return;
         }
         try {
@@ -56,7 +59,8 @@ public class ReflectUtil {
                 throw new RuntimeException("意外的类型：" + field.getType());
             }
         } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 

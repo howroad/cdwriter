@@ -57,12 +57,13 @@ public class IOServiceImpl implements IIOService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         } finally {
             if(in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e.getMessage());
                 }
             }
 
@@ -77,6 +78,7 @@ public class IOServiceImpl implements IIOService {
             strings = Files.readLines(file, Charset.forName(code));
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         return strings;
     }
@@ -306,6 +308,7 @@ public class IOServiceImpl implements IIOService {
             csvPrinter.close();
         } catch (Exception e){
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
     private void addColumn(CSVPrinter csvPrinter, Object... objs){
@@ -313,6 +316,7 @@ public class IOServiceImpl implements IIOService {
             csvPrinter.printRecord(objs);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -379,6 +383,7 @@ public class IOServiceImpl implements IIOService {
             bis.close();
         } catch ( Exception e ) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
 
         return charset;

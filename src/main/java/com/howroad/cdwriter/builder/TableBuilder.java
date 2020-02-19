@@ -94,6 +94,7 @@ public class TableBuilder {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
             }
         }
         if(paramList.isEmpty()) {
@@ -159,7 +160,8 @@ public class TableBuilder {
 
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         return tableList;
     }
@@ -198,6 +200,7 @@ public class TableBuilder {
                 clazz = Class.forName(modelFile.replace(".java",""));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
             }
 
             list.add(clazz);

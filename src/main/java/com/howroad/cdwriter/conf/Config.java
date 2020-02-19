@@ -5,6 +5,7 @@ import com.howroad.cdwriter.rule.FileNameMap;
 import com.howroad.cdwriter.rule.WithoutLastMap;
 import com.howroad.cdwriter.util.PropertiesUtil;
 import com.howroad.cdwriter.util.ReflectUtil;
+import com.howroad.log.PanelLog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -52,10 +53,15 @@ public class Config {
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         } catch (NoSuchMethodException e) {
-
+            System.out.println(e.getClass().getSimpleName() + " : " + e.getMessage());
+            PanelLog.log(e.getClass().getSimpleName() + " : " + e.getMessage());
+            //e.printStackTrace();
+            //throw new RuntimeException(e.getMessage());
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
     public static void initClassNotUp(Class clazz, String path){
@@ -71,10 +77,13 @@ public class Config {
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         } catch (NoSuchMethodException e) {
-
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -91,10 +100,15 @@ public class Config {
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         } catch (NoSuchMethodException e) {
-
+            System.out.println(e.getClass().getSimpleName() + " : " + e.getMessage());
+            PanelLog.log(e.getClass().getSimpleName() + " : " + e.getMessage());
+            //e.printStackTrace();
+            //throw new RuntimeException(e.getMessage());
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -102,13 +116,16 @@ public class Config {
     public static void log(Class clazz){
         try {
             System.out.println("-----------" + clazz.getName() + "  start-----------");
+            PanelLog.log("-----------" + clazz.getName() + "  start-----------");
             Field[] fields = ReflectUtil.getStaticFields(clazz);
             for (Field field : fields) {
                 System.out.println(field.getName() + ": " + field.get(null));
+                PanelLog.log(field.getName() + ": " + field.get(null));
             }
-            System.out.println("-----------" + clazz.getName() + "  end-----------");
+            PanelLog.log("-----------" + clazz.getName() + "  end-----------");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

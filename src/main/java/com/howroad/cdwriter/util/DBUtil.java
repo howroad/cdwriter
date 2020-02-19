@@ -23,6 +23,7 @@ public class DBUtil {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -31,7 +32,8 @@ public class DBUtil {
             try {
                 conn = DriverManager.getConnection(PageConfig.URL, PageConfig.USER, PageConfig.PASSWORD);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
             }
         }
         return conn;
@@ -42,7 +44,8 @@ public class DBUtil {
             conn.close();
             conn = null;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
     public static PreparedStatement newPreparedStatement(String sql){
@@ -51,6 +54,7 @@ public class DBUtil {
             pre = getConn().prepareStatement(sql);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         return pre;
     }
@@ -62,6 +66,7 @@ public class DBUtil {
                 preparedStatement = null;
             } catch (SQLException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
             }
         }
     }
@@ -75,6 +80,7 @@ public class DBUtil {
             resultSet = preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         return resultSet;
     }
@@ -87,6 +93,7 @@ public class DBUtil {
                 resultset = null;
             } catch (SQLException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
             }
         }
     }
@@ -110,6 +117,7 @@ public class DBUtil {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         } finally {
 
         }

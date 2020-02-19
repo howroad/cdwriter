@@ -56,6 +56,7 @@ public class DataUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
     public static<T> T getObj(Class<T> clazz) {
@@ -67,6 +68,7 @@ public class DataUtil {
             obj = clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e1) {
             e1.printStackTrace();
+            throw new RuntimeException(e1.getMessage());
         }
         Field[] fileds = clazz.getDeclaredFields();
         int index = 0;
@@ -92,6 +94,7 @@ public class DataUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         return obj;
     }
@@ -104,6 +107,7 @@ public class DataUtil {
             obj = clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e1) {
             e1.printStackTrace();
+            throw new RuntimeException(e1.getMessage());
         }
         Field[] fileds = clazz.getDeclaredFields();
         int index = 0;
@@ -129,6 +133,7 @@ public class DataUtil {
             fileds[0].set(obj,null);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         return obj;
     }
@@ -160,6 +165,7 @@ public class DataUtil {
             fileds[0].set(obj,id);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         return obj;
     }
@@ -172,6 +178,7 @@ public class DataUtil {
             obj = clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e1) {
             e1.printStackTrace();
+            throw new RuntimeException(e1.getMessage());
         } 
         Field[] fileds = clazz.getDeclaredFields();
         try {
@@ -179,6 +186,7 @@ public class DataUtil {
             fileds[0].set(obj,id);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         return obj;
     }
@@ -206,8 +214,10 @@ public class DataUtil {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         reString = sb.toString();
         return reString;

@@ -9,14 +9,11 @@ package com.howroad.cdwriter.util;
  * @since 2020-01-14 11:20
  */
 
-import com.howroad.cdwriter.conf.SystemConfig;
+import com.howroad.log.PanelLog;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -43,8 +40,10 @@ public class CompileUtil {
             account = Class.forName("Account");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         System.out.println(account);
+        PanelLog.log(account);
     }
 
     public static void compile(String path, String outPath) {
@@ -54,8 +53,10 @@ public class CompileUtil {
             int compilationResult = -1;
             compilationResult = javac.run(null, null, null, "-g", "-verbose", path);
             System.out.println(compilationResult);
+            PanelLog.log(compilationResult);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -71,7 +72,8 @@ public class CompileUtil {
 //            Class<?> account = classloader.loadClass("Account");
 //            Class cl = Class.forName("Account", true, classloader);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 

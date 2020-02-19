@@ -35,6 +35,8 @@ public class PathConfig {
     /** 工程保存的修改字段的模版 */
     public static String MODIFY_COLUMN_TEMPLET;
 
+    public static void init(){}
+
     public static String CSV_PATH(){
         return IN_CODE_DIR() + "/map.csv";
     }

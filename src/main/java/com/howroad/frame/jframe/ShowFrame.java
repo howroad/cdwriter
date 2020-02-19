@@ -103,7 +103,7 @@ public class ShowFrame extends JFrame {
     public ShowFrame() {
 
         PanelLog.initLog(this.logPanel);
-        
+
         this.setBounds(0, 0, 280, 350);
         // 无相对位置
         this.setLocationRelativeTo(null);
@@ -279,6 +279,7 @@ public class ShowFrame extends JFrame {
                 Desktop.getDesktop().open(new File(filePanel.getText()));
             } catch (IOException ex) {
                 ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         });
     }
