@@ -2,6 +2,9 @@ package com.howroad.cdwriter.conf;
 
 import com.howroad.cdwriter.model.Table;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * <p>Title: PathConfig.java</p>
  * <p>Description: 所有的路径配置</p>
@@ -38,7 +41,8 @@ public class PathConfig {
     public static void init(){}
 
     public static String CSV_PATH(){
-        return IN_CODE_DIR() + "/map.csv";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return PageConfig.WORK_SPACE + "/map" + sdf.format(new Date()) + ".csv";
     }
 
     public static String OUT_CODE_DIR(){

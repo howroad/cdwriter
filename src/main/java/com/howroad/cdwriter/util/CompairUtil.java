@@ -4,6 +4,7 @@ import com.howroad.cdwriter.builder.TableBuilder;
 import com.howroad.cdwriter.conf.Config;
 import com.howroad.cdwriter.model.MyParam;
 import com.howroad.cdwriter.model.Table;
+import com.howroad.log.PanelLog;
 import org.apache.commons.lang3.Validate;
 import org.apache.poi.hssf.record.formula.functions.T;
 
@@ -27,6 +28,7 @@ public class CompairUtil {
         Validate.isTrue(table.getParamList() != null);
         Map<String, Map.Entry<String,Integer>> map = new HashMap<>();
         Field[] declaredFields = clazz.getDeclaredFields();
+        Integer notZero = 0;
         for (MyParam myParam : table.getParamList()) {
             String finalValue = null;
             int finalScore = 99;
@@ -45,6 +47,9 @@ public class CompairUtil {
             }
             Map.Entry<String,Integer> entry = new AbstractMap.SimpleEntry<>(finalValue, finalScore);
             map.put(columnName, entry);
+            if(finalScore != 0){
+                PanelLog.log("【可疑】" + columnName + "\t\t : " + finalValue + "\t\t : " + finalScore);
+            }
         }
         return map;
     }
