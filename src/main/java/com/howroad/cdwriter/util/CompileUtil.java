@@ -41,7 +41,6 @@ public class CompileUtil {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e.getMessage());
         }
-        System.out.println(account);
         PanelLog.log(account);
     }
 
@@ -50,8 +49,11 @@ public class CompileUtil {
             JavaCompiler javac;
             javac = ToolProvider.getSystemJavaCompiler();
             int compilationResult = -1;
-            compilationResult = javac.run(null, null, null, "-g", "-verbose", path);
-            PanelLog.log(compilationResult == 0 ? "编译成功：" + path : "编译失败：" + path );
+            compilationResult = javac.run(null, PanelLog.out, PanelLog.out, "-g", "-verbose", path);
+            if(compilationResult != 0){
+                throw new RuntimeException("编译失败！");
+            }
+            PanelLog.log("编译成功！");
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

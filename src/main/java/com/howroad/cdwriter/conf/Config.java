@@ -54,7 +54,6 @@ public class Config {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e.getMessage());
         } catch (NoSuchMethodException e) {
-            System.out.println(e.getClass().getSimpleName() + " : " + e.getMessage());
             PanelLog.log(e.getClass().getSimpleName() + " : " + e.getMessage());
             //e.printStackTrace();
             //throw new RuntimeException(e.getMessage());
@@ -108,11 +107,9 @@ public class Config {
 
     public static void log(Class clazz){
         try {
-            System.out.println("-----------" + clazz.getName() + "  start-----------");
             PanelLog.log("-----------" + clazz.getName() + "  start-----------");
             Field[] fields = ReflectUtil.getStaticFields(clazz);
             for (Field field : fields) {
-                System.out.println(field.getName() + ": " + field.get(null));
                 PanelLog.log(field.getName() + ": " + field.get(null));
             }
             PanelLog.log("-----------" + clazz.getName() + "  end-----------");

@@ -129,7 +129,6 @@ public class TableBuilder {
                 }
                 
                 String columnName = list.size() > 0 ? list.get(0) : "";
-                //PanelLog.log(columnName);
                 String type = list.size() > 1 ? list.get(1) : "";
                 String commont = list.size() > 2 ? list.get(2) : "";
                 String nullableStr = list.size() > 3 ? list.get(3) : "";

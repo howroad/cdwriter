@@ -2,9 +2,14 @@ package com.howroad.log;
 
 import com.howroad.frame.panel.LogPanel;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 public class PanelLog {
 
     private static LogPanel logPanel;
+
+    public static OutputStream out;
 
     private PanelLog(){}
 
@@ -20,17 +25,10 @@ public class PanelLog {
         if(logPanel == null){
             logPanel = logPanel0;
         }
+        out = logPanel0.getOutputStream();
     }
 
     public static void log(Object log0){
         logPanel.log(log0 == null ? null : log0.toString());
-    }
-
-    public static void exception(Exception exception){
-        logPanel.log("【Exception】" + exception.toString());
-        StackTraceElement[] stackTrace = exception.getStackTrace();
-        for (StackTraceElement stackTraceElement : stackTrace) {
-            logPanel.log(stackTraceElement.toString());
-        }
     }
 }

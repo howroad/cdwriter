@@ -162,7 +162,7 @@ public class LineUtil {
             }
             if(line.matches(reg2) ){
                 PanelLog.log("【重新编辑java文件】编辑前: " + list.get(i));
-                list.set(i,line.replaceAll("extends\\s+\\w+(?=(\\s+implements\\s+\\w+)?\\{)",""));
+                list.set(i,line.replaceAll("\\sextends\\s+\\w+(?=(\\s+implements\\s+\\w+)?\\s\\{)",""));
                 PanelLog.log("【重新编辑java文件】编辑后: " + list.get(i));
                 break;
             }

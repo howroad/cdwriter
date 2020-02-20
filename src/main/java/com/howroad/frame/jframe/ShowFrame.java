@@ -14,6 +14,7 @@ import com.howroad.log.PanelLog;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -51,6 +52,7 @@ public class ShowFrame extends JFrame {
     private JPanel settingPanel = new JPanel(new GridLayout(10, 2, 1, 1));
 
     private LogPanel logPanel = new LogPanel();
+    private  BoxLayout boxLayout = new BoxLayout(logPanel,BoxLayout.Y_AXIS);
 
     private JPanel sqlPanel = new JPanel(new GridLayout(9, 2, 1, 1));
 
@@ -121,6 +123,8 @@ public class ShowFrame extends JFrame {
         custPanel.add(dbFile);
         custPanel.add(showSqlBtn);
         custPanel.add(logBtn);
+
+        logPanel.setLayout(boxLayout);
         
         this.settingPanel.add(filePanel);
         this.settingPanel.add(uRLPanel);
@@ -217,7 +221,6 @@ public class ShowFrame extends JFrame {
                 writeProperties();
             } catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, e1.getMessage());
-                PanelLog.exception(e1);
                 e1.printStackTrace();
             }
         });
@@ -228,7 +231,6 @@ public class ShowFrame extends JFrame {
                 JOptionPane.showMessageDialog(null, "生成成功！");
                 writeProperties();
             } catch (Exception e1) {
-                PanelLog.exception(e1);
                 JOptionPane.showMessageDialog(null, e1.getMessage());
                 e1.printStackTrace();
             }
@@ -242,7 +244,6 @@ public class ShowFrame extends JFrame {
                 JOptionPane.showMessageDialog(null, "生成成功！");
                 writeProperties();
             } catch (Exception e1) {
-                PanelLog.exception(e1);
                 JOptionPane.showMessageDialog(null,e1.getClass().getSimpleName() + ":" + e1.getMessage());
                 e1.printStackTrace();
             }
@@ -253,7 +254,6 @@ public class ShowFrame extends JFrame {
                 Container.coreService.clear();
                 JOptionPane.showMessageDialog(null, "清除成功");
             } catch (Exception e1) {
-                PanelLog.exception(e1);
                 JOptionPane.showMessageDialog(null, e1.getMessage());
                 e1.printStackTrace();
             }
@@ -268,7 +268,6 @@ public class ShowFrame extends JFrame {
                 Container.coreService.createCustSql(this.sqlTables.getText(),this.sqlSqls.getText(),this.sqlPks.getText().toUpperCase());
                 JOptionPane.showMessageDialog(null, "生成成功");
             } catch (Exception e1) {
-                PanelLog.exception(e1);
                 JOptionPane.showMessageDialog(null, e1.getMessage());
                 e1.printStackTrace();
             }
@@ -284,7 +283,6 @@ public class ShowFrame extends JFrame {
             try {
                 Desktop.getDesktop().open(new File(filePanel.getText()));
             } catch (IOException ex) {
-                PanelLog.exception(ex);
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
