@@ -4,6 +4,7 @@ package com.howroad.frame.jframe;
 import com.howroad.cdwriter.conf.Config;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
+import com.howroad.cdwriter.conf.VersionConfig;
 import com.howroad.cdwriter.service.Container;
 import com.howroad.frame.panel.FilePane;
 import com.howroad.frame.panel.JoinSqlLine;
@@ -162,12 +163,13 @@ public class ShowFrame extends JFrame {
         this.contentPanel.add(logPanel);
         this.contentPanel.add(sqlPanel);
 
-        this.setTitle("cdWriter 1.1.16 howroad");
         this.setContentPane(contentPanel);
         //退出即关闭
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         init();
+
+        this.setTitle("cdWriter " + VersionConfig.cdWriterVersion + " howroad");
 
     }
 

@@ -5,9 +5,27 @@
 
 	<groupId>com.howroad</groupId>
 	<artifactId>cdwriter</artifactId>
-	<version>1.01.15</version>
+	<version>${cdWriterVersion}</version>
     <build>
         <plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>src\main\resources\com\howroad\cdwriter\conf\version.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

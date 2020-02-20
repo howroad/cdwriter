@@ -38,6 +38,9 @@ public class PathConfig {
     /** 工程保存的修改字段的模版 */
     public static String MODIFY_COLUMN_TEMPLET;
 
+    /** 版本编号文件 */
+    public static String VERSION_FILE_PATH;
+
     public static void init(){}
 
     public static String CSV_PATH(){

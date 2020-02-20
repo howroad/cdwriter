@@ -32,6 +32,8 @@ public class Config {
         initClass(WithoutLastMap.class, PathConfig.WITHOUT_MAP_PATH);
         //初始化FileNameMap
         initClassNotUp(FileNameMap.class, PathConfig.NAME_MAPING_PATH);
+        //初始化version
+        initClass(VersionConfig.class, PathConfig.VERSION_FILE_PATH);
 
         log(PathConfig.class);
         log(PageConfig.class);

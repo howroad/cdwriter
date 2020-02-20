@@ -3,11 +3,11 @@ ECHO ========================================
 ECHO      Auto Clean And Package
 ECHO =========================================
 ::设置版本start
-del version.properties
+del src\main\resources\com\howroad\cdwriter\conf\version.properties
 set filename=cdWriterVersion=1.%date:~5,2%.%date:~8,2%
 ::%time:~0,2%%time:~3,2%%time:~6,2%
 set "filename=%filename: =0%"
-echo %filename%>>version.properties
+echo %filename%>>src\main\resources\com\howroad\cdwriter\conf\version.properties
 ::设置版本end
 set javaPath=D:\jdk8\bin
 set projectDirectory=E:\Project\cdwriter
