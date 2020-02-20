@@ -13,8 +13,8 @@ public class VersionUtil {
 //        String titleReg = "this\\.setTitle\\(\"cdWriter\\s([\\d\\.]+)\\showroad\".+";
 //        String versionReg = "<version>([\\d\\.]+)</version>";
 //        String str2 = "\t<version>1.01.15</version>\n";
-        String line = "public class UmAccount extends Account implements SSS {";
-        String result = line.replaceAll("\\sextends\\s+\\w+(?=(\\s+implements\\s+\\w+)?\\s\\{)","");
+        String line = "public class Ebank extends EbankAccount{";
+        String result = line.replaceAll("\\sextends\\s+\\w+(?=(\\s+implements\\s+\\w+)?\\s?\\{)","");
         System.out.println(result);
     }
 }

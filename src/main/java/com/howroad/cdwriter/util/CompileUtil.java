@@ -49,7 +49,7 @@ public class CompileUtil {
             JavaCompiler javac;
             javac = ToolProvider.getSystemJavaCompiler();
             int compilationResult = -1;
-            compilationResult = javac.run(null, PanelLog.out, PanelLog.out, "-g", "-verbose", path);
+            compilationResult = javac.run(null, PanelLog.out, PanelLog.out, "-g", "-encoding", "utf-8", "-verbose", path);
             if(compilationResult != 0){
                 throw new RuntimeException("编译失败！");
             }

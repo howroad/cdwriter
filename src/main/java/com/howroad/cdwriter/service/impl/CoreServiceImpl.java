@@ -4,21 +4,18 @@ import com.howroad.cdwriter.builder.TableBuilder;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.model.Table;
-import com.howroad.cdwriter.rule.WithoutLastMap;
 import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.ICoreService;
 import com.howroad.cdwriter.util.CompairUtil;
-import com.howroad.cdwriter.util.ValidateUtil;
 import com.howroad.log.PanelLog;
 
 import java.io.File;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.jar.JarEntry;
-
-import static com.howroad.cdwriter.rule.WithoutLastMap.map;
 
 /**
  * <p>Title: ICoreServiceImpl.java</p>
@@ -107,11 +104,13 @@ public class CoreServiceImpl implements ICoreService {
     public void createFromDbAndFile() {
         List<Table> tables = TableBuilder.buildTableFromNames(PageConfig.tablesFromDB);
         List<Class<?>> classList = TableBuilder.buildClazzFromNames(PageConfig.modelFiles);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+        String fmt = sdf.format(new Date());
         for (int i = 0; i < tables.size(); i++) {
             Table table = tables.get(i);
             Class<?> clazz = classList.get(i);
             Map<String, Map.Entry<String, Integer>> map = CompairUtil.map(table, clazz);
-            Container.ioService.writeCsv(new File(PathConfig.CSV_PATH()), map);
+            Container.ioService.writeCsv(new File(PathConfig.CSV_PATH() + "/" + i + "_" + fmt + ".csv"), map);
             table.reloadColumnMap(map);
             Container.ioService.writeAllFileByJarTemplet(table);
             Container.ioService.writeAllFileByTemplet(table, PathConfig.OUT_CODE_DIR(), PathConfig.CUST_TEMPLET_DIR());

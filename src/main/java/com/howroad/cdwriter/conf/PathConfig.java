@@ -44,8 +44,7 @@ public class PathConfig {
     public static void init(){}
 
     public static String CSV_PATH(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        return PageConfig.WORK_SPACE + "/map" + sdf.format(new Date()) + ".csv";
+        return PageConfig.WORK_SPACE;
     }
 
     public static String OUT_CODE_DIR(){
