@@ -60,7 +60,7 @@
             $table{tableNo}.$param{columnName} = #$param{paramName}#
         </isNotNull>
         @{end}
-        WHERE $table{pkColumnName} = #$table{pkName}#
+        WHERE $table{tableNo}.$table{pkColumnName} = #$table{pkName}#
     </update>
 
     <!-- 查询$table{remark}列表 -->
