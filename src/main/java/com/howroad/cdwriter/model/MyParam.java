@@ -116,7 +116,7 @@ public class MyParam {
         map.put("columnName", this.columnName);
         map.put("columnType", this.type.getColumnTypeName());
         map.put("columnSize", String.valueOf(this.type.getColumnSize()));
-        map.put("defaultValue", StringUtils.isBlank(this.defaultValue ) ? "" :"DEFAULT " + this.defaultValue + " ");
+        map.put("defaultValue", StringUtils.isBlank(this.defaultValue ) ? "" :"DEFAULT ON NULL " + this.defaultValue + " ");
         map.put("nullable", this.nullable ? "" : "NOT NULL");
     }
 
