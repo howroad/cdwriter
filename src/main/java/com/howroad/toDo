@@ -122,3 +122,5 @@ map文件的删除
 
 
 应当增加自定义sql和Java文件的关联
+
+有则改之无则新增的方法 没有在修改时判空 有隐患 但是ibatis又有iterater中不能写isNotEmpty的BUG
