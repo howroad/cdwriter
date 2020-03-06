@@ -151,7 +151,7 @@
     <update id="saveOrUpdate$table{entityName}" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.$table{entityName}">
         MERGE INTO $table{tableName} $table{tableNo}
         USING DUAL
-            ON (T.$table{pkColumnName} = #$table{pkName}#)
+            ON ($table{tableNo}.$table{pkColumnName} = #$table{pkName}#)
         WHEN MATCHED THEN
         UPDATE
             SET
