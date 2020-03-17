@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class $table{entityName}ServiceImpl extends BaseServerImpl implements $table{entityName}Service {
     
-    Log logger = LogFactory.getLog(getClass());
+    private Log logger = LogFactory.getLog(getClass());
 
     /**
     * 新增$table{remark}

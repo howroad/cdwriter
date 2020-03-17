@@ -20,4 +20,5 @@ public interface TableContans {
     String BLOB = "BLOB";
     String NULL = "NULL";
     String NOTNULL = "NOT NULL";
+    String CLOB = "CLOB";
 }

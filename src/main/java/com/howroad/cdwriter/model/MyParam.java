@@ -101,7 +101,11 @@ public class MyParam {
         } else if (columnType.startsWith(TableContans.BLOB)) {
             this.type = new MyType(Types.BLOB, 0, 0);
             this.defaultValue = default0;
-        } else {
+        }else if(columnType.startsWith(TableContans.CLOB)){
+            this.type = new MyType(Types.CLOB, 0, 0);
+            this.defaultValue = default0;
+        }
+        else {
             throw new RuntimeException("未知类型 : " + columnType);
         }
         this.nullable = !TableContans.NOTNULL.equalsIgnoreCase(nullable0.trim());
