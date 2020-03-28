@@ -56,6 +56,9 @@ public class MyParam {
             case Types.BLOB:
                 this.defaultValue = defaultV;
                 break;
+            case Types.CLOB:
+                this.defaultValue = defaultV;
+                break;
             default:
                 throw new RuntimeException("未知的类型");
         }
