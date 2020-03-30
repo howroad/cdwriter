@@ -19,14 +19,12 @@ import java.util.Map;
 public class CommonMap {
     public static Map<String,String> map;
     public static void init(){
-        if(map == null){
-            //常量加载
-            map = PropertiesUtil.readJarPropertiesUpperCase(PathConfig.COMMON_MAP_PATH);
-            //变量加载
-            map.put("appNo", PageConfig.appNo);
-            map.put("appNoUpper", PageConfig.appNo.toUpperCase());
-            map.put("now",getNow());
-        }
+        //常量加载
+        map = PropertiesUtil.readJarPropertiesUpperCase(PathConfig.COMMON_MAP_PATH);
+        //变量加载
+        map.put("appNo", PageConfig.appNo);
+        map.put("appNoUpper", PageConfig.appNo.toUpperCase());
+        map.put("now",getNow());
     }
     private static String getNow() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

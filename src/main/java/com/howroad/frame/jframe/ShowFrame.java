@@ -5,6 +5,7 @@ import com.howroad.cdwriter.conf.Config;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.conf.VersionConfig;
+import com.howroad.cdwriter.rule.CommonMap;
 import com.howroad.cdwriter.service.Container;
 import com.howroad.frame.panel.FilePane;
 import com.howroad.frame.panel.JoinSqlLine;
@@ -202,6 +203,7 @@ public class ShowFrame extends JFrame {
         PageConfig.tablesFromDB = tablesPanel.getText().split(",");
         PageConfig.modelFiles = filesPanel.getText().split(",");
         PageConfig.SEQ_ON_LAST = Boolean.valueOf(seqDirPanel.getText());
+        CommonMap.init();
     }
 
     private void addListener(){
