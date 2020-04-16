@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -150,7 +151,7 @@ public class ExcelUtil {
             value = "";
             break;
         }
-        if (value.equals("") || value == null) {
+        if (StringUtils.isBlank(value)) {
             value = "";
         }
         return value;

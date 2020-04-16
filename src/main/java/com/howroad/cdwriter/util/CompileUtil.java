@@ -68,8 +68,6 @@ public class CompileUtil {
             Method add = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]{URL.class});
             add.setAccessible(true);
             add.invoke(classloader, new Object[]{url});
-//            Class<?> account = classloader.loadClass("Account");
-//            Class cl = Class.forName("Account", true, classloader);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

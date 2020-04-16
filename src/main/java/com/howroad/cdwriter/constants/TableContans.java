@@ -21,4 +21,6 @@ public interface TableContans {
     String NULL = "NULL";
     String NOTNULL = "NOT NULL";
     String CLOB = "CLOB";
+    String SPILIT_CHAR = ",";
+    String TABLE_PREFIX = "UM_";
 }

@@ -10,7 +10,6 @@ import com.howroad.cdwriter.util.CompileUtil;
 import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.ExcelUtil;
 import com.howroad.cdwriter.util.LineUtil;
-import com.howroad.log.PanelLog;
 import oracle.jdbc.driver.OracleConnection;
 import org.apache.commons.lang3.StringUtils;
 
@@ -109,7 +108,7 @@ public class TableBuilder {
      */
     public static List<Table> buildTableFromExcel(int sheetNo) {
         //excel 导入数据
-        File file = new File(PathConfig.EXCEL_PATH());
+        File file = new File(PathConfig.excelPath());
         List<List<String>> dataList= null;
         List<Table> tableList = new ArrayList<Table>();
         
@@ -181,14 +180,14 @@ public class TableBuilder {
     public static List<Class<?>> buildClazzFromNames(String[] modelFiles) {
         List<Class<?>> list = new ArrayList<>();
         for (String modelFile : modelFiles) {
-            List<String> lineList = Container.ioService.readToLine(new File(PathConfig.IN_CODE_DIR() + modelFile));
-            File javaFile = new File(PathConfig.IN_CODE_DIR() + modelFile);
+            List<String> lineList = Container.ioService.readToLine(new File(PathConfig.inCodeDir() + modelFile));
+            File javaFile = new File(PathConfig.inCodeDir() + modelFile);
             LineUtil.rebuildFile(lineList);
             Container.ioService.write(javaFile, lineList, "utf8");
             //编译该java文件到虚拟机
-            CompileUtil.compile(PathConfig.IN_CODE_DIR() + modelFile,null);
+            CompileUtil.compile(PathConfig.inCodeDir() + modelFile,null);
             //加载自定义的classPath
-            CompileUtil.addClassLoader(PathConfig.IN_CODE_DIR());
+            CompileUtil.addClassLoader(PathConfig.inCodeDir());
             Class<?> clazz = null;
             try {
                 clazz = Class.forName(modelFile.replace(".java",""));

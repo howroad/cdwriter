@@ -5,6 +5,10 @@ import com.howroad.frame.panel.LogPanel;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+/**
+ * 日志Panel
+ * @author luhao
+ */
 public class PanelLog {
 
     private static LogPanel logPanel;

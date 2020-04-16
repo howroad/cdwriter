@@ -67,8 +67,11 @@ public class Table{
         }
         this.initMap();
     }
-    
-    //获得缩写
+
+    /**
+     * 获得缩写
+     * @return 表缩写根据下划线分割的第一个英文单词的缩写
+     */
     public String tableNo() {
         String tableName = getTableName();
         String reg = "[^\\_]+";
@@ -134,7 +137,7 @@ public class Table{
      */
     public String getEntityName() {
         String entityName = null;
-        if(tableName.toUpperCase().startsWith("UM_")) {
+        if(tableName.toUpperCase().startsWith(TableContans.TABLE_PREFIX)) {
             entityName = tableName.substring(tableName.indexOf(TableContans.UNDER_LINE) + 1);
             entityName = "UM_" + entityName.substring(entityName.indexOf(TableContans.UNDER_LINE) + 1);
         }else if (tableName.contains(TableContans.UNDER_LINE)) {

@@ -45,21 +45,21 @@ public class CoreServiceImpl implements ICoreService {
         List<Table> tables = TableBuilder.buildTableFromExcel(0);
         for (Table table : tables) {
             Container.ioService.writeAllFileByJarTemplet(table);
-            Container.ioService.writeAllFileByTemplet(table, PathConfig.OUT_CODE_DIR(), PathConfig.CUST_TEMPLET_DIR());
+            Container.ioService.writeAllFileByTemplet(table, PathConfig.outCodeDir(), PathConfig.custTempletDir());
         }
 
         List<Table> tableAddColumns = TableBuilder.buildTableFromExcel(1);
         for (Table table : tableAddColumns) {
             //新增字段的模版
             InputStream addColumnTemplet = Container.ioService.getTemplet(PathConfig.ADD_COLUMN_TEMPLET);
-            Container.ioService.writeFileByTemplet(addColumnTemplet, new File(PathConfig.ADD_COLUMN_PATH(table)),table);
+            Container.ioService.writeFileByTemplet(addColumnTemplet, new File(PathConfig.addColumnPath(table)),table);
         }
 
         List<Table> tableModifyColumns = TableBuilder.buildTableFromExcel(2);
         for (Table table : tableModifyColumns) {
             //修改字段的模版
             InputStream modifyColumnTemplet = Container.ioService.getTemplet(PathConfig.MODIFY_COLUMN_TEMPLET);
-            Container.ioService.writeFileByTemplet(modifyColumnTemplet, new File(PathConfig.MODIFY_COLUMN_PATH(table)),table);
+            Container.ioService.writeFileByTemplet(modifyColumnTemplet, new File(PathConfig.modifyColumnPath(table)),table);
        }
     }
 
@@ -68,7 +68,7 @@ public class CoreServiceImpl implements ICoreService {
         List<Table> tables = TableBuilder.buildTableFromNames(PageConfig.tablesFromDB);
         for (Table table : tables) {
             Container.ioService.writeAllFileByJarTemplet(table);
-            Container.ioService.writeAllFileByTemplet(table, PathConfig.OUT_CODE_DIR(), PathConfig.CUST_TEMPLET_DIR());
+            Container.ioService.writeAllFileByTemplet(table, PathConfig.outCodeDir(), PathConfig.custTempletDir());
             Container.ioService.writeDataFile(table);
         }
 
@@ -110,10 +110,10 @@ public class CoreServiceImpl implements ICoreService {
             Table table = tables.get(i);
             Class<?> clazz = classList.get(i);
             Map<String, Map.Entry<String, Integer>> map = CompairUtil.map(table, clazz);
-            Container.ioService.writeCsv(new File(PathConfig.CSV_PATH() + "/" + i + "_" + fmt + ".csv"), map);
+            Container.ioService.writeCsv(new File(PathConfig.csvPath() + "/" + i + "_" + fmt + ".csv"), map);
             table.reloadColumnMap(map);
             Container.ioService.writeAllFileByJarTemplet(table);
-            Container.ioService.writeAllFileByTemplet(table, PathConfig.OUT_CODE_DIR(), PathConfig.CUST_TEMPLET_DIR());
+            Container.ioService.writeAllFileByTemplet(table, PathConfig.outCodeDir(), PathConfig.custTempletDir());
             Container.ioService.writeDataFile(table);
         }
     }

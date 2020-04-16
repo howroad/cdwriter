@@ -65,7 +65,7 @@ public class DatabaseServiceImpl implements IDatabaseService {
     }
 
     @Override
-    public String defaultDDL(String tableName) {
+    public String defaultDdl(String tableName) {
         tableName = tableName.toUpperCase();
         String sql = "SELECT DBMS_METADATA.GET_DDL('TABLE','" + tableName + "') FROM DUAL";
         List<List<Object>> list = DBUtil.query(sql);
@@ -162,7 +162,8 @@ public class DatabaseServiceImpl implements IDatabaseService {
                 Object object = iterator.next();
                 String value = table.getInsertValue(object, table.getParamList().get(index++));
                 last = !iterator.hasNext();
-                boolean use = false;//此处不应有序列
+                //此处不应有序列
+                boolean use = false;
                 if(last) {
                     sb2.append(value);
                 }else {

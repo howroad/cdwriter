@@ -2,9 +2,6 @@ package com.howroad.cdwriter.conf;
 
 import com.howroad.cdwriter.model.Table;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * <p>Title: PathConfig.java</p>
  * <p>Description: 所有的路径配置</p>
@@ -43,37 +40,37 @@ public class PathConfig {
 
     public static void init(){}
 
-    public static String CSV_PATH(){
+    public static String csvPath(){
         return PageConfig.WORK_SPACE;
     }
 
-    public static String OUT_CODE_DIR(){
+    public static String outCodeDir(){
         return PageConfig.WORK_SPACE + "/out";
     }
-    public static String CUST_TEMPLET_DIR(){
+    public static String custTempletDir(){
         return PageConfig.WORK_SPACE + "/templet";
     }
-    public static String EXCEL_PATH(){
+    public static String excelPath(){
         return PageConfig.WORK_SPACE + "/1.xlsx";
     }
 
-    public static String OUT_SQL_DIR() {
-        return OUT_CODE_DIR() + "/sqls/";
+    public static String outSqlDir() {
+        return outCodeDir() + "/sqls/";
     }
-    public static String OUT_SQL_PATH(Table table){
-        return OUT_CODE_DIR() + "/sqls/" + table.getTableName() + ".SQL";
+    public static String outSqlPath(Table table){
+        return outCodeDir() + "/sqls/" + table.getTableName() + ".SQL";
     }
-    public static String OUT_SQL_PATH_CUST(Table table){
-        return OUT_CODE_DIR() + "/sqls/cust/" + table.getTableName() + ".SQL";
+    public static String outSqlPathCust(Table table){
+        return outCodeDir() + "/sqls/cust/" + table.getTableName() + ".SQL";
     }
-    public static String ADD_COLUMN_PATH(Table table){
-        return OUT_CODE_DIR() + "/db/patch/" + table.getTableName() + ".TAB";
+    public static String addColumnPath(Table table){
+        return outCodeDir() + "/db/patch/" + table.getTableName() + ".TAB";
     }
-    public static String MODIFY_COLUMN_PATH(Table table){
-        return OUT_CODE_DIR() + "/db/patch/" + table.getTableName() + "2.TAB";
+    public static String modifyColumnPath(Table table){
+        return outCodeDir() + "/db/patch/" + table.getTableName() + "2.TAB";
     }
 
-    public static String IN_CODE_DIR(){
+    public static String inCodeDir(){
         return PageConfig.WORK_SPACE + "/in/";
     }
 }

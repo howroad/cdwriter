@@ -81,8 +81,8 @@ public class MyParam {
         } else if (columnType.startsWith(TableContans.NUMBER)) {
             if (mat.find()) {
                 String inner = mat.group();
-                if(inner.contains(",")){
-                    this.type = new MyType(Types.DECIMAL, new Integer(inner.split(",")[0]), new Integer(inner.split(",")[1]));
+                if(inner.contains(TableContans.SPILIT_CHAR)){
+                    this.type = new MyType(Types.DECIMAL, new Integer(inner.split(TableContans.SPILIT_CHAR)[0]), new Integer(inner.split(TableContans.SPILIT_CHAR)[1]));
                 }else{
                     this.type = new MyType(Types.DECIMAL, new Integer(inner), NumberUtils.INTEGER_ZERO);
                 }

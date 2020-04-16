@@ -15,6 +15,7 @@ import com.howroad.frame.panel.TextPane;
 import com.howroad.log.PanelLog;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,11 +26,13 @@ import javax.swing.WindowConstants;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Properties;
+import java.util.function.Consumer;
 
 
 /**
@@ -60,7 +63,7 @@ public class ShowFrame extends JFrame {
 
     /** settings start */
     private FilePane filePanel = new FilePane("...", TEXT_LENGTH);
-    private TextPane uRLPanel = new TextPane("url:", TEXT_LENGTH);
+    private TextPane urlPanel = new TextPane("url:", TEXT_LENGTH);
     private TextPane userNamePanel = new TextPane("user:", TEXT_LENGTH);
     private TextPane passwordPanel = new TextPane("pwd:", TEXT_LENGTH);
 
@@ -76,7 +79,7 @@ public class ShowFrame extends JFrame {
     private JButton conBtn = new JButton("cnn");
     private JButton runBtnExcel = new JButton("RnEx");
     private JButton clearBtn = new JButton("clr");
-    private JButton runBtnDB = new JButton("RnDb");
+    private JButton runBtnDb = new JButton("RnDb");
 
     private JButton showSqlBtn = new JButton("sql>");
     private JButton openEx = new JButton("opEx");
@@ -91,7 +94,6 @@ public class ShowFrame extends JFrame {
     private JButton createSql = new JButton("生成sql");
 
 
-    //JOIN
     private JoinSqlLine joinSqlLine1 = new JoinSqlLine(true);
     private JoinSqlLine joinSqlLine2 = new JoinSqlLine(false);
     private JoinSqlLine joinSqlLine3 = new JoinSqlLine(false);
@@ -118,7 +120,7 @@ public class ShowFrame extends JFrame {
         
         btnPanel.add(conBtn);
         btnPanel.add(runBtnExcel);
-        btnPanel.add(runBtnDB);
+        btnPanel.add(runBtnDb);
         btnPanel.add(clearBtn);
 
         custPanel.add(openEx);
@@ -129,7 +131,7 @@ public class ShowFrame extends JFrame {
         logPanel.setLayout(boxLayout);
         
         this.settingPanel.add(filePanel);
-        this.settingPanel.add(uRLPanel);
+        this.settingPanel.add(urlPanel);
         this.settingPanel.add(userNamePanel);
         this.settingPanel.add(passwordPanel);
         this.settingPanel.add(appNoPanel);
@@ -139,26 +141,13 @@ public class ShowFrame extends JFrame {
         this.settingPanel.add(btnPanel);
         this.settingPanel.add(custPanel);
 
-        /**sql panel start*/
+        //sql panel start
         sqlPanel.add(sqlTables);
         sqlPanel.add(sqlSqls);
         sqlPanel.add(sqlPks);
         sqlBtnPanel.add(createSql);
         sqlPanel.add(sqlBtnPanel);
-
-        /*
-        sqlPanel.add(joinSqlLine1);
-        sqlPanel.add(joinSqlLine2);
-        sqlPanel.add(joinSqlLine3);
-        sqlPanel.add(joinSqlLine4);
-        sqlPanel.add(joinSqlLine5);
-
-        joinBtnPanel.add(joinBtnOnSqlId);
-        joinBtnPanel.add(joinBtnOnColumn);
-        sqlPanel.add(joinBtnPanel);
-         */
-
-        /**sql panel end*/
+        //sql panel end
 
         this.contentPanel.add(settingPanel);
         this.contentPanel.add(logPanel);
@@ -186,7 +175,7 @@ public class ShowFrame extends JFrame {
     private void loadConfig(){
         seqDirPanel.setText(BooleanUtils.toStringTrueFalse(PageConfig.SEQ_ON_LAST));
         filePanel.setText(PageConfig.WORK_SPACE);
-        uRLPanel.setText(PageConfig.URL == null ? "" : PageConfig.URL.replace("jdbc:oracle:thin:@", ""));
+        urlPanel.setText(PageConfig.URL == null ? "" : PageConfig.URL.replace("jdbc:oracle:thin:@", ""));
         userNamePanel.setText(PageConfig.USER);
         passwordPanel.setText(PageConfig.PASSWORD);
         appNoPanel.setText(PageConfig.appNo);
@@ -196,7 +185,7 @@ public class ShowFrame extends JFrame {
 
     private void reLoadConfig(){
         PageConfig.WORK_SPACE = filePanel.getText();
-        PageConfig.URL = "jdbc:oracle:thin:@" + uRLPanel.getText();
+        PageConfig.URL = "jdbc:oracle:thin:@" + urlPanel.getText();
         PageConfig.USER = userNamePanel.getText();
         PageConfig.PASSWORD = passwordPanel.getText();
         PageConfig.appNo = appNoPanel.getText();
@@ -206,91 +195,69 @@ public class ShowFrame extends JFrame {
         CommonMap.init();
     }
 
+    private void addBtnListener(JButton jButton, Consumer<ActionEvent> consumer) {
+        jButton.addActionListener(e -> {
+            try{
+                consumer.accept(e);
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, e1.getMessage());
+                //报错信息将会打印在日志页面
+                e1.printStackTrace();
+            }
+        });
+    }
+
     private void addListener(){
-        conBtn.addActionListener((e) -> {
+        addBtnListener(conBtn, e -> {
             reLoadConfig();
-            if(Container.coreService.testCoonect()){
-                JOptionPane.showMessageDialog(null, "连接成功！");
-                writeProperties();
-            }else{
-                JOptionPane.showMessageDialog(null, "连接失败！");
-            }
+            boolean b = Container.coreService.testCoonect();
+            Validate.isTrue(b,"连接失败！");
+            JOptionPane.showMessageDialog(null, "连接成功！");
         });
-
-        runBtnExcel.addActionListener((e) -> {
-            try {
-                reLoadConfig();
-                Container.coreService.createFromXls();
-                JOptionPane.showMessageDialog(null, "生成成功！");
-                writeProperties();
-            } catch (Exception e1) {
-                JOptionPane.showMessageDialog(null, e1.getMessage());
-                e1.printStackTrace();
-            }
-        });
-        runBtnDB.addActionListener((e) -> {
-            try {
-                reLoadConfig();
-                Container.coreService.createFromDb();
-                JOptionPane.showMessageDialog(null, "生成成功！");
-                writeProperties();
-            } catch (Exception e1) {
-                JOptionPane.showMessageDialog(null, e1.getMessage());
-                e1.printStackTrace();
-            }
-        });
-        dbFile.addActionListener((e) -> {
-            try {
-                reLoadConfig();
-                //清除class文件
-                Container.ioService.clearWithReg(new File(PathConfig.IN_CODE_DIR()), new String[]{".+\\.class"}, new String[]{});
-                Container.coreService.createFromDbAndFile();
-                JOptionPane.showMessageDialog(null, "生成成功！");
-                writeProperties();
-            } catch (Exception e1) {
-                JOptionPane.showMessageDialog(null,e1.getClass().getSimpleName() + ":" + e1.getMessage());
-                e1.printStackTrace();
-            }
-        });
-        clearBtn.addActionListener((e) -> {
-            try {
-                reLoadConfig();
-                Container.coreService.clear();
-                JOptionPane.showMessageDialog(null, "清除成功");
-            } catch (Exception e1) {
-                JOptionPane.showMessageDialog(null, e1.getMessage());
-                e1.printStackTrace();
-            }
-        });
-
-        //自定义事件
-        createSql.addActionListener(e ->{
+        addBtnListener(runBtnExcel, e ->{
             reLoadConfig();
+            Container.coreService.createFromXls();
+            writeProperties();
+            JOptionPane.showMessageDialog(null, "生成成功！");
+        });
+        addBtnListener(runBtnDb, e ->{
+            reLoadConfig();
+            Container.coreService.createFromDb();
+            JOptionPane.showMessageDialog(null, "生成成功！");
+            writeProperties();
+        });
+        addBtnListener(dbFile, e ->{
+            reLoadConfig();
+            //清除class文件
+            Container.ioService.clearWithReg(new File(PathConfig.inCodeDir()), new String[]{".+\\.class"}, new String[]{});
+            Container.coreService.createFromDbAndFile();
+            JOptionPane.showMessageDialog(null, "生成成功！");
+            writeProperties();
+        });
+        addBtnListener(clearBtn, e ->{
+            reLoadConfig();
+            Container.coreService.clear();
+            JOptionPane.showMessageDialog(null, "清除成功");
+        });
+        addBtnListener(createSql, e ->{
+            reLoadConfig();
+            Container.coreService.createCustSql(this.sqlTables.getText(),this.sqlSqls.getText(),this.sqlPks.getText().toUpperCase());
+            JOptionPane.showMessageDialog(null, "生成成功");
+        });
+        addBtnListener(openEx, e ->{
             try {
-                //Start.ta0723BuildSql();
-                //Start.N0801SQL();
-                Container.coreService.createCustSql(this.sqlTables.getText(),this.sqlSqls.getText(),this.sqlPks.getText().toUpperCase());
-                JOptionPane.showMessageDialog(null, "生成成功");
-            } catch (Exception e1) {
-                JOptionPane.showMessageDialog(null, e1.getMessage());
-                e1.printStackTrace();
+                Desktop.getDesktop().open(new File(filePanel.getText()));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
-
         logBtn.addActionListener(e -> {
             showOrHidePanel(this.logPanel);
         });
         showSqlBtn.addActionListener(e ->{
             showOrHidePanel(this.sqlPanel);
         });
-        openEx.addActionListener(e ->{
-            try {
-                Desktop.getDesktop().open(new File(filePanel.getText()));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        });
+
     }
     /**
      * 写入配置文件
@@ -337,5 +304,7 @@ public class ShowFrame extends JFrame {
         contentPanel.add(panel);
         pack();
     }
-    
+
+
+
 }

@@ -1,7 +1,6 @@
 package com.howroad.cdwriter.service.impl;
 
 import com.google.common.io.Files;
-import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.conf.SystemConfig;
 import com.howroad.cdwriter.model.Table;
@@ -40,7 +39,7 @@ import java.util.Set;
  * @author luhao
  * @since：2019-10-12 16:46
  */
-public class IOServiceImpl implements IIOService {
+public class IoServiceImpl implements IIOService {
 
     @Override
     public List<String> readToLine(InputStream ins, String code) {
@@ -70,7 +69,7 @@ public class IOServiceImpl implements IIOService {
     public List<String> readToLine(File file) {
         List<String> strings = null;
         try {
-            String code = get_charset(file);
+            String code = getCharset(file);
             strings = Files.readLines(file, Charset.forName(code));
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
@@ -159,7 +158,7 @@ public class IOServiceImpl implements IIOService {
     @Override
     public Map<String,InputStream> getAllJarTemplet() {
         Set<String> names = FileNameMap.localMap.keySet();
-        Map<String,InputStream> result = new HashMap<>();
+        Map<String,InputStream> result = new HashMap<>(64);
         for (String name : names) {
             InputStream stream = Class.class.getResourceAsStream(PathConfig.TEMPLET_DIR + name);
             if(stream == null){
@@ -182,7 +181,9 @@ public class IOServiceImpl implements IIOService {
         outDirFile.mkdirs();
         File tmpletDirFile = new File(templetDir);
         File[] files = tmpletDirFile.listFiles(file -> file.isDirectory() || file.getName().endsWith(SystemConfig.SUFFIX));
-        if(files == null) return;
+        if(files == null) {
+            return;
+        }
         for (File file : files) {
             if(file.isFile()){
                 List<String> lineList = readToLine(file);
@@ -198,7 +199,7 @@ public class IOServiceImpl implements IIOService {
 
     @Override
     public void writeAllFileByJarTemplet(Table table) {
-        File outDirFile = new File(PathConfig.OUT_CODE_DIR());
+        File outDirFile = new File(PathConfig.outCodeDir());
         outDirFile.mkdirs();
         Map<String, InputStream> allJarTemplet = getAllJarTemplet();
         Set<String> keySet = allJarTemplet.keySet();
@@ -206,7 +207,7 @@ public class IOServiceImpl implements IIOService {
             String fileName = LineUtil.buildName(key, table);
             List<String> lineList = readToLine(allJarTemplet.get(key), SystemConfig.INPUT_CODE);
             List<String> newLine = LineUtil.buildNewLine(lineList, table);
-            write(PathConfig.OUT_CODE_DIR() + "/" + fileName, newLine);
+            write(PathConfig.outCodeDir() + "/" + fileName, newLine);
         }
     }
 
@@ -214,18 +215,18 @@ public class IOServiceImpl implements IIOService {
     public void writeDataFile(Table table) {
         List<List<Object>> listList = DBUtil.query("SELECT * FROM " + table.getTableName() + " WHERE ROWNUM <= 200 ORDER BY 1");
         List<String> line = Container.databaseService.dataToLine(table, listList);
-        write(new File(PathConfig.OUT_SQL_PATH(table)), line);
+        write(new File(PathConfig.outSqlPath(table)), line);
     }
 
     @Override
     public void writeDataFile(Table table, String sql, String[] primaryColUpKeys) {
         List<String> line = Container.databaseService.custDataToLine(table, sql, primaryColUpKeys);
-        write(new File(PathConfig.OUT_SQL_PATH_CUST(table)), line);
+        write(new File(PathConfig.outSqlPathCust(table)), line);
     }
 
     @Override
     public void clear() {
-        Container.ioService.clearWithReg(new File(PathConfig.OUT_CODE_DIR()), new String[]{".+\\.+(java|xml|Table|PDC)"}, new String[]{});
+        Container.ioService.clearWithReg(new File(PathConfig.outCodeDir()), new String[]{".+\\.+(java|xml|Table|PDC)"}, new String[]{});
     }
 
     @Override
@@ -317,7 +318,8 @@ public class IOServiceImpl implements IIOService {
      * @param file
      * @return
      */
-    public static String get_charset( File file ) {
+    @SuppressWarnings("AlibabaUndefineMagicConstant")
+    public static String getCharset(File file ) {
         String charset = "GBK";
         byte[] first3Bytes = new byte[3];
         try {
@@ -325,7 +327,9 @@ public class IOServiceImpl implements IIOService {
             BufferedInputStream bis = new BufferedInputStream( new FileInputStream( file ) );
             bis.mark( 0 );
             int read = bis.read( first3Bytes, 0, 3 );
-            if ( read == -1 ) return charset;
+            if ( read == -1 ) {
+                return charset;
+            }
             if ( first3Bytes[0] == (byte) 0xFF && first3Bytes[1] == (byte) 0xFE ) {
                 charset = "UTF-16LE";
                 checked = true;
@@ -345,17 +349,26 @@ public class IOServiceImpl implements IIOService {
 
                 while ( (read = bis.read()) != -1 ) {
                     loc++;
-                    if ( read >= 0xF0 ) break;
-                    if ( 0x80 <= read && read <= 0xBF ) // 单独出现BF以下的，也算是GBK
+                    if ( read >= 0xF0 ) {
                         break;
+                    }
+                    // 单独出现BF以下的，也算是GBK
+                    if ( 0x80 <= read && read <= 0xBF )
+                    {
+                        break;
+                    }
                     if ( 0xC0 <= read && read <= 0xDF ) {
                         read = bis.read();
-                        if ( 0x80 <= read && read <= 0xBF ) // 双字节 (0xC0 - 0xDF) (0x80
-                            // - 0xBF),也可能在GB编码内
+                        // 双字节 (0xC0 - 0xDF) (0x80 - 0xBF),也可能在GB编码内
+                        if ( 0x80 <= read && read <= 0xBF )
+                        {
                             continue;
-                        else break;
+                        } else {
+                            break;
+                        }
                     }
-                    else if ( 0xE0 <= read && read <= 0xEF ) {// 也有可能出错，但是几率较小
+                    // 也有可能出错，但是几率较小
+                    else if ( 0xE0 <= read && read <= 0xEF ) {
                         read = bis.read();
                         if ( 0x80 <= read && read <= 0xBF ) {
                             read = bis.read();
@@ -363,12 +376,15 @@ public class IOServiceImpl implements IIOService {
                                 charset = "UTF-8";
                                 break;
                             }
-                            else break;
+                            else {
+                                break;
+                            }
                         }
-                        else break;
+                        else {
+                            break;
+                        }
                     }
                 }
-                //System.out.println( loc + " " + Integer.toHexString( read ) );
             }
 
             bis.close();

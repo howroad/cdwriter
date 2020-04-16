@@ -75,8 +75,6 @@ public class LineUtil {
                             outStr = replaceTemplet(string, param.getMap(), "param");
                             outStr = replaceTemplet(outStr, table.getMap(), "table");
 
-                            //将date 变为 SYSDATE
-                            //outStr = outStr.replaceAll("#(updateDate|updateTime)#", "SYSDATE");
                             if(iterator.hasNext()) {
                                 outStr = replaceTemplet(outStr, CommonMap.map, "split");
                             }else {

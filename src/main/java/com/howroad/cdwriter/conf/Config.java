@@ -57,8 +57,6 @@ public class Config {
             throw new RuntimeException(e.getMessage());
         } catch (NoSuchMethodException e) {
             PanelLog.log(e.getClass().getSimpleName() + " : " + e.getMessage());
-            //e.printStackTrace();
-            //throw new RuntimeException(e.getMessage());
         } catch (InvocationTargetException e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
@@ -99,8 +97,6 @@ public class Config {
             throw new RuntimeException(e.getMessage());
         } catch (NoSuchMethodException e) {
             PanelLog.log(e.getClass().getSimpleName() + " : " + e.getMessage());
-            //e.printStackTrace();
-            //throw new RuntimeException(e.getMessage());
         } catch (InvocationTargetException e) {
             throw new RuntimeException(e.getMessage());
         }

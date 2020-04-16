@@ -42,8 +42,6 @@ public class LogPanel extends JPanel {
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        //jTextArea.setEditable(false);
-
         outputStream = new OutputStream() {
             @Override
             public void write(int b) throws IOException {

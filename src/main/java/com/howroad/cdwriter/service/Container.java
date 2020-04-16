@@ -18,6 +18,6 @@ public class Container {
     static{
         databaseService = new DatabaseServiceImpl();
         coreService = new CoreServiceImpl();
-        ioService = new IOServiceImpl();
+        ioService = new IoServiceImpl();
     }
 }

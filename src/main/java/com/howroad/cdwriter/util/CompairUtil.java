@@ -26,7 +26,7 @@ public class CompairUtil {
     public static  Map<String, Map.Entry<String,Integer>> map(Table table, Class<?> clazz){
         Validate.isTrue(table != null);
         Validate.isTrue(table.getParamList() != null);
-        Map<String, Map.Entry<String,Integer>> map = new HashMap<>();
+        Map<String, Map.Entry<String,Integer>> map = new HashMap<>(64);
         Field[] declaredFields = clazz.getDeclaredFields();
         Integer notZero = 0;
         Integer isZero = 0;
@@ -83,7 +83,7 @@ public class CompairUtil {
      * @return
      */
     private static int minDistance(String str, String target) {
-        int d[][];              // 矩阵
+        int[][] d;              // 矩阵
         int n = str.length();
         int m = target.length();
         int i;                  // 遍历str的

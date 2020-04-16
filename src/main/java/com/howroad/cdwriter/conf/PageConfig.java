@@ -25,7 +25,7 @@ public class PageConfig {
     /** 序列规则 */
     public static Boolean SEQ_ON_LAST;
 
-    // 输出工作空间
+    /** 输出工作空间 */
     public static String WORK_SPACE;
 
     public static void init(){}
