@@ -124,6 +124,7 @@ public class MyParam {
         map.put("columnType", this.type.getColumnTypeName());
         map.put("columnSize", String.valueOf(this.type.getColumnSize()));
         map.put("defaultValue", StringUtils.isBlank(this.defaultValue ) ? "" :"DEFAULT ON NULL " + this.defaultValue + " ");
+        //TODO 实际上dafault on null的时候就自动设置了not null
         map.put("nullable", this.nullable ? "" : "NOT NULL");
     }
 
