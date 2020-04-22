@@ -1,6 +1,8 @@
 package com.howroad.cdwriter.service;
 
-import com.howroad.cdwriter.service.impl.*;
+import com.howroad.cdwriter.service.impl.CoreServiceImpl;
+import com.howroad.cdwriter.service.impl.DatabaseServiceImpl;
+import com.howroad.cdwriter.service.impl.IoServiceImpl;
 
 /**
  * <p>Title: Container.java</p>
@@ -13,7 +15,7 @@ import com.howroad.cdwriter.service.impl.*;
 public class Container {
     public static IDatabaseService databaseService;
     public static ICoreService coreService;
-    public static IIOService ioService;
+    public static IIoService ioService;
 
     static{
         databaseService = new DatabaseServiceImpl();

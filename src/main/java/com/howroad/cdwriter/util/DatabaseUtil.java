@@ -1,10 +1,12 @@
 package com.howroad.cdwriter.util;
 
-import com.howroad.cdwriter.conf.Config;
 import com.howroad.cdwriter.conf.PageConfig;
-import com.howroad.cdwriter.conf.PathConfig;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ import java.util.List;
  * @author luhao
  * @since 2019-11-01 09:04
  */
-public class DBUtil {
+public class DatabaseUtil {
     private static Connection conn;
     static {
         try {

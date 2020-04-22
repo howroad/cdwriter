@@ -6,7 +6,6 @@ import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.rule.CommonMap;
 import com.howroad.cdwriter.rule.FileNameMap;
 import com.howroad.cdwriter.rule.WithoutLastMap;
-import com.howroad.frame.panel.LogPanel;
 import com.howroad.log.PanelLog;
 import org.apache.commons.lang3.StringUtils;
 
@@ -40,11 +39,11 @@ public class LineUtil {
 
         String outStr = null;
         for (String line : lineList) {
-            if(line.matches("^.*\\@\\{\\/delete\\}.*$")) {
+            if(line.matches("^.*@\\{/delete}.*$")) {
                 delete = false;
                 continue;
             }
-            else if(line.matches("^.*\\@\\{delete\\}.*$")) {
+            else if(line.matches("^.*@\\{delete}.*$")) {
                 delete = true;
                 continue;
             }
@@ -54,7 +53,7 @@ public class LineUtil {
             //循环种
             else if(loop) {
                 // 遇到结束标识 解析循环体中的模板
-                if(line.matches("^.*\\@\\{end\\}.*$")) {
+                if(line.matches("^.*@\\{end}.*$")) {
                     loop = false;
                     for (ListIterator<MyParam> iterator = table.getParamList().listIterator(); iterator.hasNext();) {
                         // 清除第一个属性信息
@@ -64,7 +63,7 @@ public class LineUtil {
                         }
                         MyParam param = iterator.next();
                         for (String string : loopLine) {
-                            if(string.matches("^.*\\@if1\\@.*$")) {
+                            if(string.matches("^.*@if1@.*$")) {
                                 if(param.getType().getColumnTypeName().startsWith(TableContans.NUMBER)) {
                                     string = string.replace("@if1@","DECODE(#list[].$param{paramName}#,NULL,NULL,#list[].$param{paramName}#) AS $param{columnName}$split{,}");
                                 }else {
@@ -72,13 +71,13 @@ public class LineUtil {
                                 }
                             }
 
-                            outStr = replaceTemplet(string, param.getMap(), "param");
-                            outStr = replaceTemplet(outStr, table.getMap(), "table");
+                            outStr = replaceTemplate(string, param.getMap(), "param");
+                            outStr = replaceTemplate(outStr, table.getMap(), "table");
 
                             if(iterator.hasNext()) {
-                                outStr = replaceTemplet(outStr, CommonMap.map, "split");
+                                outStr = replaceTemplate(outStr, CommonMap.map, "split");
                             }else {
-                                outStr = replaceTemplet(outStr, WithoutLastMap.map, "split");
+                                outStr = replaceTemplate(outStr, WithoutLastMap.map, "split");
                             }
                             result.add(outStr);
                         }
@@ -88,18 +87,18 @@ public class LineUtil {
                     loopLine.add(line);
                 }
                 // 开始进入循环体，设置标识
-            }else if(line.matches("^.*\\@\\{start\\}.*$")) {
+            }else if(line.matches("^.*@\\{start}.*$")) {
                 loopLine.clear();
                 loop = true;
                 clearFirst = false;
-            }else if(line.matches("^.*\\@\\{startFrom2\\}.*$")) {
+            }else if(line.matches("^.*@\\{startFrom2}.*$")) {
                 loopLine.clear();
                 loop = true;
                 clearFirst = true;
                 // 不是循环，解析模板
             } else {
-                outStr = replaceTemplet(line, CommonMap.map, "common");
-                outStr = replaceTemplet(outStr, table.getMap(), "table");
+                outStr = replaceTemplate(line, CommonMap.map, "common");
+                outStr = replaceTemplate(outStr, table.getMap(), "table");
                 result.add(outStr);
             }
         }
@@ -107,10 +106,10 @@ public class LineUtil {
     }
 
 
-    public static String replaceTemplet(String template, Map<String, String> tokens, String type) {
+    public static String replaceTemplate(String template, Map<String, String> tokens, String type) {
 
         //生成匹配模式的正则表达式
-        String patternString = "(?i)\\$"+ type + "\\{(" + StringUtils.join(tokens.keySet(), "|") + ")\\}";
+        String patternString = "(?i)\\$"+ type + "\\{(" + StringUtils.join(tokens.keySet(), "|") + ")}";
 
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(template);
@@ -130,16 +129,16 @@ public class LineUtil {
 
     }
 
-    public static String builCustdName(String oldLine, Table table){
+    public static String buildCustName(String oldLine, Table table){
         String result = FileNameMap.getCustName(oldLine);
-        result = replaceTemplet(result, table.getMap(), "table");
-        result = replaceTemplet(result, CommonMap.map, "common");
+        result = replaceTemplate(result, table.getMap(), "table");
+        result = replaceTemplate(result, CommonMap.map, "common");
         return result;
     }
     public static String buildName(String oldLine, Table table){
         String result = FileNameMap.getLocalName(oldLine);
-        result = replaceTemplet(result, table.getMap(), "table");
-        result = replaceTemplet(result, CommonMap.map, "common");
+        result = replaceTemplate(result, table.getMap(), "table");
+        result = replaceTemplate(result, CommonMap.map, "common");
         return result;
     }
 
@@ -147,7 +146,7 @@ public class LineUtil {
     public static List<String> rebuildFile(List<String> list){
         final String reg = "package\\s+.+";
         final String reg2 = "public\\s+class\\s\\w+(\\s+extends.+)\\{";
-        final String reg3 = "\\s+\\@Oweride.+";
+        final String reg3 = "\\s+@Oweride.+";
         for (int i = 0; i < list.size(); i++) {
             String line = list.get(i);
             if(line == null){

@@ -7,14 +7,17 @@ import com.howroad.cdwriter.model.MyParam;
 import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.util.CompileUtil;
-import com.howroad.cdwriter.util.DBUtil;
+import com.howroad.cdwriter.util.DatabaseUtil;
 import com.howroad.cdwriter.util.ExcelUtil;
 import com.howroad.cdwriter.util.LineUtil;
 import oracle.jdbc.driver.OracleConnection;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -49,7 +52,7 @@ public class TableBuilder {
         String tableRemark = null;
         List<MyParam> paramList = new ArrayList<MyParam>();
         try {
-            Connection conn = DBUtil.getConn();
+            Connection conn = DatabaseUtil.getConn();
             ((OracleConnection) conn).setRemarksReporting(true);
             db = conn.getMetaData();
             rs = db.getColumns(null, PageConfig.USER.toUpperCase(), tableName.toUpperCase(), null);

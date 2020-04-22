@@ -1,7 +1,8 @@
 package com.howroad.frame.panel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.Dimension;
 
 /**
  * <p>Title: MyPanel.java</p>
@@ -15,10 +16,10 @@ import java.awt.*;
  * @since：2019年3月6日 下午1:53:29
  * 
  */
-public class TextPane_Half extends JPanel{
+public class TextPaneHalf extends JPanel{
     private static final long serialVersionUID = -3947317443678310621L;
     private JTextField text;
-    public TextPane_Half(int size) {
+    public TextPaneHalf(int size) {
         super();
         text = new JTextField();
         text.setPreferredSize(new Dimension(10 * size, 20));

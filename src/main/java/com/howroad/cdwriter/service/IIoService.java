@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-import java.util.jar.JarEntry;
 
 /**
  * <p>Title: IIOService.java</p>
@@ -16,7 +15,7 @@ import java.util.jar.JarEntry;
  * @author luhao
  * @since：2019-09-12 14:04
  */
-public interface IIOService {
+public interface IIoService {
 
     /**
      * 获得一个字符串集合

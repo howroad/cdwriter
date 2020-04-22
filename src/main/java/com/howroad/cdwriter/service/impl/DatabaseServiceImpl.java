@@ -1,22 +1,16 @@
 package com.howroad.cdwriter.service.impl;
 
-import com.google.common.base.CaseFormat;
 import com.howroad.cdwriter.builder.TableBuilder;
-import com.howroad.cdwriter.conf.Config;
-import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.model.MyParam;
 import com.howroad.cdwriter.model.Table;
-import com.howroad.cdwriter.service.Container;
 import com.howroad.cdwriter.service.IDatabaseService;
-import com.howroad.cdwriter.util.DBUtil;
 import com.howroad.cdwriter.util.DataUtil;
-import com.howroad.cdwriter.util.ExcelUtil;
+import com.howroad.cdwriter.util.DatabaseUtil;
 import com.howroad.frame.panel.JoinSqlLine;
-import oracle.jdbc.driver.OracleConnection;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.sql.*;
+import java.sql.Clob;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -60,7 +54,7 @@ public class DatabaseServiceImpl implements IDatabaseService {
 
     @Override
     public List<List<Object>> query(String sql) {
-        return DBUtil.query(sql);
+        return DatabaseUtil.query(sql);
 
     }
 
@@ -68,7 +62,7 @@ public class DatabaseServiceImpl implements IDatabaseService {
     public String defaultDdl(String tableName) {
         tableName = tableName.toUpperCase();
         String sql = "SELECT DBMS_METADATA.GET_DDL('TABLE','" + tableName + "') FROM DUAL";
-        List<List<Object>> list = DBUtil.query(sql);
+        List<List<Object>> list = DatabaseUtil.query(sql);
         String result = null;
         if(!list.isEmpty()){
             Clob clob = (Clob)list.get(0).get(0);

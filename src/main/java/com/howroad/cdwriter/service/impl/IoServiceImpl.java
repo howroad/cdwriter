@@ -6,8 +6,8 @@ import com.howroad.cdwriter.conf.SystemConfig;
 import com.howroad.cdwriter.model.Table;
 import com.howroad.cdwriter.rule.FileNameMap;
 import com.howroad.cdwriter.service.Container;
-import com.howroad.cdwriter.service.IIOService;
-import com.howroad.cdwriter.util.DBUtil;
+import com.howroad.cdwriter.service.IIoService;
+import com.howroad.cdwriter.util.DatabaseUtil;
 import com.howroad.cdwriter.util.LineUtil;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -39,7 +39,7 @@ import java.util.Set;
  * @author luhao
  * @since：2019-10-12 16:46
  */
-public class IoServiceImpl implements IIOService {
+public class IoServiceImpl implements IIoService {
 
     @Override
     public List<String> readToLine(InputStream ins, String code) {
@@ -66,6 +66,7 @@ public class IoServiceImpl implements IIOService {
         return lineList;
     }
     @Override
+    @SuppressWarnings("UnstableApiUsage")
     public List<String> readToLine(File file) {
         List<String> strings = null;
         try {
@@ -188,7 +189,7 @@ public class IoServiceImpl implements IIOService {
             if(file.isFile()){
                 List<String> lineList = readToLine(file);
                 List<String> newLine = LineUtil.buildNewLine(lineList, table);
-                String fileName = LineUtil.builCustdName(file.getName(), table);
+                String fileName = LineUtil.buildCustName(file.getName(), table);
                 write(outDir + "/" + fileName, newLine);
             }else{
                 writeAllFileByTemplet(table, outDir + "/" + file.getName(), templetDir + "/" + file.getName());
@@ -213,7 +214,7 @@ public class IoServiceImpl implements IIOService {
 
     @Override
     public void writeDataFile(Table table) {
-        List<List<Object>> listList = DBUtil.query("SELECT * FROM " + table.getTableName() + " WHERE ROWNUM <= 200 ORDER BY 1");
+        List<List<Object>> listList = DatabaseUtil.query("SELECT * FROM " + table.getTableName() + " WHERE ROWNUM <= 200 ORDER BY 1");
         List<String> line = Container.databaseService.dataToLine(table, listList);
         write(new File(PathConfig.outSqlPath(table)), line);
     }
@@ -265,13 +266,11 @@ public class IoServiceImpl implements IIOService {
             a:for (File file : files) {
                 String fileName = file.getName();
                 if(file.isFile()) {
-                    b:
                     for (String withoutReg : withoutRegs) {
                         if(fileName.matches(withoutReg)){
                             continue a;
                         }
                     }
-                    c:
                     for (String reg : regs) {
                         if(fileName.matches(reg)){
                             file.delete();

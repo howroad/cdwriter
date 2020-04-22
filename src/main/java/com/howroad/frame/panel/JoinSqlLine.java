@@ -2,8 +2,9 @@ package com.howroad.frame.panel;
 
 import com.howroad.frame.jframe.ShowFrame;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 /**
  * <p>Title: JoinSqlLine.java</p>
@@ -15,18 +16,18 @@ import java.awt.*;
  */
 public class JoinSqlLine extends JPanel{
 
-    private TextPane_Half tb1;
+    private TextPaneHalf tb1;
     private SelectPanel sel;
-    private TextPane_Half tb2;
+    private TextPaneHalf tb2;
     private JLabel on = new JLabel("on");
-    private TextPane_Half where;
+    private TextPaneHalf where;
 
     public JoinSqlLine(boolean enabled) {
-        this.tb1 = new TextPane_Half(ShowFrame.TEXT_LENGTH/2);
+        this.tb1 = new TextPaneHalf(ShowFrame.TEXT_LENGTH/2);
         this.sel = new SelectPanel(null, ShowFrame.TEXT_LENGTH/2, "LEFT JOIN ", "INNER JOIN ");
-        this.tb2 = new TextPane_Half(ShowFrame.TEXT_LENGTH/2);;
+        this.tb2 = new TextPaneHalf(ShowFrame.TEXT_LENGTH/2);;
         this.on = new JLabel("ON");
-        this.where = new TextPane_Half(ShowFrame.TEXT_LENGTH);
+        this.where = new TextPaneHalf(ShowFrame.TEXT_LENGTH);
         this.setLayout(new FlowLayout());
         this.add(tb1);
         this.add(sel);
@@ -40,11 +41,11 @@ public class JoinSqlLine extends JPanel{
         this.tb1.makeEnabled(enabled);
     }
 
-    public TextPane_Half getTb1() {
+    public TextPaneHalf getTb1() {
         return tb1;
     }
 
-    public void setTb1(TextPane_Half tb1) {
+    public void setTb1(TextPaneHalf tb1) {
         this.tb1 = tb1;
     }
 
@@ -56,11 +57,11 @@ public class JoinSqlLine extends JPanel{
         this.sel = sel;
     }
 
-    public TextPane_Half getTb2() {
+    public TextPaneHalf getTb2() {
         return tb2;
     }
 
-    public void setTb2(TextPane_Half tb2) {
+    public void setTb2(TextPaneHalf tb2) {
         this.tb2 = tb2;
     }
 
@@ -72,11 +73,11 @@ public class JoinSqlLine extends JPanel{
         this.on = on;
     }
 
-    public TextPane_Half getWhere() {
+    public TextPaneHalf getWhere() {
         return where;
     }
 
-    public void setWhere(TextPane_Half where) {
+    public void setWhere(TextPaneHalf where) {
         this.where = where;
     }
 }
