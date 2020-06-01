@@ -3,6 +3,7 @@ package com.howroad.cdwriter.rule;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.conf.PathConfig;
 import com.howroad.cdwriter.util.PropertiesUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,7 +24,7 @@ public class CommonMap {
         map = PropertiesUtil.readJarPropertiesUpperCase(PathConfig.COMMON_MAP_PATH);
         //变量加载
         map.put("appNo", PageConfig.appNo);
-        map.put("appNoUpper", PageConfig.appNo.toUpperCase());
+        map.put("appNoUpper", StringUtils.upperCase(PageConfig.appNo));
         map.put("now",getNow());
     }
     private static String getNow() {
