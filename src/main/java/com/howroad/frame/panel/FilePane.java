@@ -1,13 +1,12 @@
 package com.howroad.frame.panel;
 
-import java.awt.Dimension;
-import java.io.File;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.Dimension;
+import java.io.File;
 
 /**
  * <p>
@@ -32,7 +31,7 @@ public class FilePane extends JPanel {
     private JButton button;
     private JTextField text;
 
-    public FilePane(String lable,int size) {
+    public FilePane(String lable,int size, String tips) {
         super();
         button = new JButton(lable);
         text = new JTextField();
@@ -48,6 +47,8 @@ public class FilePane extends JPanel {
             File file=jfc.getSelectedFile();  
             text.setText(file.getAbsolutePath().replace("\\", "/"));
         });
+        button.setToolTipText(tips);
+        text.setToolTipText(tips);
     }
 
     public String getText() {

@@ -24,7 +24,7 @@ public class JoinSqlLine extends JPanel{
 
     public JoinSqlLine(boolean enabled) {
         this.tb1 = new TextPaneHalf(ShowFrame.TEXT_LENGTH/2);
-        this.sel = new SelectPanel(null, ShowFrame.TEXT_LENGTH/2, "LEFT JOIN ", "INNER JOIN ");
+        this.sel = new SelectPanel(null, ShowFrame.TEXT_LENGTH/2,"这是提示信息", "LEFT JOIN ", "INNER JOIN ");
         this.tb2 = new TextPaneHalf(ShowFrame.TEXT_LENGTH/2);;
         this.on = new JLabel("ON");
         this.where = new TextPaneHalf(ShowFrame.TEXT_LENGTH);

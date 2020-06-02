@@ -62,15 +62,15 @@ public class ShowFrame extends JFrame {
     private JPanel sqlPanel = new JPanel(new GridLayout(9, 2, 1, 1));
 
     /** settings start */
-    private FilePane filePanel = new FilePane("...", TEXT_LENGTH);
-    private TextPane urlPanel = new TextPane("url:", TEXT_LENGTH);
-    private TextPane userNamePanel = new TextPane("user:", TEXT_LENGTH);
-    private TextPane passwordPanel = new TextPane("pwd:", TEXT_LENGTH);
+    private FilePane filePanel = new FilePane("...", TEXT_LENGTH, "请选择工作空间");
+    private TextPane urlPanel = new TextPane("url:", TEXT_LENGTH, "请输入URL,例如：192.168.20.35:1521:sas");
+    private TextPane userNamePanel = new TextPane("user:", TEXT_LENGTH,"请输入用户名，例如：spic1204");
+    private TextPane passwordPanel = new TextPane("pwd:", TEXT_LENGTH,"请输入密码，例如：123456");
 
-    private TextPane appNoPanel = new TextPane("appNo:", TEXT_LENGTH);
-    private TextPane tablesPanel = new TextPane("tbls", TEXT_LENGTH);
-    private TextPane filesPanel = new TextPane("files", TEXT_LENGTH);
-    private SelectPanel seqDirPanel = new SelectPanel("T_seq:", TEXT_LENGTH, "true", "false");
+    private TextPane appNoPanel = new TextPane("appNo:", TEXT_LENGTH,"生成代码的模块名，将影响包名、xml文件名");
+    private TextPane tablesPanel = new TextPane("tbls", TEXT_LENGTH,"从数据库读取表名生成代码，用逗号分割，例如：aims_account,aims_ebank");
+    private TextPane filesPanel = new TextPane("files", TEXT_LENGTH,"针对已存在的Java类和已存在的表，自动分析对照关系，生成代码，可以在log中查看详情。");
+    private SelectPanel seqDirPanel = new SelectPanel("T_seq:", TEXT_LENGTH, "自动生成的序列文件命名规则_SEQ是否后置", "true", "false");
     private JPanel btnPanel = new JPanel();
 
     private JPanel custPanel = new JPanel();
@@ -87,9 +87,9 @@ public class ShowFrame extends JFrame {
     /** settings end */
 
     /**export Sql start*/
-    private TextPane sqlTables = new TextPane("tbls(;):", TEXT_LENGTH);
-    private TextPane sqlSqls = new TextPane("sqls(;):", TEXT_LENGTH);
-    private TextPane sqlPks = new TextPane("pks(;,):", TEXT_LENGTH);
+    private TextPane sqlTables = new TextPane("tbls(;):", TEXT_LENGTH, "生成数据初始化脚本的关键表，用分号隔开");
+    private TextPane sqlSqls = new TextPane("sqls(;):", TEXT_LENGTH, "用于选择生成的记录的sql，用分好分割");
+    private TextPane sqlPks = new TextPane("pks(;,):", TEXT_LENGTH, "用于唯一确定一条记录，类似于主键，可以选择多个，例如：type_code,app_no;ebank_id");
     private JPanel sqlBtnPanel = new JPanel();
     private JButton createSql = new JButton("生成sql");
 
@@ -169,7 +169,7 @@ public class ShowFrame extends JFrame {
         addListener();
         hidePanel(logPanel);
         hidePanel(sqlPanel);
-
+        setAllToolTip();
     }
 
     private void loadConfig(){
@@ -307,6 +307,16 @@ public class ShowFrame extends JFrame {
         pack();
     }
 
+    private void setAllToolTip() {
+        conBtn.setToolTipText("测试连接");
+        runBtnExcel.setToolTipText("根据Excel生成代码");
+        runBtnDb.setToolTipText("根据数据库生成代码");
+        clearBtn.setToolTipText("清除工作空间");
+        openEx.setToolTipText("打开工作空间");
+        dbFile.setToolTipText("根据in文件夹里面的java类和数据库表名生成代码");
+        showSqlBtn.setToolTipText("生成初始化脚本");
+        logBtn.setToolTipText("日志信息");
+    }
 
 
 }

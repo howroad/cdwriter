@@ -1,10 +1,9 @@
 package com.howroad.frame.panel;
 
-import java.awt.Dimension;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.Dimension;
 
 /**
  * <p>Title: MyPanel.java</p>
@@ -22,7 +21,7 @@ public class TextPane extends JPanel{
     private static final long serialVersionUID = -3947317443678310621L;
     private JLabel label;
     private JTextField text;
-    public TextPane(String lable,int size) {
+    public TextPane(String lable,int size, String tips) {
         super();
         label = new JLabel(lable);
         text = new JTextField();
@@ -30,6 +29,8 @@ public class TextPane extends JPanel{
         text.setPreferredSize(new Dimension(10 * size, 20));
         this.add(label);
         this.add(text);
+        label.setToolTipText(tips);
+        text.setToolTipText(tips);
     }
     public String getText() {
         return text.getText().trim();

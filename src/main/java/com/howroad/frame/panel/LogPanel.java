@@ -73,6 +73,7 @@ public class LogPanel extends JPanel {
                 jTextArea.setText("");
             }
         });
+        button.setToolTipText("清除日志信息");
     }
 
     public void log(String log){
