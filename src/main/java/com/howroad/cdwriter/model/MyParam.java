@@ -65,11 +65,11 @@ public class MyParam {
         init();
     }
 
-    public MyParam(String paramRemark, String columnName, String typeStr, String nullable0, String default0) {
+    public MyParam(String paramRemark, String columnName, String typeStr, String nullable0, String default0, String paramName) {
         super();
         this.paramRemark = paramRemark;
         this.columnName = columnName.toUpperCase();
-        this.paramName = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, columnName);
+        this.paramName = StringUtils.isNotBlank(paramName) ? paramName : CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, columnName);
         String columnType = typeStr.trim().toUpperCase();
         Matcher mat = Pattern.compile("(?<=\\()(\\S+)(?=\\))").matcher(typeStr);
         if (TableContans.DATE.equals(columnType)) {

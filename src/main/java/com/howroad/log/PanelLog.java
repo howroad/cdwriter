@@ -3,7 +3,6 @@ package com.howroad.log;
 import com.howroad.frame.panel.LogPanel;
 
 import java.io.OutputStream;
-import java.io.PrintStream;
 
 /**
  * 日志Panel
@@ -16,14 +15,6 @@ public class PanelLog {
     public static OutputStream out;
 
     private PanelLog(){}
-
-    public static LogPanel getLog(){
-        if(logPanel == null){
-            throw new RuntimeException("无法获取日志信息！");
-        }else{
-            return logPanel;
-        }
-    }
 
     public static void initLog(LogPanel logPanel0){
         if(logPanel == null){

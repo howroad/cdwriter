@@ -164,7 +164,7 @@ public class ShowFrame extends JFrame {
     }
 
     private void init() {
-        Config.init();
+        Config.initClass();
         loadConfig();
         addListener();
         hidePanel(logPanel);
@@ -212,6 +212,7 @@ public class ShowFrame extends JFrame {
             reLoadConfig();
             boolean b = Container.coreService.testCoonect();
             Validate.isTrue(b,"连接失败！");
+            writeProperties();
             JOptionPane.showMessageDialog(null, "连接成功！");
         });
         addBtnListener(runBtnExcel, e ->{
@@ -242,6 +243,7 @@ public class ShowFrame extends JFrame {
         addBtnListener(createSql, e ->{
             reLoadConfig();
             Container.coreService.createCustSql(this.sqlTables.getText(),this.sqlSqls.getText(),this.sqlPks.getText().toUpperCase());
+            writeProperties();
             JOptionPane.showMessageDialog(null, "生成成功");
         });
         addBtnListener(openEx, e ->{
@@ -265,7 +267,7 @@ public class ShowFrame extends JFrame {
     public void writeProperties() {
         Properties pro = new Properties();
         FileOutputStream oFile;
-        File tempFile = new File(PathConfig.SAVE_CONFIG_PATH);
+        File tempFile = new File(PathConfig.configPath());
         pro.setProperty("SEQ_ON_LAST", PageConfig.SEQ_ON_LAST == null ? "false" : PageConfig.SEQ_ON_LAST.toString());
         pro.setProperty("URL", PageConfig.URL);
         pro.setProperty("USER", PageConfig.USER);

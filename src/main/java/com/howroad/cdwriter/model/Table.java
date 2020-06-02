@@ -4,6 +4,7 @@ import com.google.common.base.CaseFormat;
 import com.howroad.cdwriter.conf.PageConfig;
 import com.howroad.cdwriter.constants.TableContans;
 import oracle.sql.TIMESTAMP;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
 import java.sql.Types;
@@ -32,13 +33,14 @@ public class Table{
 	private String tableRemart;
 	private Map<String, String> map = new HashMap<String, String>();
 	private List<MyParam> paramList;
+	private String entityName;
 
-    public Table(String tableName, String tableRemark, List<MyParam> paramList) {
+    public Table(String tableName, String tableRemark, List<MyParam> paramList, String entityName) {
         super();
         this.tableName = tableName.toUpperCase();
         this.tableRemart = tableRemark == null || "null".equals(tableRemark) ? "" : tableRemark;
         this.paramList = paramList;
-        
+        this.entityName = entityName;
     }
     private void initMap() {
         if(hasDateType()) {
@@ -74,7 +76,7 @@ public class Table{
      */
     public String tableNo() {
         String tableName = getTableName();
-        String reg = "[^\\_]+";
+        String reg = "[^_]+";
         Pattern pattern = Pattern.compile(reg);
         Matcher matcher = pattern.matcher(tableName);
         StringBuffer buffer = new StringBuffer();
@@ -136,16 +138,19 @@ public class Table{
      * @since：2018年12月28日 下午6:32:04
      */
     public String getEntityName() {
-        String entityName = null;
-        if(tableName.toUpperCase().startsWith(TableContans.TABLE_PREFIX)) {
-            entityName = tableName.substring(tableName.indexOf(TableContans.UNDER_LINE) + 1);
-            entityName = "UM_" + entityName.substring(entityName.indexOf(TableContans.UNDER_LINE) + 1);
-        }else if (tableName.contains(TableContans.UNDER_LINE)) {
-            entityName = tableName.substring(tableName.indexOf(TableContans.UNDER_LINE));
-        } else {
-            entityName = tableName;
+        if(StringUtils.isNotBlank(entityName)) {
+            return entityName;
         }
-        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, entityName);
+        String temp;
+        if(tableName.toUpperCase().startsWith(TableContans.TABLE_PREFIX)) {
+            temp = tableName.substring(tableName.indexOf(TableContans.UNDER_LINE) + 1);
+            temp = "UM_" + entityName.substring(entityName.indexOf(TableContans.UNDER_LINE) + 1);
+        }else if (tableName.contains(TableContans.UNDER_LINE)) {
+            temp = tableName.substring(tableName.indexOf(TableContans.UNDER_LINE));
+        } else {
+            temp = tableName;
+        }
+        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, temp);
     }
     
     /**
@@ -175,7 +180,7 @@ public class Table{
 	
     @Override
 	public Table clone() {
-	    return new Table(tableName, tableRemart,paramList);
+	    return new Table(tableName, tableRemart, paramList, entityName);
 	}
 	@Override
     public String toString() {

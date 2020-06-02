@@ -9,9 +9,9 @@ import com.nstc.temp.model.*;
  *
  * <p>Description: </p>
  *
- * @author luhao
+ * @author $common{author}
  * 
- * @since：2018年12月27日 上午11:20:40
+ * @since $common{now}
  * 
  */
 public interface ICommonDao {

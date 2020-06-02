@@ -1,6 +1,7 @@
 package com.howroad.cdwriter.control;
 
 import com.howroad.frame.jframe.ShowFrame;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>Title: Start.java</p>
@@ -15,6 +16,8 @@ public class Start {
         ShowFrame showFrame = new ShowFrame();
         showFrame.setVisible(true);
     }
+
+    @Test
     public void test(){
         ShowFrame showFrame = new ShowFrame();
         showFrame.setVisible(true);

@@ -1,9 +1,8 @@
 package com.howroad.cdwriter.rule;
 
 import com.howroad.cdwriter.conf.PageConfig;
-import com.howroad.cdwriter.conf.PathConfig;
-import com.howroad.cdwriter.util.PropertiesUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,8 +19,7 @@ import java.util.Map;
 public class CommonMap {
     public static Map<String,String> map;
     public static void init(){
-        //常量加载
-        map = PropertiesUtil.readJarPropertiesUpperCase(PathConfig.COMMON_MAP_PATH);
+        Validate.notEmpty(map, "CommonMap初始化异常！");
         //变量加载
         map.put("appNo", PageConfig.appNo);
         map.put("appNoUpper", StringUtils.upperCase(PageConfig.appNo));

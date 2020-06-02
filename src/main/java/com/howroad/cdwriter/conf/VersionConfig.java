@@ -1,7 +1,5 @@
 package com.howroad.cdwriter.conf;
 
-import com.howroad.cdwriter.util.PropertiesUtil;
-
 /**
  * <p>Title: VersionConfig.java</p>
  * <p>Description: 版本号</p>
@@ -14,6 +12,4 @@ public class VersionConfig {
 
     /** 打包版本 */
     public static String cdWriterVersion;
-
-    public static void init(){}
 }

@@ -2,10 +2,8 @@ package com.howroad.cdwriter.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Year;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -45,32 +43,6 @@ public class PropertiesUtil {
         return resultMap;
     }
 
-    public static Map<String,String> readJarPropertiesUpperCase(String path){
-        Properties pro = new Properties();
-        InputStream in = null;
-        try {
-            in = Class.class.getResourceAsStream(path);
-            pro.load(in);
-            in.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }finally {
-            if(in != null){
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-            }
-        }
-
-        Map<String,String> resultMap = new HashMap<>();
-        pro.forEach((e,f) ->{
-            resultMap.put(String.valueOf(e).toUpperCase(),String.valueOf(f));
-        });
-        return resultMap;
-    }
-
     public static Map<String,String> readPageConfig(String path){
         Properties pro = new Properties();
         InputStream in = null;
@@ -98,7 +70,7 @@ public class PropertiesUtil {
 
         Map<String,String> resultMap = new HashMap<>();
         pro.forEach((e,f) ->{
-            resultMap.put(String.valueOf(e).toUpperCase(),String.valueOf(f));
+            resultMap.put(String.valueOf(e), String.valueOf(f));
         });
         return resultMap;
     }

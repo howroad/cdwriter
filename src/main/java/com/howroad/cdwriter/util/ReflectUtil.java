@@ -25,28 +25,36 @@ public class ReflectUtil {
      * @param paramMap
      */
     public static void setStaticParam(Field field, Map<String, String> paramMap) {
-        String fieldName = field.getName().toUpperCase();
-        if ("NULL".equals(fieldName)) {
-            throw new RuntimeException("非法的Key：NULL！");
-        }
-        String value = paramMap.get(fieldName);
-        if (value == null) {
-            PanelLog.log(field.getDeclaringClass().getName() + " : " + fieldName + ":未设置！");
-            return;
-        }
+        String fieldName = field.getName();
+        Class<?> type = field.getType();
         try {
-            if (field.getType() == String.class) {
+            if (type == Map.class) {
+                Map<String,Object> oldMap = (Map<String, Object>) field.get(null);
+                if(oldMap != null) {
+                    oldMap.putAll(paramMap);
+                    field.set(null,oldMap);
+                } else {
+                    field.set(null,paramMap);
+                }
+                return;
+            }
+            String value = paramMap.get(fieldName);
+            if (value == null) {
+                PanelLog.log(field.getDeclaringClass().getName() + " : " + fieldName + ":未设置！");
+                return;
+            }
+            if (type == String.class) {
                 field.set(null, value);
-            } else if (field.getType() == Integer.class) {
+            } else if (type == Integer.class) {
                 field.set(null, Integer.valueOf(value));
-            } else if (field.getType() == Boolean.class) {
+            } else if (type == Boolean.class) {
                 field.set(null, Boolean.valueOf(value));
-            } else if (field.getType() == Double.class) {
+            } else if (type == Double.class) {
                 field.set(null, Double.valueOf(value));
-            } else if (field.getType().isArray() && field.getType().getComponentType() == String.class) {
+            } else if (type.isArray() && type.getComponentType() == String.class) {
                 String[] strArr = value.split(",");
                 field.set(null, strArr);
-            } else if (field.getType().isArray() && field.getType().getComponentType() == Integer.class) {
+            } else if (type.isArray() && type.getComponentType() == Integer.class) {
                 String[] strArr = value.split(",");
                 Integer[] intArr = new Integer[strArr.length];
                 field.set(null, intArr);

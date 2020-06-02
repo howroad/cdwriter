@@ -98,7 +98,7 @@ public class TableBuilder {
         if(paramList.isEmpty()) {
             throw new RuntimeException(tableName + "表中无字段，或该表不存在！");
         }
-        Table table = new Table(tableName, tableRemark ,paramList);
+        Table table = new Table(tableName, tableRemark ,paramList, null);
         return table;
     }
 
@@ -135,6 +135,7 @@ public class TableBuilder {
                 String commont = list.size() > 2 ? list.get(2) : "";
                 String nullableStr = list.size() > 3 ? list.get(3) : "";
                 String defaultV = list.size() > 4 ? list.get(4) : "";
+                String javaName = list.size() > 5 ? list.get(5) : "";
 
                 if(StringUtils.isEmpty(columnName) && StringUtils.isEmpty(type) && StringUtils.isEmpty(commont)) {
                     continue;
@@ -149,10 +150,10 @@ public class TableBuilder {
                         tableList.add(table);
                     }
                     tempParamList = new ArrayList<MyParam>();
-                    tempTable = new Table(columnName, commont ,tempParamList);
+                    tempTable = new Table(columnName, commont ,tempParamList, javaName);
                 }else {
                     //属性信息
-                    tempParamList.add(new MyParam(commont, columnName, type, nullableStr, defaultV));
+                    tempParamList.add(new MyParam(commont, columnName, type, nullableStr, defaultV, javaName));
                 }
 
             }

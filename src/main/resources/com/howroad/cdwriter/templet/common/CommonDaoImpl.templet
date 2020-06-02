@@ -10,9 +10,9 @@ import com.nstc.temp.model.*;
  *
  * <p>Description: </p>
  *
- * @author luhao
+ * @author $common{author}
  * 
- * @since：2018年12月27日 上午11:21:45
+ * @since $common{now}
  * 
  */
 public class CommonDaoImpl extends BaseDao implements ICommonDao {

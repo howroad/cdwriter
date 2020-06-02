@@ -21,19 +21,27 @@ import java.util.Map;
  * @since 2019-10-31 16:25
  */
 public class Config {
-    public static void init(){
+
+    public static final int JAR = 0;
+    public static final int PATH = 1;
+
+    public static void initClass() {
         //初始化PathConfig
-        initClass(PathConfig.class,PathConfig.PROPERTIES_PATH);
-        //写入PageConfig--暂时使用properties文件写入
-        initClassFromAbs(PageConfig.class,PathConfig.SAVE_CONFIG_PATH);
-        //初始化CommonMap
-        initClass(CommonMap.class, PathConfig.COMMON_MAP_PATH);
-        //初始化WithoutMapMap
-        initClass(WithoutLastMap.class, PathConfig.WITHOUT_MAP_PATH);
-        //初始化FileNameMap
-        initClassNotUp(FileNameMap.class, PathConfig.NAME_MAPING_PATH);
+        setParam(PathConfig.class, PathConfig.PROPERTIES_PATH, JAR);
         //初始化version
-        initClass(VersionConfig.class, PathConfig.VERSION_FILE_PATH);
+        setParam(VersionConfig.class, PathConfig.VERSION_FILE_PATH, JAR);
+        //写入PageConfig--暂时使用properties文件写入
+        setParam(PageConfig.class, PathConfig.configPath(), PATH);
+
+
+        //初始化配置文件CommonMap
+        setParam(CommonMap.class, PathConfig.COMMON_MAP_PATH, JAR);
+        //根据用户设置初始化CommonMap
+        setParam(CommonMap.class, PathConfig.SAVE_CUST_CONFIG_PATH, PATH);
+
+        initClass(CommonMap.class);
+        initClass(WithoutLastMap.class);
+        initClass(FileNameMap.class);
 
         log(PathConfig.class);
         log(PageConfig.class);
@@ -42,68 +50,42 @@ public class Config {
         log(FileNameMap.class);
     }
 
-    public static void initClass(Class clazz, String path){
-        try {
-            Map<String,String> result = PropertiesUtil.readJarPropertiesUpperCase(path);
-            Field[] fields = ReflectUtil.getStaticFields(clazz);
-            for (Field field : fields) {
-                ReflectUtil.setStaticParam(field,result);
-            }
-            Method method = clazz.getMethod("init");
-            if(method != null){
-                method.invoke(null);
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch (NoSuchMethodException e) {
-            PanelLog.log(e.getClass().getSimpleName() + " : " + e.getMessage());
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+
+    public static void setParam(Class clazz, String path, Integer source) {
+        Map<String, String> result;
+        if (JAR == source) {
+            result = PropertiesUtil.readJarProperties(path);
+        } else if (PATH == source) {
+            result = PropertiesUtil.readPageConfig(path);
+        } else {
+            throw new RuntimeException();
         }
+        Field[] fields = ReflectUtil.getStaticFields(clazz);
+        for (Field field : fields) {
+            ReflectUtil.setStaticParam(field, result);
+        }
+
     }
-    public static void initClassNotUp(Class clazz, String path){
-        try {
-            Map<String,String> result = PropertiesUtil.readJarPropertiesUpperCase(path);
-            Field[] fields = ReflectUtil.getStaticFields(clazz);
-            for (Field field : fields) {
-                ReflectUtil.setStaticParam(field,result);
+
+    public static void initClass(Class... classes) {
+        for (Class clazz : classes) {
+            try {
+                Method method = clazz.getMethod("init");
+                if (method != null) {
+                    method.invoke(null);
+                }
+            } catch (NoSuchMethodException e) {
+                PanelLog.log(e.getClass().getSimpleName() + " : " + e.getMessage());
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
             }
-            Method method = clazz.getMethod("init");
-            if(method != null){
-                method.invoke(null);
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e.getMessage());
         }
     }
 
-      public static void initClassFromAbs(Class clazz, String path){
-        try {
-            Map<String,String> result = PropertiesUtil.readPageConfig(path);
-            Field[] fields = ReflectUtil.getStaticFields(clazz);
-            for (Field field : fields) {
-                ReflectUtil.setStaticParam(field,result);
-            }
-            Method method = clazz.getMethod("init");
-            if(method != null){
-                method.invoke(null);
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch (NoSuchMethodException e) {
-            PanelLog.log(e.getClass().getSimpleName() + " : " + e.getMessage());
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-
-    public static void log(Class clazz){
+    public static void log(Class clazz) {
         try {
             PanelLog.log("-----------" + clazz.getName() + "  start-----------");
             Field[] fields = ReflectUtil.getStaticFields(clazz);
@@ -115,4 +97,5 @@ public class Config {
             throw new RuntimeException(e.getMessage());
         }
     }
+
 }

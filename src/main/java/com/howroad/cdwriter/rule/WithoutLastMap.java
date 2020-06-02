@@ -17,7 +17,7 @@ public class WithoutLastMap {
     public static Map<String,String> map;
     public static void init(){
         if(map == null){
-            map = PropertiesUtil.readJarPropertiesUpperCase(PathConfig.WITHOUT_MAP_PATH);
+            map = PropertiesUtil.readJarProperties(PathConfig.WITHOUT_MAP_PATH);
         }
     }
 }
