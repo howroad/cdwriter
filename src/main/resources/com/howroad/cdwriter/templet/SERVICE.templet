@@ -29,6 +29,15 @@ public interface $table{entityName}Service {
     */
     Integer save$table{entityName}($table{entityName} model);
 
+
+    /**
+    * 根据$table{remark}条件删除$table{remark}
+    * @param scope $table{remark}条件
+    * @author $common{author}
+    * @since $common{now}
+    */
+    void delete$table{entityName} ($table{entityName}Scope scope);
+
     /**
     * 修改$table{remark}
     * @param model $table{remark}实体
@@ -38,16 +47,6 @@ public interface $table{entityName}Service {
     void update$table{entityName}($table{entityName} model);
 
     /**
-    * 查询$table{remark}列表
-    * @param scope $table{remark}查询条件
-    * @author $common{author}
-    * @return $table{remark}集合
-    * @since $common{now}
-    */
-    List<$table{entityName}View> get$table{entityName}List($table{entityName}Scope scope);
-
-
-    /**
     * 根据条件查询$table{remark}View的第一条记录
     * @param scope $table{remark}查询条件
     * @author $common{author}
@@ -55,22 +54,15 @@ public interface $table{entityName}Service {
     * @since $common{now}
     */
     $table{entityName}View get$table{entityName}ByScope ($table{entityName}Scope scope);
-    
+
     /**
-    * 根据主键删除多个$table{remark}
-    * @param ids $table{remark}主键
+    * 查询$table{remark}列表
+    * @param scope $table{remark}查询条件
     * @author $common{author}
+    * @return $table{remark}集合
     * @since $common{now}
     */
-    void delete$table{entityName}ByIds (List<Integer> ids);
-    
-    /**
-    * 根据$table{remark}条件删除$table{remark}
-    * @param scope $table{remark}条件
-    * @author $common{author}
-    * @since $common{now}
-    */
-    void delete$table{entityName} ($table{entityName}Scope scope);
+    List<$table{entityName}View> get$table{entityName}List($table{entityName}Scope scope);
 
     /**
     * 查询$table{remark}记录数
@@ -90,7 +82,7 @@ public interface $table{entityName}Service {
     */
     List<$table{entityName}View> get$table{entityName}PageList($table{entityName}Scope scope);
 
-    @{delete}
+
     /**
     * 根据主键删除$table{remark}
     * @param id $table{remark}主键
@@ -98,6 +90,14 @@ public interface $table{entityName}Service {
     * @since $common{now}
     */
     void delete$table{entityName}ById (Integer id);
+
+    /**
+    * 根据主键删除多个$table{remark}
+    * @param ids $table{remark}主键
+    * @author $common{author}
+    * @since $common{now}
+    */
+    void delete$table{entityName}ByIds (List<Integer> ids);
 
     /**
     * 根据Id查询$table{remark}
@@ -126,6 +126,5 @@ public interface $table{entityName}Service {
      * @since $common{now}
      */
     Integer submit$table{entityName}($table{entityName} model);
-    @{/delete}  
     
 }    

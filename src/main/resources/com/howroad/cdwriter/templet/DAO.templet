@@ -1,3 +1,25 @@
+package com.nstc.$common{appNo}.dao;
+
+import java.util.List;
+
+import $common{groupId}.$common{appNo}.$common{poPackage}.*;
+import $common{groupId}.$common{appNo}.$common{poPackage}.scope.*;
+import $common{groupId}.$common{appNo}.$common{poPackage}.view.*;
+
+/**
+ * <p>Title: $table{entityName}Dao.java</p>
+ *
+ * <p>Description: $table{remark}Dao</p>
+ *
+ * <p>Company: 北京九恒星科技股份有限公司</p>
+ *
+ * @author $common{author}
+ *
+ * @since $common{now}
+ *
+ */
+public interface $table{entityName}Dao {
+
     /**
     * 新增$table{remark}
     * @param model $table{remark}实体
@@ -8,12 +30,12 @@
     Integer save$table{entityName}($table{entityName} model);
 
     /**
-    * 根据主键删除$table{remark}
-    * @param id $table{remark}主键
-    * @author $common{author}
-    * @since $common{now}
-    */
-    void delete$table{entityName}ById (Integer id);
+     * 根据条件删除$table{remark}
+     * @param scope $table{remark}删除条件
+     * @author $common{author}
+     * @since $common{now}
+     */
+    void delete$table{entityName}($table{entityName}Scope scope);
 
     /**
     * 修改$table{remark}
@@ -22,24 +44,6 @@
     * @since $common{now}
     */
     void update$table{entityName}($table{entityName} model);
-
-    /**
-    * 查询$table{remark}列表
-    * @param scope $table{remark}Scope 查询条件
-    * @author $common{author}
-    * @return $table{remark}集合
-    * @since $common{now}
-    */
-    List<$table{entityName}> get$table{entityName}List($table{entityName}Scope scope);
-    
-    /**
-    * 根据Id查询$table{remark}View
-    * @param id $table{remark}主键
-    * @author $common{author}
-    * @return $table{remark}
-    * @since $common{now}
-    */
-    $table{entityName}View get$table{entityName}ById(Integer id);
 
     /**
     * 根据条件查询$table{remark}View的第一条记录
@@ -51,15 +55,14 @@
     $table{entityName}View get$table{entityName}ByScope ($table{entityName}Scope scope);
 
     /**
-    * 根据主键删除多个$table{remark}
-    * @param ids $table{remark}主键
+    * 查询$table{remark}列表
+    * @param scope $table{remark}Scope 查询条件
     * @author $common{author}
+    * @return $table{remark}集合
     * @since $common{now}
     */
-    void delete$table{entityName}ByIds (List<Integer> ids);
-    
-        
-    @{delete}
+    List<$table{entityName}> get$table{entityName}List($table{entityName}Scope scope);
+
     /**
     * 查询$table{remark}记录数
     * @param scope $table{remark}查询条件
@@ -77,16 +80,32 @@
     * @since $common{now}
     */
     List<$table{entityName}View> get$table{entityName}PageList($table{entityName}Scope scope);
-    @{/delete}  
 
     /**
-     * 根据条件删除$table{remark}
-     * @param scope $table{remark}删除条件
-     * @author $common{author}
-     * @since $common{now}
-     */
-    void delete$table{entityName}($table{entityName}Scope scope);
-    
+    * 根据Id查询$table{remark}View
+    * @param id $table{remark}主键
+    * @author $common{author}
+    * @return $table{remark}
+    * @since $common{now}
+    */
+    $table{entityName}View get$table{entityName}ById(Integer id);
+
+    /**
+    * 根据主键删除$table{remark}
+    * @param id $table{remark}主键
+    * @author $common{author}
+    * @since $common{now}
+    */
+    void delete$table{entityName}ById (Integer id);
+
+    /**
+    * 根据主键删除多个$table{remark}
+    * @param ids $table{remark}主键
+    * @author $common{author}
+    * @since $common{now}
+    */
+    void delete$table{entityName}ByIds (List<Integer> ids);
+
     /**
     * 新增或者修改$table{remark}集合中的内容
     * @param list $table{remark}集合
@@ -102,3 +121,5 @@
     * @since $common{now}
     */
     void saveOrUpdate$table{entityName} ($table{entityName} model);
+
+}

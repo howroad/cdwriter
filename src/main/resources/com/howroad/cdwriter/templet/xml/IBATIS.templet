@@ -51,6 +51,12 @@
         )
     </insert>
 
+    <!-- 删除$table{remark} -->
+    <delete id="delete$table{entityName}" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.scope.$table{entityName}Scope">
+        DELETE $table{tableName} $table{tableNo} WHERE 1 = 1
+        <include refid="query$table{entityName}ScopeSQL" />
+    </delete>
+
     <!-- 修改$table{remark} -->
     <update id="update$table{entityName}" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.$table{entityName}">
         UPDATE $table{tableName} $table{tableNo} SET
@@ -63,15 +69,6 @@
         WHERE $table{tableNo}.$table{pkColumnName} = #$table{pkName}#
     </update>
 
-    <!-- 查询$table{remark}列表 -->
-    <select id="get$table{entityName}List" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.scope.$table{entityName}Scope" resultClass="$common{groupId}.$common{appNo}.$common{poPackage}.view.$table{entityName}View">
-        SELECT
-        <include refid="show$table{entityName}ViewSQL" />
-        FROM $table{tableName} $table{tableNo} WHERE 1 = 1
-        <include refid="query$table{entityName}ScopeSQL" />
-        ORDER BY $table{tableNo}.$table{pkColumnName} ASC
-    </select>
-
     <!-- 根据条件查询$table{remark}View的第一条记录  -->
     <select id="get$table{entityName}ByScope" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.scope.$table{entityName}Scope" resultClass="$common{groupId}.$common{appNo}.$common{poPackage}.view.$table{entityName}View">
         SELECT
@@ -80,14 +77,15 @@
         <include refid="query$table{entityName}ScopeSQL" />
         AND ROWNUM = 1
     </select>
-    
-    <!-- 根据Id集合删除$table{remark} -->
-    <delete id="delete$table{entityName}ByIds" parameterClass="java.util.ArrayList">
-        DELETE FROM $table{tableName} $table{tableNo} WHERE  $table{tableNo}.$table{pkColumnName} IN
-        <iterate open="(" close=")" conjunction=",">  
-            #ids[]#  
-        </iterate>
-    </delete>   
+
+    <!-- 查询$table{remark}列表 -->
+    <select id="get$table{entityName}List" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.scope.$table{entityName}Scope" resultClass="$common{groupId}.$common{appNo}.$common{poPackage}.view.$table{entityName}View">
+        SELECT
+        <include refid="show$table{entityName}ViewSQL" />
+        FROM $table{tableName} $table{tableNo} WHERE 1 = 1
+        <include refid="query$table{entityName}ScopeSQL" />
+        ORDER BY $table{tableNo}.$table{pkColumnName} ASC
+    </select>
 
     <!-- 查询$table{remark}记录数 -->
     <select id="get$table{entityName}PageCount" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.scope.$table{entityName}Scope" resultClass="java.lang.Integer">
@@ -108,12 +106,14 @@
         <include refid="pagingEndSql" />
     </select>
 
-    <!-- 删除$table{remark} -->
-    <delete id="delete$table{entityName}" parameterClass="$common{groupId}.$common{appNo}.$common{poPackage}.scope.$table{entityName}Scope">
-        DELETE $table{tableName} $table{tableNo} WHERE 1 = 1
-        <include refid="query$table{entityName}ScopeSQL" />
-    </delete> 
-    
+    <!-- 根据Id集合删除$table{remark} -->
+    <delete id="delete$table{entityName}ByIds" parameterClass="java.util.ArrayList">
+        DELETE FROM $table{tableName} $table{tableNo} WHERE  $table{tableNo}.$table{pkColumnName} IN
+        <iterate open="(" close=")" conjunction=",">
+            #ids[]#
+        </iterate>
+    </delete>
+
     <!-- 保存或修改$table{remark}集合 -->  
     <update id="saveOrUpdate$table{entityName}List" parameterClass="java.util.ArrayList">
         MERGE INTO $table{tableName} $table{tableNo} 
