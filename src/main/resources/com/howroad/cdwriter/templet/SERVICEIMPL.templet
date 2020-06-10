@@ -131,4 +131,5 @@ public class $table{entityName}ServiceImpl extends BaseServerImpl implements $ta
     public $table{entityName}View get$table{entityName}ById(Integer id) {
         return getDaoFacade().get$table{entityName}Dao().get$table{entityName}ById(id);
     }
+
 }
